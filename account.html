@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LidCraft Studio — Личный кабинет</title>
+  <meta name="copyright" content="© LidCraft Studio. All rights reserved." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <div class="brand"><img src="assets/lidcraft-logo.svg" alt="LidCraft Studio logo" /><span class="brand-text">LidCraft Studio — Кабинет</span></div>
+      <div class="cta-row">
+        <a class="btn ghost" href="index.html">Главная</a>
+        <button id="logoutBtn" class="btn primary" type="button">Выйти</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <h1>Добро пожаловать, <span id="userName">клиент</span></h1>
+      <p>Здесь собрана расширенная информация по работе с LidCraft Studio и быстрые действия для запуска проекта.</p>
+
+      <section class="section">
+        <h2>Безопасность, доступ и данные</h2>
+        <div class="cards">
+          <article class="card">
+            <h3>Статус доступа</h3>
+            <p id="sessionStatus" class="result-text">Проверяем сессию...</p>
+            <p id="subscriptionStatus" class="result-text">Проверяем подписку...</p>
+            <div class="cta-row">
+              <a class="btn primary" href="#pricing" id="renewAccessBtn">Продлить подписку</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3>Управление профилем</h3>
+            <input id="profileName" class="field" type="text" placeholder="Имя" />
+            <input id="profileEmail" class="field" type="email" placeholder="Email" />
+            <div class="cta-row">
+              <button id="saveProfileBtn" class="btn primary" type="button">Сохранить профиль</button>
+              <button id="exportDataBtn" class="btn ghost" type="button">Экспорт данных</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3>AI-защита промптов</h3>
+            <p>Проверка запроса перед отправкой в ИИ: блокируем попытки вытащить системные инструкции и код проекта.</p>
+            <input id="aiPromptInput" class="field" type="text" placeholder="Введите тестовый запрос..." />
+            <div class="cta-row">
+              <button id="aiPromptCheckBtn" class="btn ghost" type="button">Проверить запрос</button>
+            </div>
+            <p id="aiPromptResult" class="result-text">Ожидание проверки...</p>
+          </article>
+        </div>
+        <div class="cta-row">
+          <button id="clearDataBtn" class="btn ghost" type="button">Очистить локальные данные</button>
+          <button id="deleteAccountBtn" class="btn ghost" type="button">Удалить аккаунт (локально)</button>
+        </div>
+        <p id="securityNotice" class="result-text">Все действия логируются локально в браузере.</p>
+      </section>
+
+      <section class="section">
+        <h2>Детальный анализ по внедрению</h2>
+        <div class="cards">
+          <article class="card">
+            <h3>Этап 1: Диагностика</h3>
+            <p>Определяем, где бизнес теряет деньги: медленные ответы, потерянные лиды, хаос в коммуникациях.</p>
+          </article>
+          <article class="card">
+            <h3>Этап 2: Проектирование</h3>
+            <p>Собираем архитектуру решений: бот, воронка, CRM-логика, роли сотрудников и сценарии эскалации.</p>
+          </article>
+          <article class="card">
+            <h3>Этап 3: Рост результата</h3>
+            <p>По данным общения и продаж усиливаем скрипты, оффер и точки конверсии для стабильного роста.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="container">
+          <h2>Почему выбирают нас</h2>
+          <div class="cards">
+            <article class="card">
+              <h3>Фокус на бизнес-результат</h3>
+              <p>Мы не продаем «просто AI». Мы строим систему, которая увеличивает выручку и снижает потери.</p>
+            </article>
+            <article class="card">
+              <h3>Работа под вашу нишу</h3>
+              <p>Каждый проект адаптируется под реальный процесс вашей команды, а не по шаблону «один для всех».</p>
+            </article>
+            <article class="card">
+              <h3>Поддержка после запуска</h3>
+              <p>После релиза вы не остаетесь одни: дорабатываем сценарии и улучшаем показатели на практике.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Примерные тесты внутри кабинета</h2>
+        <div class="quiz-box">
+          <p id="cabQuizQuestion">1) Есть ли у вас единый стандарт ответа клиенту?</p>
+          <div class="cta-row">
+            <button class="btn primary" type="button" data-cab-quiz="yes">Да</button>
+            <button class="btn ghost" type="button" data-cab-quiz="no">Нет</button>
+          </div>
+          <p id="cabQuizProgress" class="result-text">Вопрос 1 из 4</p>
+          <p id="cabQuizResult" class="result-text">Ответьте на вопросы, чтобы получить ориентир по зрелости процессов.</p>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="container">
+          <h2>Оплата и запуск</h2>
+          <p>Выберите пакет и перейдите к безопасной оплате по ссылке.</p>
+          <div class="cards">
+            <article class="card">
+              <h3>Start</h3>
+              <p class="price">$99</p>
+              <a class="btn primary" href="https://pay.cloudtips.ru/p/replace-start" target="_blank" rel="noopener">Перейти к оплате</a>
+            </article>
+            <article class="card featured">
+              <h3>Growth</h3>
+              <p class="price">$299</p>
+              <a class="btn primary" href="https://pay.cloudtips.ru/p/replace-growth" target="_blank" rel="noopener">Перейти к оплате</a>
+            </article>
+            <article class="card">
+              <h3>Scale</h3>
+              <p class="price">$799</p>
+              <a class="btn primary" href="https://pay.cloudtips.ru/p/replace-scale" target="_blank" rel="noopener">Перейти к оплате</a>
+            </article>
+          </div>
+          <p class="result-text">Если нужен другой эквайринг (Stripe/ЮKassa/Kaspi Pay), мы подключим его в вашем рабочем контуре.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="accountYear"></span> LidCraft Studio • lidcraft-studio.site. Название и материалы сайта защищены авторским правом.</p>
+      <p><a href="legal.html">Правовая информация</a></p>
+    </div>
+  </footer>
+
+  <script src="account.js"></script>
+  <script>document.getElementById("accountYear").textContent = new Date().getFullYear();</script>
+</body>
+</html>

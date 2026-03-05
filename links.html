@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LidCraft Studio — Все соцсети</title>
+  <meta name="description" content="Официальные каналы LidCraft Studio: связи, консультации и запуск проектов." />
+  <meta name="copyright" content="© LidCraft Studio. All rights reserved." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .links-wrap { min-height: 100vh; display: grid; place-items: center; }
+    .links-card { width: min(640px, 92%); background: var(--panel); border: 1px solid var(--border); border-radius: 18px; padding: 22px; }
+    .links-card h1 { margin-bottom: 6px; }
+    .link-list { display: grid; gap: 10px; margin-top: 14px; }
+    .link-list a { text-decoration: none; color: var(--text); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+    .link-list a:hover { border-color: var(--accent); color: var(--accent-2); }
+    .mini { font-size: 14px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <main class="links-wrap">
+    <section class="links-card">
+      <h1>LidCraft Studio</h1>
+      <p>Официальные ссылки для связи и сотрудничества</p>
+      <p class="mini">Ответ в течение дня • Бесплатный первичный разбор задачи</p>
+      <div class="link-list">
+        <a href="https://t.me/Timur_0_6_0_6?text=%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%2C%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BA%D0%BE%D1%80%D0%BE%D1%82%D0%BA%D0%B8%D0%B9%20%D1%80%D0%B0%D0%B7%D0%B1%D0%BE%D1%80%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0" target="_blank" rel="noopener">LidCraft Studio — Telegram (основной канал)</a>
+        <a href="https://wa.me/000000000000?text=%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0" target="_blank" rel="noopener">LidCraft Studio — WhatsApp</a>
+        <a href="https://instagram.com/your_username" target="_blank" rel="noopener">LidCraft Studio — Instagram</a>
+        <a href="https://www.tiktok.com/@your_username" target="_blank" rel="noopener">LidCraft Studio — TikTok</a>
+        <a href="https://youtube.com/@your_username" target="_blank" rel="noopener">LidCraft Studio — YouTube</a>
+        <a href="https://vk.com/your_username" target="_blank" rel="noopener">LidCraft Studio — VK</a>
+        <a href="https://www.linkedin.com/in/your_username" target="_blank" rel="noopener">LidCraft Studio — LinkedIn</a>
+        <a href="mailto:hello@lidcraft-studio.site">LidCraft Studio — Email</a>
+      </div>
+      <div class="cta-row" style="margin-top: 16px;">
+        <a class="btn ghost" href="index.html">← На сайт</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="linksYear"></span> LidCraft Studio • lidcraft-studio.site. Название и материалы сайта защищены авторским правом.</p>
+      <p><a href="legal.html">Правовая информация</a></p>
+    </div>
+  </footer>
+
+  <script>document.getElementById("linksYear").textContent = new Date().getFullYear();</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LidCraft Studio — Вход и регистрация</title>
+  <meta name="copyright" content="© LidCraft Studio. All rights reserved." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="section">
+    <div class="container">
+      <h1>Вход и регистрация</h1>
+      <p>Создайте аккаунт, чтобы получить доступ к расширенной информации, анализу и материалам.</p>
+
+      <div class="cards">
+        <section class="card">
+          <h2>Регистрация</h2>
+          <input id="regName" class="field" type="text" placeholder="Ваше имя" />
+          <input id="regEmail" class="field" type="email" placeholder="Email" />
+          <input id="regPassword" class="field" type="password" placeholder="Пароль" />
+          <button id="registerBtn" class="btn primary" type="button">Создать аккаунт</button>
+          <p id="regMessage" class="result-text"></p>
+        </section>
+
+        <section class="card">
+          <h2>Вход</h2>
+          <input id="loginEmail" class="field" type="email" placeholder="Email" />
+          <input id="loginPassword" class="field" type="password" placeholder="Пароль" />
+          <button id="loginBtn" class="btn primary" type="button">Войти</button>
+          <button id="showForgotBtn" class="btn ghost" type="button">Забыли пароль?</button>
+          <p id="loginMessage" class="result-text"></p>
+        </section>
+
+        <section class="card" id="forgotBlock" style="display:none;">
+          <h2>Восстановление пароля</h2>
+          <p>Выберите канал, получите код подтверждения и установите новый пароль.</p>
+          <select id="forgotChannel" class="field">
+            <option value="email">Email</option>
+            <option value="sms">SMS</option>
+          </select>
+          <input id="forgotIdentifier" class="field" type="text" placeholder="Email или телефон" />
+          <button id="sendCodeBtn" class="btn primary" type="button">Отправить код</button>
+
+          <input id="forgotCode" class="field" type="text" placeholder="Код подтверждения" />
+          <input id="newPassword" class="field" type="password" placeholder="Новый пароль" />
+          <button id="resetPasswordBtn" class="btn ghost" type="button">Сменить пароль</button>
+          <p id="forgotMessage" class="result-text"></p>
+        </section>
+
+        <section class="card">
+          <h2>Что внутри личного кабинета</h2>
+          <p>— Детальный разбор сценариев внедрения</p>
+          <p>— Примерные тесты готовности бизнеса</p>
+          <p>— Пакеты работ и быстрый переход к оплате</p>
+          <p>— Аргументация, почему выбирают LidCraft Studio</p>
+          <a class="btn ghost" href="index.html">← На главную</a>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="authYear"></span> LidCraft Studio • lidcraft-studio.site. Название и материалы сайта защищены авторским правом.</p>
+      <p><a href="legal.html">Правовая информация</a></p>
+    </div>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script>document.getElementById("authYear").textContent = new Date().getFullYear();</script>
+</body>
+</html>

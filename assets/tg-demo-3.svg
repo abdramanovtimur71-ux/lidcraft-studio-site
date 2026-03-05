@@ -1,0 +1,15 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="24" fill="#0F1221"/>
+  <rect x="90" y="90" width="1020" height="540" rx="20" fill="#171A2E" stroke="#2B3152"/>
+  <text x="140" y="150" fill="#F5F7FF" font-size="34" font-family="Segoe UI, Arial">Сценарий работы бота</text>
+  <rect x="140" y="200" width="260" height="150" rx="14" fill="#23294B"/>
+  <text x="170" y="276" fill="#F5F7FF" font-size="24" font-family="Segoe UI, Arial">1. Клиент пишет</text>
+  <rect x="470" y="200" width="260" height="150" rx="14" fill="#7F8CFF"/>
+  <text x="500" y="276" fill="#FFFFFF" font-size="24" font-family="Segoe UI, Arial">2. Бот отвечает</text>
+  <rect x="800" y="200" width="260" height="150" rx="14" fill="#23294B"/>
+  <text x="835" y="276" fill="#F5F7FF" font-size="24" font-family="Segoe UI, Arial">3. Вы получаете</text>
+  <text x="830" y="310" fill="#F5F7FF" font-size="24" font-family="Segoe UI, Arial">уведомление</text>
+  <rect x="140" y="400" width="920" height="170" rx="14" fill="#1E2340"/>
+  <text x="180" y="460" fill="#F5F7FF" font-size="24" font-family="Segoe UI, Arial">Итог: ни один лид не теряется, все диалоги под контролем.</text>
+  <text x="180" y="500" fill="#A6B0FF" font-size="23" font-family="Segoe UI, Arial">В любой момент можно подключить менеджера и доработать сценарии.</text>
+</svg>

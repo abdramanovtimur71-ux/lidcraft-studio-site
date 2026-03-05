@@ -1,0 +1,13 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="24" fill="#0F1221"/>
+  <rect x="70" y="60" width="1060" height="600" rx="20" fill="#171A2E" stroke="#2B3152"/>
+  <text x="120" y="120" fill="#F5F7FF" font-size="34" font-family="Segoe UI, Arial">Диалог клиента с ботом Aura AI</text>
+  <rect x="120" y="170" width="520" height="94" rx="14" fill="#23294B"/>
+  <text x="150" y="218" fill="#F5F7FF" font-size="24" font-family="Segoe UI, Arial">Клиент: Нужен бот для заявок в Telegram</text>
+  <rect x="560" y="290" width="510" height="160" rx="14" fill="#7F8CFF"/>
+  <text x="590" y="340" fill="#FFFFFF" font-size="22" font-family="Segoe UI, Arial">Aura AI: Отлично, сделаем.</text>
+  <text x="590" y="374" fill="#FFFFFF" font-size="22" font-family="Segoe UI, Arial">Нужны ниша, дедлайн и интеграции</text>
+  <text x="590" y="408" fill="#FFFFFF" font-size="22" font-family="Segoe UI, Arial">(CRM / Google Sheets / WhatsApp).</text>
+  <rect x="120" y="490" width="760" height="94" rx="14" fill="#23294B"/>
+  <text x="150" y="540" fill="#F5F7FF" font-size="24" font-family="Segoe UI, Arial">Клиент: Ниша — услуги, запуск нужен за 5 дней</text>
+</svg>

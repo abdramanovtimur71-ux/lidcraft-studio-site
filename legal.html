@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LidCraft Studio — Правовая информация</title>
+  <meta name="description" content="Правовая информация LidCraft Studio: авторские права, условия использования и контакты правообладателя." />
+  <meta name="copyright" content="© LidCraft Studio. All rights reserved." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="section">
+    <div class="container">
+      <h1>Правовая информация</h1>
+      <p>Ниже указаны условия использования материалов сайта LidCraft Studio и информация о правообладателе.</p>
+
+      <section class="card" style="margin-bottom: 16px;">
+        <h2>1. Авторские права</h2>
+        <p>© <span id="legalYear"></span> LidCraft Studio. Все права защищены.</p>
+        <p>Дизайн, тексты, структура страниц, графические материалы и другие элементы сайта защищены авторским правом.</p>
+      </section>
+
+      <section class="card" style="margin-bottom: 16px;">
+        <h2>2. Использование материалов</h2>
+        <p>Запрещено копирование, переработка, публикация и коммерческое использование материалов сайта без предварительного письменного согласия правообладателя.</p>
+        <p>Допускается цитирование с активной ссылкой на источник: lidcraft-studio.site.</p>
+      </section>
+
+      <section class="card" style="margin-bottom: 16px;">
+        <h2>3. Обозначение бренда</h2>
+        <p>Наименование «LidCraft Studio» используется как обозначение проекта и бренда.</p>
+        <p>Для дополнительной правовой защиты имени рекомендуется регистрация товарного знака в вашей юрисдикции.</p>
+      </section>
+
+      <section class="card" style="margin-bottom: 16px;">
+        <h2>4. Контакты правообладателя</h2>
+        <p>Email: <a href="mailto:hello@lidcraft-studio.site">hello@lidcraft-studio.site</a></p>
+        <p>Сайт: <a href="https://lidcraft-studio.site">lidcraft-studio.site</a></p>
+      </section>
+
+      <div class="cta-row">
+        <a class="btn ghost" href="index.html">← На главную</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="legalFooterYear"></span> LidCraft Studio • lidcraft-studio.site. Название и материалы сайта защищены авторским правом.</p>
+    </div>
+  </footer>
+
+  <script>
+    const y = new Date().getFullYear();
+    document.getElementById("legalYear").textContent = y;
+    document.getElementById("legalFooterYear").textContent = y;
+  </script>
+</body>
+</html>

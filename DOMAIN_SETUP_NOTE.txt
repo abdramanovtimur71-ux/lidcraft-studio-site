@@ -1,0 +1,2 @@
+Custom domain target (set later): lidcraft-studio.site
+CNAME removed temporarily to ensure immediate public access via GitHub Pages URL.
