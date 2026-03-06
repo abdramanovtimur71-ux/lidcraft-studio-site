@@ -345,12 +345,16 @@ p {
 }
 
 .result-text {
-  color: #0f1221;
+  color: var(--text);
   margin-top: 10px;
-  background: #eef2ff;
-  border: 1px solid #d7deff;
+  background: rgba(127, 140, 255, 0.12);
+  border: 1px solid rgba(166, 176, 255, 0.35);
   border-radius: 10px;
   padding: 10px 12px;
+}
+
+.result-text:empty {
+  display: none;
 }
 
 .quiz-box {
@@ -362,11 +366,11 @@ p {
 
 #quizQuestion,
 #cabQuizQuestion {
-  color: #0f1221;
+  color: var(--text);
   font-size: 20px;
   font-weight: 700;
-  background: #eef2ff;
-  border: 1px solid #d7deff;
+  background: rgba(127, 140, 255, 0.14);
+  border: 1px solid rgba(166, 176, 255, 0.4);
   border-radius: 10px;
   padding: 10px 12px;
 }
@@ -375,7 +379,7 @@ p {
 #quizResult,
 #cabQuizProgress,
 #cabQuizResult {
-  color: #0f1221;
+  color: var(--muted);
   font-weight: 500;
 }
 
