@@ -203,6 +203,15 @@ if (langSearch && globalLang) {
       populateLanguageOptions(ALL_LANGUAGES, globalLang.value || "en");
     }
   });
+
+  langSearch.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      if (openTranslate) {
+        openTranslate.click();
+      }
+    }
+  });
 }
 
 if (openTranslate && globalLang) {
@@ -238,6 +247,13 @@ if (growthButton && leadsInput && calcResult) {
     };
 
     calcResult.textContent = `Статистика: до автоматизации может теряться около ${formatCount(lostBefore)} лидов/мес (≈30%), после — около ${formatCount(lostAfter)} (≈10%). Экономия: ${formatCount(savedLeads)} лидов/мес (≈20%). Ускоренная обработка: ${formatCount(fasterReply)} обращений/мес (≈35%).`;
+  });
+
+  leadsInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      growthButton.click();
+    }
   });
 }
 

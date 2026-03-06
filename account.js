@@ -20,6 +20,12 @@ function safeStorageSet(key, value) {
   }
 }
 
+function addHours(date, hours) {
+  const next = new Date(date.getTime());
+  next.setHours(next.getHours() + hours);
+  return next;
+}
+
 function parseJson(value) {
   try {
     return value ? JSON.parse(value) : null;
@@ -44,7 +50,7 @@ function isSubscriptionActive(user) {
 function lockProtectedFeatures() {
   const protectedButtons = document.querySelectorAll(".btn.primary, [data-cab-quiz]");
   protectedButtons.forEach((node) => {
-    const keepEnabled = node.id === "logoutBtn" || node.id === "saveProfileBtn" || node.id === "renewAccessBtn";
+    const keepEnabled = ["logoutBtn", "saveProfileBtn", "renewAccessBtn", "saveSettingsBtn"].includes(node.id);
     if (!keepEnabled) {
       node.setAttribute("disabled", "disabled");
       node.style.opacity = "0.55";
@@ -58,13 +64,70 @@ function getLocalUsers() {
   return Array.isArray(users) ? users : [];
 }
 
-function updateLocalUser(user) {
+function updateLocalUser(user, previousEmail = null) {
   const users = getLocalUsers();
-  const index = users.findIndex((item) => item.email === user.email);
+  const anchorEmail = previousEmail || user.email;
+  const index = users.findIndex((item) => item.email === anchorEmail);
   if (index !== -1) {
     users[index] = { ...users[index], ...user };
     safeStorageSet("auraUsers", JSON.stringify(users));
   }
+}
+
+function getSettingsStorageKey(email) {
+  return `auraAccountSettings:${String(email || "").toLowerCase()}`;
+}
+
+const DEFAULT_SETTINGS = {
+  language: "ru",
+  timezone: "Europe/Moscow",
+  privacyMode: "standard",
+  autoLogoutMinutes: 60,
+  notifications: {
+    email: false,
+    telegram: true,
+    digest: true
+  }
+};
+
+function getUserSettings(email) {
+  const parsed = parseJson(safeStorageGet(getSettingsStorageKey(email)));
+  return {
+    ...DEFAULT_SETTINGS,
+    ...(parsed || {}),
+    notifications: {
+      ...DEFAULT_SETTINGS.notifications,
+      ...(parsed?.notifications || {})
+    }
+  };
+}
+
+function saveUserSettings(email, settings) {
+  safeStorageSet(getSettingsStorageKey(email), JSON.stringify(settings));
+}
+
+function migrateUserSettingsEmail(oldEmail, newEmail) {
+  if (!oldEmail || !newEmail || oldEmail === newEmail) return;
+  const oldKey = getSettingsStorageKey(oldEmail);
+  const newKey = getSettingsStorageKey(newEmail);
+  const raw = safeStorageGet(oldKey);
+  if (raw) {
+    safeStorageSet(newKey, raw);
+    safeStorageRemove(oldKey);
+  }
+}
+
+function bindEnterByIds(ids, handler) {
+  ids.forEach((id) => {
+    const node = document.getElementById(id);
+    if (!node) return;
+    node.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        handler();
+      }
+    });
+  });
 }
 
 function escapeCsvValue(value) {
@@ -143,10 +206,47 @@ const profileEmail = document.getElementById("profileEmail");
 if (profileName) profileName.value = currentUser?.name || "";
 if (profileEmail) profileEmail.value = currentUser?.email || "";
 
+const settingsLanguage = document.getElementById("settingsLanguage");
+const settingsTimezone = document.getElementById("settingsTimezone");
+const settingsPrivacyMode = document.getElementById("settingsPrivacyMode");
+const settingsAutoLogout = document.getElementById("settingsAutoLogout");
+const notifyEmail = document.getElementById("notifyEmail");
+const notifyTelegram = document.getElementById("notifyTelegram");
+const notifyDigest = document.getElementById("notifyDigest");
+const settingsStatus = document.getElementById("settingsStatus");
+
+function applySettingsToForm(settings) {
+  if (settingsLanguage) settingsLanguage.value = settings.language;
+  if (settingsTimezone) settingsTimezone.value = settings.timezone;
+  if (settingsPrivacyMode) settingsPrivacyMode.value = settings.privacyMode;
+  if (settingsAutoLogout) settingsAutoLogout.value = String(settings.autoLogoutMinutes);
+  if (notifyEmail) notifyEmail.checked = Boolean(settings.notifications?.email);
+  if (notifyTelegram) notifyTelegram.checked = Boolean(settings.notifications?.telegram);
+  if (notifyDigest) notifyDigest.checked = Boolean(settings.notifications?.digest);
+}
+
+function readSettingsFromForm() {
+  return {
+    language: settingsLanguage?.value || DEFAULT_SETTINGS.language,
+    timezone: settingsTimezone?.value || DEFAULT_SETTINGS.timezone,
+    privacyMode: settingsPrivacyMode?.value || DEFAULT_SETTINGS.privacyMode,
+    autoLogoutMinutes: Number(settingsAutoLogout?.value || DEFAULT_SETTINGS.autoLogoutMinutes),
+    notifications: {
+      email: Boolean(notifyEmail?.checked),
+      telegram: Boolean(notifyTelegram?.checked),
+      digest: Boolean(notifyDigest?.checked)
+    }
+  };
+}
+
+let userSettings = getUserSettings(currentUser?.email);
+applySettingsToForm(userSettings);
+
 const securityNotice = document.getElementById("securityNotice");
 const saveProfileBtn = document.getElementById("saveProfileBtn");
 if (saveProfileBtn) {
   saveProfileBtn.addEventListener("click", () => {
+    const previousEmail = currentUser?.email || "";
     const nextName = (profileName?.value || "").trim();
     const nextEmail = (profileEmail?.value || "").trim().toLowerCase();
 
@@ -157,9 +257,101 @@ if (saveProfileBtn) {
 
     currentUser = { ...currentUser, name: nextName, email: nextEmail };
     safeStorageSet("auraCurrentUser", JSON.stringify(currentUser));
-    updateLocalUser(currentUser);
+    updateLocalUser(currentUser, previousEmail);
+    migrateUserSettingsEmail(previousEmail, nextEmail);
+    userSettings = getUserSettings(nextEmail);
+    applySettingsToForm(userSettings);
     if (userName) userName.textContent = nextName;
     if (securityNotice) securityNotice.textContent = "Профиль обновлен.";
+  });
+}
+
+const saveSettingsBtn = document.getElementById("saveSettingsBtn");
+if (saveSettingsBtn) {
+  saveSettingsBtn.addEventListener("click", () => {
+    userSettings = readSettingsFromForm();
+    saveUserSettings(currentUser?.email, userSettings);
+    safeStorageSet("auraLang", userSettings.language);
+    if (settingsStatus) settingsStatus.textContent = "Настройки кабинета сохранены.";
+  });
+}
+
+const resetSettingsBtn = document.getElementById("resetSettingsBtn");
+if (resetSettingsBtn) {
+  resetSettingsBtn.addEventListener("click", () => {
+    userSettings = {
+      ...DEFAULT_SETTINGS,
+      notifications: { ...DEFAULT_SETTINGS.notifications }
+    };
+    applySettingsToForm(userSettings);
+    saveUserSettings(currentUser?.email, userSettings);
+    if (settingsStatus) settingsStatus.textContent = "Настройки сброшены к значениям по умолчанию.";
+  });
+}
+
+const currentPasswordAccount = document.getElementById("currentPasswordAccount");
+const newPasswordAccount = document.getElementById("newPasswordAccount");
+const newPasswordRepeatAccount = document.getElementById("newPasswordRepeatAccount");
+const securityStatus = document.getElementById("securityStatus");
+
+const changePasswordBtn = document.getElementById("changePasswordBtn");
+if (changePasswordBtn) {
+  changePasswordBtn.addEventListener("click", () => {
+    const currentValue = (currentPasswordAccount?.value || "").trim();
+    const nextValue = (newPasswordAccount?.value || "").trim();
+    const repeatValue = (newPasswordRepeatAccount?.value || "").trim();
+
+    if (!currentValue || !nextValue || !repeatValue) {
+      if (securityStatus) securityStatus.textContent = "Заполните все поля для смены пароля.";
+      return;
+    }
+
+    if (currentUser?.password && currentUser.password !== currentValue) {
+      if (securityStatus) securityStatus.textContent = "Текущий пароль введен неверно.";
+      return;
+    }
+
+    if (nextValue.length < 6) {
+      if (securityStatus) securityStatus.textContent = "Новый пароль должен быть не менее 6 символов.";
+      return;
+    }
+
+    if (nextValue !== repeatValue) {
+      if (securityStatus) securityStatus.textContent = "Подтверждение пароля не совпадает.";
+      return;
+    }
+
+    currentUser = { ...currentUser, password: nextValue };
+    safeStorageSet("auraCurrentUser", JSON.stringify(currentUser));
+    updateLocalUser(currentUser);
+
+    if (currentPasswordAccount) currentPasswordAccount.value = "";
+    if (newPasswordAccount) newPasswordAccount.value = "";
+    if (newPasswordRepeatAccount) newPasswordRepeatAccount.value = "";
+    if (securityStatus) securityStatus.textContent = "Пароль успешно обновлен.";
+  });
+}
+
+const extendSessionBtn = document.getElementById("extendSessionBtn");
+if (extendSessionBtn) {
+  extendSessionBtn.addEventListener("click", () => {
+    const currentSession = parseJson(safeStorageGet("auraSession"));
+    if (!currentSession || currentSession.userEmail !== currentUser?.email) {
+      if (securityStatus) securityStatus.textContent = "Сессия не найдена, выполните вход заново.";
+      return;
+    }
+
+    const ttlMinutes = Number(userSettings?.autoLogoutMinutes || DEFAULT_SETTINGS.autoLogoutMinutes);
+    const updatedSession = {
+      ...currentSession,
+      expiresAt: addHours(new Date(), Math.max(1, ttlMinutes / 60)).toISOString()
+    };
+    safeStorageSet("auraSession", JSON.stringify(updatedSession));
+
+    if (sessionStatus) {
+      sessionStatus.textContent = `Сессия активна до: ${new Date(updatedSession.expiresAt).toLocaleString()}`;
+    }
+    if (securityStatus) securityStatus.textContent = "Сессия продлена.";
   });
 }
 
@@ -228,6 +420,22 @@ if (aiPromptCheckBtn && aiPromptInput && aiPromptResult) {
       aiPromptResult.textContent = "Запрос заблокирован защитой: обнаружена попытка получить инструкции/код проекта.";
     }
   });
+}
+
+if (saveProfileBtn) {
+  bindEnterByIds(["profileName", "profileEmail"], () => saveProfileBtn.click());
+}
+
+if (saveSettingsBtn) {
+  bindEnterByIds(["settingsLanguage", "settingsTimezone", "settingsPrivacyMode", "settingsAutoLogout"], () => saveSettingsBtn.click());
+}
+
+if (changePasswordBtn) {
+  bindEnterByIds(["currentPasswordAccount", "newPasswordAccount", "newPasswordRepeatAccount"], () => changePasswordBtn.click());
+}
+
+if (aiPromptCheckBtn) {
+  bindEnterByIds(["aiPromptInput"], () => aiPromptCheckBtn.click());
 }
 
 const questions = [

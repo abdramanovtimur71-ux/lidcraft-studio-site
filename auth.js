@@ -129,6 +129,19 @@ async function apiPost(path, payload) {
 const registerBtn = document.getElementById("registerBtn");
 const loginBtn = document.getElementById("loginBtn");
 
+function bindEnterByIds(ids, handler) {
+  ids.forEach((id) => {
+    const node = document.getElementById(id);
+    if (!node) return;
+    node.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        handler();
+      }
+    });
+  });
+}
+
 if (registerBtn) {
   registerBtn.addEventListener("click", async () => {
     const name = document.getElementById("regName").value.trim();
@@ -245,6 +258,30 @@ if (resetPasswordBtn) {
       } else {
         forgotMessage.textContent = error.message;
       }
+    }
+  });
+}
+
+if (registerBtn) {
+  bindEnterByIds(["regName", "regEmail", "regPassword"], () => registerBtn.click());
+}
+
+if (loginBtn) {
+  bindEnterByIds(["loginEmail", "loginPassword"], () => loginBtn.click());
+}
+
+if (sendCodeBtn && forgotBlock) {
+  bindEnterByIds(["forgotIdentifier"], () => {
+    if (forgotBlock.style.display !== "none") {
+      sendCodeBtn.click();
+    }
+  });
+}
+
+if (resetPasswordBtn && forgotBlock) {
+  bindEnterByIds(["forgotCode", "newPassword"], () => {
+    if (forgotBlock.style.display !== "none") {
+      resetPasswordBtn.click();
     }
   });
 }
