@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://unwanton-nonexpectantly-jenna.ngrok-free.dev/sitemap.xml
+Sitemap: https://abdramanovtimur71-ux.github.io/lidcraft-studio-site/sitemap.xml
