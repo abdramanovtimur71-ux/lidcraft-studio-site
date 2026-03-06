@@ -1,2 +1,2 @@
-Custom domain target (set later): lidcraft-studio.site
-CNAME removed temporarily to ensure immediate public access via GitHub Pages URL.
+Current public mode: ngrok domain.
+Set your reserved ngrok domain via NGROK_URL environment variable for stable link.

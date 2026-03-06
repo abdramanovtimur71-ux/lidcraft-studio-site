@@ -7,5 +7,5 @@ https://unwanton-nonexpectantly-jenna.ngrok-free.dev/lidcraft-studio.html
 LidCraft Studio — Короткая ссылка для клиентов:
 https://is.gd/Z9Bwhl
 
-LidCraft Studio — Постоянная бренд-ссылка (после подключения домена):
-https://lidcraft-studio.site
+LidCraft Studio — Постоянная бренд-ссылка (ваш закрепленный ngrok-домен):
+https://YOUR_RESERVED_NGROK_DOMAIN/lidcraft-studio.html

@@ -52,7 +52,12 @@ def start_http_server():
 
 
 def start_ngrok():
-    cmd = ["ngrok", "http", str(PORT)]
+    ngrok_url = os.getenv("NGROK_URL", "").strip()
+    cmd = ["ngrok", "http"]
+    if ngrok_url:
+        # Use reserved ngrok domain when provided.
+        cmd.extend(["--url", ngrok_url])
+    cmd.append(str(PORT))
     return subprocess.Popen(cmd, cwd=str(BASE_DIR), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
 
 
@@ -96,6 +101,9 @@ def main():
     global http_proc, ngrok_proc
 
     log("Запуск LidCraft Studio сайта в автономном режиме...")
+    ngrok_url = os.getenv("NGROK_URL", "").strip()
+    if ngrok_url:
+        log(f"Использую закрепленный ngrok домен: {ngrok_url}")
     atexit.register(cleanup)
     signal.signal(signal.SIGTERM, cleanup)
     signal.signal(signal.SIGINT, cleanup)
