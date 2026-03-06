@@ -604,6 +604,55 @@ p {
   margin-bottom: 8px;
 }
 
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.metrics-grid.compact {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.metric-chip {
+  border: 1px solid rgba(124, 155, 201, 0.32);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: linear-gradient(180deg, rgba(22, 35, 56, 0.78), rgba(11, 20, 34, 0.86));
+}
+
+.metric-chip.highlight {
+  border-color: rgba(223, 191, 133, 0.62);
+  background: linear-gradient(180deg, rgba(93, 72, 39, 0.35), rgba(20, 31, 50, 0.88));
+}
+
+.metric-label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.metric-chip strong {
+  color: var(--text);
+  font-size: 17px;
+}
+
+.action-list {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  color: var(--text);
+}
+
+.action-list li {
+  margin-bottom: 8px;
+}
+
+.action-list .is-done {
+  color: color-mix(in srgb, var(--text) 68%, #9ed5ac 32%);
+}
+
 .kpi {
   margin-bottom: 10px;
   color: var(--text);
@@ -1036,6 +1085,16 @@ body.theme-graphite .featured {
   background: linear-gradient(180deg, rgba(156, 171, 195, 0.2), rgba(25, 33, 45, 0.95));
 }
 
+body.theme-graphite .metric-chip {
+  border-color: rgba(153, 169, 195, 0.42);
+  background: linear-gradient(180deg, rgba(55, 66, 84, 0.72), rgba(29, 37, 50, 0.82));
+}
+
+body.theme-graphite .metric-chip.highlight {
+  border-color: rgba(204, 217, 236, 0.64);
+  background: linear-gradient(180deg, rgba(121, 137, 164, 0.35), rgba(34, 43, 58, 0.9));
+}
+
 body.theme-graphite .field,
 body.theme-graphite .result-text,
 body.theme-graphite #quizQuestion,
@@ -1058,7 +1117,9 @@ body.theme-graphite .demo-item:hover {
 
 @media (max-width: 900px) {
   .hero-grid,
-  .cards {
+  .cards,
+  .metrics-grid,
+  .metrics-grid.compact {
     grid-template-columns: 1fr;
   }
 

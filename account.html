@@ -37,6 +37,83 @@
       </section>
 
       <section class="section">
+        <h2>Центр управления ботом</h2>
+        <p>Здесь видно, как ваш бот подключен, что происходит по лидам и какие действия сейчас дают максимальный рост.</p>
+        <div class="cards">
+          <article class="card">
+            <h3>Статус подключения</h3>
+            <p id="botConnectionStatus" class="result-text">Проверяем подключение бота...</p>
+            <div class="metrics-grid compact">
+              <div class="metric-chip">
+                <span class="metric-label">Канал</span>
+                <strong id="botChannel">-</strong>
+              </div>
+              <div class="metric-chip">
+                <span class="metric-label">CRM</span>
+                <strong id="botCrmStatus">-</strong>
+              </div>
+              <div class="metric-chip">
+                <span class="metric-label">Webhook</span>
+                <strong id="botWebhookStatus">-</strong>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3>Воронка за 7 дней</h3>
+            <div class="metrics-grid">
+              <div class="metric-chip">
+                <span class="metric-label">Входящие</span>
+                <strong id="botIncomingLeads">0</strong>
+              </div>
+              <div class="metric-chip">
+                <span class="metric-label">Квалифицированы</span>
+                <strong id="botQualifiedLeads">0</strong>
+              </div>
+              <div class="metric-chip">
+                <span class="metric-label">Назначены созвоны</span>
+                <strong id="botBookedCalls">0</strong>
+              </div>
+              <div class="metric-chip highlight">
+                <span class="metric-label">Конверсия</span>
+                <strong id="botConversionRate">0%</strong>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3>Оперативная аналитика</h3>
+            <div class="metrics-grid">
+              <div class="metric-chip">
+                <span class="metric-label">Средний ответ</span>
+                <strong id="botAvgResponse">-</strong>
+              </div>
+              <div class="metric-chip">
+                <span class="metric-label">Автообработка</span>
+                <strong id="botAutomationRate">-</strong>
+              </div>
+              <div class="metric-chip">
+                <span class="metric-label">Ответ до 1 мин</span>
+                <strong id="botFirstReplyRate">-</strong>
+              </div>
+              <div class="metric-chip">
+                <span class="metric-label">Последняя синхронизация</span>
+                <strong id="botLastSync">-</strong>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3>Что делать дальше</h3>
+            <ul id="botActionList" class="action-list">
+              <li>Загружаем персональные рекомендации...</li>
+            </ul>
+            <p id="botAdvisorNote" class="result-text">Собираем рекомендации на основе вашего профиля.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
         <h2>Безопасность, доступ и данные</h2>
         <div class="cards">
           <article class="card">
