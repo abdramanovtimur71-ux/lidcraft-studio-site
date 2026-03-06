@@ -453,6 +453,14 @@ const p = document.getElementById("cabQuizProgress");
 const r = document.getElementById("cabQuizResult");
 const buttons = document.querySelectorAll("[data-cab-quiz]");
 
+function isTypingContext() {
+  const active = document.activeElement;
+  if (!active) return false;
+  const tag = (active.tagName || "").toLowerCase();
+  if (tag === "input" || tag === "textarea" || tag === "select") return true;
+  return active.isContentEditable === true;
+}
+
 function redraw() {
   if (!q || !p) return;
   if (index < questions.length) {
@@ -474,19 +482,40 @@ function finish() {
 }
 
 if (buttons.length) {
+  const answerByValue = (value) => {
+    if (index >= questions.length) return;
+    if (value === "yes") {
+      score += 1;
+    }
+    index += 1;
+    if (index >= questions.length) {
+      finish();
+    } else {
+      redraw();
+    }
+  };
+
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
-      if (index >= questions.length) return;
-      if (button.getAttribute("data-cab-quiz") === "yes") {
-        score += 1;
-      }
-      index += 1;
-      if (index >= questions.length) {
-        finish();
-      } else {
-        redraw();
-      }
+      answerByValue(button.getAttribute("data-cab-quiz"));
     });
   });
+
+  document.addEventListener("keydown", (event) => {
+    if (isTypingContext()) return;
+    if (index >= questions.length) return;
+
+    const key = (event.key || "").toLowerCase();
+    if (key === "y" || key === "н") {
+      event.preventDefault();
+      answerByValue("yes");
+      return;
+    }
+    if (key === "n" || key === "т") {
+      event.preventDefault();
+      answerByValue("no");
+    }
+  });
+
   redraw();
 }

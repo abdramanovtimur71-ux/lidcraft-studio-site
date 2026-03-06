@@ -273,6 +273,14 @@ const quizProgress = document.getElementById("quizProgress");
 const quizResult = document.getElementById("quizResult");
 const quizButtons = document.querySelectorAll("[data-quiz]");
 
+function isTypingContext() {
+  const active = document.activeElement;
+  if (!active) return false;
+  const tag = (active.tagName || "").toLowerCase();
+  if (tag === "input" || tag === "textarea" || tag === "select") return true;
+  return active.isContentEditable === true;
+}
+
 function updateQuizView() {
   if (!quizQuestion || !quizProgress) return;
   if (quizIndex < quizQuestions.length) {
@@ -296,21 +304,39 @@ function finishQuiz() {
 }
 
 if (quizButtons.length) {
+  const answerByValue = (value) => {
+    if (quizIndex >= quizQuestions.length) return;
+    if (value === "yes") {
+      quizScore += 1;
+    }
+    quizIndex += 1;
+    if (quizIndex >= quizQuestions.length) {
+      finishQuiz();
+    } else {
+      updateQuizView();
+    }
+  };
+
   quizButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      if (quizIndex >= quizQuestions.length) return;
-
-      if (button.getAttribute("data-quiz") === "yes") {
-        quizScore += 1;
-      }
-
-      quizIndex += 1;
-      if (quizIndex >= quizQuestions.length) {
-        finishQuiz();
-      } else {
-        updateQuizView();
-      }
+      answerByValue(button.getAttribute("data-quiz"));
     });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (isTypingContext()) return;
+    if (quizIndex >= quizQuestions.length) return;
+
+    const key = (event.key || "").toLowerCase();
+    if (key === "y" || key === "н") {
+      event.preventDefault();
+      answerByValue("yes");
+      return;
+    }
+    if (key === "n" || key === "т") {
+      event.preventDefault();
+      answerByValue("no");
+    }
   });
 
   updateQuizView();
