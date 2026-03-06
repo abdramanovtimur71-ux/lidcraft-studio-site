@@ -224,25 +224,59 @@ nav a:hover,
   transform: translateY(-1px);
 }
 
-@media (max-width: 1200px) and (min-width: 901px) {
+@media (max-width: 1460px) and (min-width: 901px) {
   .nav {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    align-items: start;
+    grid-template-columns: minmax(220px, auto) minmax(0, 1fr);
+    grid-template-areas:
+      "brand actions"
+      "menu menu";
+    align-items: center;
     row-gap: 10px;
   }
 
+  .brand {
+    grid-area: brand;
+  }
+
+  #mainNav {
+    grid-area: menu;
+    width: 100%;
+  }
+
+  .nav-actions {
+    grid-area: actions;
+    justify-self: end;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    row-gap: 6px;
+  }
+
   nav {
+    border: 1px solid rgba(120, 148, 190, 0.28);
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(17, 27, 43, 0.84), rgba(10, 17, 30, 0.9));
     flex-wrap: wrap;
     overflow-x: visible;
     scrollbar-width: none;
-    gap: 7px;
-    padding-right: 0;
+    gap: 8px;
+    padding: 7px;
   }
 
   nav a {
     flex: 0 1 auto;
-    font-size: 12px;
-    padding: 7px 10px;
+    font-size: 13px;
+    min-height: 40px;
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 1260px) and (min-width: 901px) {
+  .theme-label {
+    display: none;
+  }
+
+  .theme-select {
+    min-width: 148px;
   }
 }
 
