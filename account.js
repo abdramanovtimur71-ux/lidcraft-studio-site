@@ -170,6 +170,152 @@ function bindEnterByIds(ids, handler) {
   });
 }
 
+function setButtonLoading(button, isLoading, loadingText = "Подождите...") {
+  if (!button) return;
+  if (isLoading) {
+    button.dataset.originalText = button.textContent;
+    button.textContent = loadingText;
+    button.classList.add("is-loading");
+    button.disabled = true;
+    return;
+  }
+
+  if (button.dataset.originalText) {
+    button.textContent = button.dataset.originalText;
+  }
+  button.classList.remove("is-loading");
+  button.disabled = false;
+}
+
+function markInvalid(ids, invalidId = null) {
+  let invalidNode = null;
+  ids.forEach((id) => {
+    const node = document.getElementById(id);
+    if (!node) return;
+    const isInvalid = id === invalidId;
+    node.setAttribute("aria-invalid", String(isInvalid));
+    if (isInvalid && !invalidNode) {
+      invalidNode = node;
+    }
+  });
+
+  if (invalidNode instanceof HTMLElement) {
+    invalidNode.focus({ preventScroll: false });
+    invalidNode.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+}
+
+function clearInvalidOnInput(ids) {
+  ids.forEach((id) => {
+    const node = document.getElementById(id);
+    if (!node) return;
+    node.addEventListener("input", () => {
+      node.removeAttribute("aria-invalid");
+    });
+  });
+}
+
+function ensureToastStack() {
+  let stack = document.querySelector(".toast-stack");
+  if (stack) return stack;
+  stack = document.createElement("div");
+  stack.className = "toast-stack";
+  document.body.appendChild(stack);
+  return stack;
+}
+
+function showToast(text, state = "info") {
+  if (!text) return;
+  const stack = ensureToastStack();
+  const toast = document.createElement("div");
+  toast.className = `toast toast-${state}`;
+  toast.textContent = text;
+  stack.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transform = "translateY(8px)";
+    setTimeout(() => toast.remove(), 180);
+  }, 2500);
+}
+
+function setMessage(node, text, state = "info", toast = false) {
+  if (!node) return;
+  node.textContent = text;
+  node.dataset.state = state;
+  if (toast) {
+    showToast(text, state);
+  }
+}
+
+function getPasswordStrength(password) {
+  const value = String(password || "");
+  let score = 0;
+  if (value.length >= 8) score += 1;
+  if (/[A-ZА-Я]/.test(value) && /[a-zа-я]/.test(value)) score += 1;
+  if (/\d/.test(value)) score += 1;
+  if (/[^A-Za-zА-Яа-я0-9]/.test(value)) score += 1;
+
+  if (value.length < 6 || score <= 1) return "weak";
+  if (score <= 3) return "medium";
+  return "strong";
+}
+
+function bindPasswordHint(inputId, hintId) {
+  const input = document.getElementById(inputId);
+  const hint = document.getElementById(hintId);
+  if (!input || !hint) return;
+
+  const update = () => {
+    const level = getPasswordStrength(input.value);
+    hint.dataset.level = level;
+    if (!input.value) {
+      hint.textContent = "Сильный пароль: 8+ символов, буквы в разных регистрах, цифры и спецсимвол.";
+      return;
+    }
+    if (level === "weak") {
+      hint.textContent = "Надежность: низкая. Пароль легко подобрать.";
+      return;
+    }
+    if (level === "medium") {
+      hint.textContent = "Надежность: средняя. Добавьте еще сложность для лучшей защиты.";
+      return;
+    }
+    hint.textContent = "Надежность: высокая. Отличный пароль.";
+  };
+
+  input.addEventListener("input", update);
+  input.addEventListener("blur", update);
+  update();
+}
+
+function enhancePasswordInputs(ids) {
+  ids.forEach((id) => {
+    const input = document.getElementById(id);
+    if (!input || input.dataset.enhancedPassword === "true") return;
+
+    const wrap = document.createElement("div");
+    wrap.className = "pass-wrap";
+    input.parentNode.insertBefore(wrap, input);
+    wrap.appendChild(input);
+
+    const toggleButton = document.createElement("button");
+    toggleButton.type = "button";
+    toggleButton.className = "pass-toggle";
+    toggleButton.setAttribute("aria-label", "Показать пароль");
+    toggleButton.textContent = "Show";
+
+    toggleButton.addEventListener("click", () => {
+      const show = input.type === "password";
+      input.type = show ? "text" : "password";
+      toggleButton.setAttribute("aria-label", show ? "Скрыть пароль" : "Показать пароль");
+      toggleButton.textContent = show ? "Hide" : "Show";
+    });
+
+    wrap.appendChild(toggleButton);
+    input.dataset.enhancedPassword = "true";
+  });
+}
+
 function escapeCsvValue(value) {
   const v = String(value ?? "");
   return `"${v.replaceAll('"', '""')}"`;
@@ -240,15 +386,19 @@ if (convertGuestBtn && isGuestUser(currentUser)) {
 
 const sessionStatus = document.getElementById("sessionStatus");
 if (sessionStatus && session?.expiresAt) {
-  sessionStatus.textContent = `Сессия активна до: ${new Date(session.expiresAt).toLocaleString()}`;
+  setMessage(sessionStatus, `Сессия активна до: ${new Date(session.expiresAt).toLocaleString()}`, "info");
 }
 
 const subscriptionStatus = document.getElementById("subscriptionStatus");
 if (subscriptionStatus) {
   const active = isSubscriptionActive(currentUser);
-  subscriptionStatus.textContent = active
-    ? `Подписка активна до: ${new Date(currentUser.subscriptionEndsAt).toLocaleDateString()}`
-    : "Подписка неактивна: функции кабинета ограничены до продления.";
+  setMessage(
+    subscriptionStatus,
+    active
+      ? `Подписка активна до: ${new Date(currentUser.subscriptionEndsAt).toLocaleDateString()}`
+      : "Подписка неактивна: функции кабинета ограничены до продления.",
+    active ? "success" : "error"
+  );
 
   if (!active) {
     lockProtectedFeatures();
@@ -326,12 +476,18 @@ const securityNotice = document.getElementById("securityNotice");
 const saveProfileBtn = document.getElementById("saveProfileBtn");
 if (saveProfileBtn) {
   saveProfileBtn.addEventListener("click", () => {
+    setButtonLoading(saveProfileBtn, true, "Сохраняем...");
+
     const previousEmail = currentUser?.email || "";
     const nextName = (profileName?.value || "").trim();
     const nextEmail = (profileEmail?.value || "").trim().toLowerCase();
 
+    markInvalid(["profileName", "profileEmail"]);
+
     if (!nextName || !nextEmail) {
-      if (securityNotice) securityNotice.textContent = "Имя и email обязательны.";
+      setMessage(securityNotice, "Имя и email обязательны.", "error", true);
+      markInvalid(["profileName", "profileEmail"], !nextName ? "profileName" : "profileEmail");
+      setButtonLoading(saveProfileBtn, false);
       return;
     }
 
@@ -342,17 +498,20 @@ if (saveProfileBtn) {
     userSettings = getUserSettings(nextEmail);
     applySettingsToForm(userSettings);
     if (userName) userName.textContent = nextName;
-    if (securityNotice) securityNotice.textContent = "Профиль обновлен.";
+    setMessage(securityNotice, "Профиль обновлен.", "success", true);
+    setButtonLoading(saveProfileBtn, false);
   });
 }
 
 const saveSettingsBtn = document.getElementById("saveSettingsBtn");
 if (saveSettingsBtn) {
   saveSettingsBtn.addEventListener("click", () => {
+    setButtonLoading(saveSettingsBtn, true, "Сохраняем...");
     userSettings = readSettingsFromForm();
     saveUserSettings(currentUser?.email, userSettings);
     safeStorageSet("auraLang", userSettings.language);
-    if (settingsStatus) settingsStatus.textContent = "Настройки кабинета сохранены.";
+    setMessage(settingsStatus, "Настройки кабинета сохранены.", "success", true);
+    setButtonLoading(saveSettingsBtn, false);
   });
 }
 
@@ -365,7 +524,7 @@ if (resetSettingsBtn) {
     };
     applySettingsToForm(userSettings);
     saveUserSettings(currentUser?.email, userSettings);
-    if (settingsStatus) settingsStatus.textContent = "Настройки сброшены к значениям по умолчанию.";
+    setMessage(settingsStatus, "Настройки сброшены к значениям по умолчанию.", "info", true);
   });
 }
 
@@ -377,27 +536,42 @@ const securityStatus = document.getElementById("securityStatus");
 const changePasswordBtn = document.getElementById("changePasswordBtn");
 if (changePasswordBtn) {
   changePasswordBtn.addEventListener("click", () => {
+    setButtonLoading(changePasswordBtn, true, "Меняем...");
+
     const currentValue = (currentPasswordAccount?.value || "").trim();
     const nextValue = (newPasswordAccount?.value || "").trim();
     const repeatValue = (newPasswordRepeatAccount?.value || "").trim();
 
+    markInvalid(["currentPasswordAccount", "newPasswordAccount", "newPasswordRepeatAccount"]);
+
     if (!currentValue || !nextValue || !repeatValue) {
-      if (securityStatus) securityStatus.textContent = "Заполните все поля для смены пароля.";
+      setMessage(securityStatus, "Заполните все поля для смены пароля.", "error", true);
+      markInvalid(
+        ["currentPasswordAccount", "newPasswordAccount", "newPasswordRepeatAccount"],
+        !currentValue ? "currentPasswordAccount" : !nextValue ? "newPasswordAccount" : "newPasswordRepeatAccount"
+      );
+      setButtonLoading(changePasswordBtn, false);
       return;
     }
 
     if (currentUser?.password && currentUser.password !== currentValue) {
-      if (securityStatus) securityStatus.textContent = "Текущий пароль введен неверно.";
+      setMessage(securityStatus, "Текущий пароль введен неверно.", "error", true);
+      markInvalid(["currentPasswordAccount", "newPasswordAccount", "newPasswordRepeatAccount"], "currentPasswordAccount");
+      setButtonLoading(changePasswordBtn, false);
       return;
     }
 
     if (nextValue.length < 6) {
-      if (securityStatus) securityStatus.textContent = "Новый пароль должен быть не менее 6 символов.";
+      setMessage(securityStatus, "Новый пароль должен быть не менее 6 символов.", "error", true);
+      markInvalid(["currentPasswordAccount", "newPasswordAccount", "newPasswordRepeatAccount"], "newPasswordAccount");
+      setButtonLoading(changePasswordBtn, false);
       return;
     }
 
     if (nextValue !== repeatValue) {
-      if (securityStatus) securityStatus.textContent = "Подтверждение пароля не совпадает.";
+      setMessage(securityStatus, "Подтверждение пароля не совпадает.", "error", true);
+      markInvalid(["currentPasswordAccount", "newPasswordAccount", "newPasswordRepeatAccount"], "newPasswordRepeatAccount");
+      setButtonLoading(changePasswordBtn, false);
       return;
     }
 
@@ -408,7 +582,8 @@ if (changePasswordBtn) {
     if (currentPasswordAccount) currentPasswordAccount.value = "";
     if (newPasswordAccount) newPasswordAccount.value = "";
     if (newPasswordRepeatAccount) newPasswordRepeatAccount.value = "";
-    if (securityStatus) securityStatus.textContent = "Пароль успешно обновлен.";
+    setMessage(securityStatus, "Пароль успешно обновлен.", "success", true);
+    setButtonLoading(changePasswordBtn, false);
   });
 }
 
@@ -417,7 +592,7 @@ if (extendSessionBtn) {
   extendSessionBtn.addEventListener("click", () => {
     const currentSession = parseJson(safeStorageGet("auraSession"));
     if (!currentSession || currentSession.userEmail !== currentUser?.email) {
-      if (securityStatus) securityStatus.textContent = "Сессия не найдена, выполните вход заново.";
+      setMessage(securityStatus, "Сессия не найдена, выполните вход заново.", "error", true);
       return;
     }
 
@@ -429,9 +604,9 @@ if (extendSessionBtn) {
     safeStorageSet("auraSession", JSON.stringify(updatedSession));
 
     if (sessionStatus) {
-      sessionStatus.textContent = `Сессия активна до: ${new Date(updatedSession.expiresAt).toLocaleString()}`;
+      setMessage(sessionStatus, `Сессия активна до: ${new Date(updatedSession.expiresAt).toLocaleString()}`, "info");
     }
-    if (securityStatus) securityStatus.textContent = "Сессия продлена.";
+    setMessage(securityStatus, "Сессия продлена.", "success", true);
   });
 }
 
@@ -452,7 +627,7 @@ if (exportDataBtn) {
     link.download = "lidcraft-user-data.csv";
     link.click();
     URL.revokeObjectURL(link.href);
-    if (securityNotice) securityNotice.textContent = "Экспорт данных выполнен.";
+    setMessage(securityNotice, "Экспорт данных выполнен.", "success", true);
   });
 }
 
@@ -466,7 +641,7 @@ if (clearDataBtn) {
         safeStorageRemove(key);
       }
     });
-    if (securityNotice) securityNotice.textContent = "Локальные данные очищены. Выполните вход заново.";
+    setMessage(securityNotice, "Локальные данные очищены. Выполните вход заново.", "info", true);
     setTimeout(() => {
       window.location.href = "auth.html";
     }, 900);
@@ -480,7 +655,7 @@ if (deleteAccountBtn) {
     safeStorageSet("auraUsers", JSON.stringify(users));
     safeStorageRemove("auraCurrentUser");
     safeStorageRemove("auraSession");
-    if (securityNotice) securityNotice.textContent = "Аккаунт удален локально.";
+    setMessage(securityNotice, "Аккаунт удален локально.", "success", true);
     setTimeout(() => {
       window.location.href = "auth.html";
     }, 900);
@@ -493,14 +668,27 @@ const aiPromptResult = document.getElementById("aiPromptResult");
 
 if (aiPromptCheckBtn && aiPromptInput && aiPromptResult) {
   aiPromptCheckBtn.addEventListener("click", () => {
+    setButtonLoading(aiPromptCheckBtn, true, "Проверяем...");
     const safe = checkPromptSafety(aiPromptInput.value || "");
     if (safe) {
-      aiPromptResult.textContent = "Запрос безопасен: можно отправлять в ИИ-модуль.";
+      setMessage(aiPromptResult, "Запрос безопасен: можно отправлять в ИИ-модуль.", "success");
     } else {
-      aiPromptResult.textContent = "Запрос заблокирован защитой: обнаружена попытка получить инструкции/код проекта.";
+      setMessage(aiPromptResult, "Запрос заблокирован защитой: обнаружена попытка получить инструкции/код проекта.", "error", true);
     }
+    setButtonLoading(aiPromptCheckBtn, false);
   });
 }
+
+clearInvalidOnInput([
+  "profileName",
+  "profileEmail",
+  "currentPasswordAccount",
+  "newPasswordAccount",
+  "newPasswordRepeatAccount"
+]);
+
+bindPasswordHint("newPasswordAccount", "newPasswordAccountHint");
+enhancePasswordInputs(["currentPasswordAccount", "newPasswordAccount", "newPasswordRepeatAccount"]);
 
 if (saveProfileBtn) {
   bindEnterByIds(["profileName", "profileEmail"], () => saveProfileBtn.click());

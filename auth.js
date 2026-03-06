@@ -167,6 +167,152 @@ function bindEnterByIds(ids, handler) {
   });
 }
 
+function setButtonLoading(button, isLoading, loadingText = "Подождите...") {
+  if (!button) return;
+  if (isLoading) {
+    button.dataset.originalText = button.textContent;
+    button.textContent = loadingText;
+    button.classList.add("is-loading");
+    button.disabled = true;
+    return;
+  }
+
+  if (button.dataset.originalText) {
+    button.textContent = button.dataset.originalText;
+  }
+  button.classList.remove("is-loading");
+  button.disabled = false;
+}
+
+function markInvalid(ids, invalidId = null) {
+  let invalidNode = null;
+  ids.forEach((id) => {
+    const node = document.getElementById(id);
+    if (!node) return;
+    const isInvalid = id === invalidId;
+    node.setAttribute("aria-invalid", String(isInvalid));
+    if (isInvalid && !invalidNode) {
+      invalidNode = node;
+    }
+  });
+
+  if (invalidNode instanceof HTMLElement) {
+    invalidNode.focus({ preventScroll: false });
+    invalidNode.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+}
+
+function clearInvalidOnInput(ids) {
+  ids.forEach((id) => {
+    const node = document.getElementById(id);
+    if (!node) return;
+    node.addEventListener("input", () => {
+      node.removeAttribute("aria-invalid");
+    });
+  });
+}
+
+function ensureToastStack() {
+  let stack = document.querySelector(".toast-stack");
+  if (stack) return stack;
+  stack = document.createElement("div");
+  stack.className = "toast-stack";
+  document.body.appendChild(stack);
+  return stack;
+}
+
+function showToast(text, state = "info") {
+  if (!text) return;
+  const stack = ensureToastStack();
+  const toast = document.createElement("div");
+  toast.className = `toast toast-${state}`;
+  toast.textContent = text;
+  stack.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transform = "translateY(8px)";
+    setTimeout(() => toast.remove(), 180);
+  }, 2500);
+}
+
+function setMessage(node, text, state = "info", toast = false) {
+  if (!node) return;
+  node.textContent = text;
+  node.dataset.state = state;
+  if (toast) {
+    showToast(text, state);
+  }
+}
+
+function getPasswordStrength(password) {
+  const value = String(password || "");
+  let score = 0;
+  if (value.length >= 8) score += 1;
+  if (/[A-ZА-Я]/.test(value) && /[a-zа-я]/.test(value)) score += 1;
+  if (/\d/.test(value)) score += 1;
+  if (/[^A-Za-zА-Яа-я0-9]/.test(value)) score += 1;
+
+  if (value.length < 6 || score <= 1) return "weak";
+  if (score <= 3) return "medium";
+  return "strong";
+}
+
+function bindPasswordHint(inputId, hintId) {
+  const input = document.getElementById(inputId);
+  const hint = document.getElementById(hintId);
+  if (!input || !hint) return;
+
+  const update = () => {
+    const level = getPasswordStrength(input.value);
+    hint.dataset.level = level;
+    if (!input.value) {
+      hint.textContent = "Пароль: минимум 6 символов. Лучше использовать буквы, цифры и спецсимволы.";
+      return;
+    }
+    if (level === "weak") {
+      hint.textContent = "Надежность: низкая. Добавьте длину, цифры и спецсимволы.";
+      return;
+    }
+    if (level === "medium") {
+      hint.textContent = "Надежность: средняя. Почти хорошо, добавьте разнообразие символов.";
+      return;
+    }
+    hint.textContent = "Надежность: высокая. Такой пароль подходит.";
+  };
+
+  input.addEventListener("input", update);
+  input.addEventListener("blur", update);
+  update();
+}
+
+function enhancePasswordInputs(ids) {
+  ids.forEach((id) => {
+    const input = document.getElementById(id);
+    if (!input || input.dataset.enhancedPassword === "true") return;
+
+    const wrap = document.createElement("div");
+    wrap.className = "pass-wrap";
+    input.parentNode.insertBefore(wrap, input);
+    wrap.appendChild(input);
+
+    const toggleButton = document.createElement("button");
+    toggleButton.type = "button";
+    toggleButton.className = "pass-toggle";
+    toggleButton.setAttribute("aria-label", "Показать пароль");
+    toggleButton.textContent = "Show";
+
+    toggleButton.addEventListener("click", () => {
+      const show = input.type === "password";
+      input.type = show ? "text" : "password";
+      toggleButton.setAttribute("aria-label", show ? "Скрыть пароль" : "Показать пароль");
+      toggleButton.textContent = show ? "Hide" : "Show";
+    });
+
+    wrap.appendChild(toggleButton);
+    input.dataset.enhancedPassword = "true";
+  });
+}
+
 if (registerBtn) {
   registerBtn.addEventListener("click", async () => {
     const name = document.getElementById("regName").value.trim();
@@ -176,22 +322,27 @@ if (registerBtn) {
     const marketingConsent = document.getElementById("regMarketingConsent");
     const regMessage = document.getElementById("regMessage");
 
+    markInvalid(["regName", "regEmail", "regPassword"]);
+
     if (!name || !email || !password) {
-      regMessage.textContent = "Заполните все поля для регистрации.";
+      setMessage(regMessage, "Заполните все поля для регистрации.", "error", true);
+      markInvalid(["regName", "regEmail", "regPassword"], !name ? "regName" : !email ? "regEmail" : "regPassword");
       return;
     }
 
     if (password.length < 6) {
-      regMessage.textContent = "Пароль должен быть не менее 6 символов.";
+      setMessage(regMessage, "Пароль должен быть не менее 6 символов.", "error", true);
+      markInvalid(["regName", "regEmail", "regPassword"], "regPassword");
       return;
     }
 
     if (!consent?.checked) {
-      regMessage.textContent = "Подтвердите согласие с условиями и политикой.";
+      setMessage(regMessage, "Подтвердите согласие с условиями и политикой.", "error", true);
       return;
     }
 
     try {
+      setButtonLoading(registerBtn, true, "Создаем...");
       const result = await authWithFallback("register", {
         name,
         email,
@@ -206,12 +357,15 @@ if (registerBtn) {
       };
       safeStorageSet("auraCurrentUser", JSON.stringify(result.user));
       saveSession(result.user);
-      regMessage.textContent = "Регистрация успешна. Переходим в личный кабинет...";
+      setMessage(regMessage, "Регистрация успешна. Переходим в личный кабинет...", "success", true);
       setTimeout(() => {
         window.location.href = "account.html";
       }, 700);
     } catch (error) {
-      regMessage.textContent = error.message;
+      setMessage(regMessage, error.message, "error", true);
+      markInvalid(["regName", "regEmail", "regPassword"], "regEmail");
+    } finally {
+      setButtonLoading(registerBtn, false);
     }
   });
 }
@@ -222,21 +376,28 @@ if (loginBtn) {
     const password = document.getElementById("loginPassword").value;
     const loginMessage = document.getElementById("loginMessage");
 
+    markInvalid(["loginEmail", "loginPassword"]);
+
     if (!email || !password) {
-      loginMessage.textContent = "Введите email и пароль.";
+      setMessage(loginMessage, "Введите email и пароль.", "error", true);
+      markInvalid(["loginEmail", "loginPassword"], !email ? "loginEmail" : "loginPassword");
       return;
     }
 
     try {
+      setButtonLoading(loginBtn, true, "Входим...");
       const result = await authWithFallback("login", { email, password });
       safeStorageSet("auraCurrentUser", JSON.stringify(result.user));
       saveSession(result.user);
-      loginMessage.textContent = "Вход выполнен. Переходим в кабинет...";
+      setMessage(loginMessage, "Вход выполнен. Переходим в кабинет...", "success", true);
       setTimeout(() => {
         window.location.href = "account.html";
       }, 500);
     } catch (error) {
-      loginMessage.textContent = error.message;
+      setMessage(loginMessage, error.message, "error", true);
+      markInvalid(["loginEmail", "loginPassword"], "loginPassword");
+    } finally {
+      setButtonLoading(loginBtn, false);
     }
   });
 }
@@ -302,19 +463,23 @@ if (sendCodeBtn) {
     const forgotMessage = document.getElementById("forgotMessage");
 
     if (!identifier) {
-      forgotMessage.textContent = "Введите email или телефон.";
+      setMessage(forgotMessage, "Введите email или телефон.", "error", true);
+      markInvalid(["forgotIdentifier"], "forgotIdentifier");
       return;
     }
 
     try {
+      setButtonLoading(sendCodeBtn, true, "Отправляем...");
       const result = await apiPost("/auth/forgot/request", { channel, identifier });
       if (result.debugCode) {
-        forgotMessage.textContent = `Код отправлен (dev-режим): ${result.debugCode}. Введите его ниже.`;
+        setMessage(forgotMessage, `Код отправлен (dev-режим): ${result.debugCode}. Введите его ниже.`, "info", true);
       } else {
-        forgotMessage.textContent = "Код отправлен. Проверьте выбранный канал и введите код ниже.";
+        setMessage(forgotMessage, "Код отправлен. Проверьте выбранный канал и введите код ниже.", "success", true);
       }
     } catch (error) {
-      forgotMessage.textContent = error.message;
+      setMessage(forgotMessage, error.message, "error", true);
+    } finally {
+      setButtonLoading(sendCodeBtn, false);
     }
   });
 }
@@ -326,27 +491,51 @@ if (resetPasswordBtn) {
     const newPassword = document.getElementById("newPassword").value;
     const forgotMessage = document.getElementById("forgotMessage");
 
+    markInvalid(["forgotIdentifier", "forgotCode", "newPassword"]);
+
     if (!identifier || !code || !newPassword) {
-      forgotMessage.textContent = "Заполните все поля восстановления.";
+      setMessage(forgotMessage, "Заполните все поля восстановления.", "error", true);
+      markInvalid(
+        ["forgotIdentifier", "forgotCode", "newPassword"],
+        !identifier ? "forgotIdentifier" : !code ? "forgotCode" : "newPassword"
+      );
       return;
     }
 
     try {
+      setButtonLoading(resetPasswordBtn, true, "Обновляем...");
       await apiPost("/auth/forgot/verify", { identifier, code, new_password: newPassword });
-      forgotMessage.textContent = "Пароль обновлен. Теперь выполните вход с новым паролем.";
+      setMessage(forgotMessage, "Пароль обновлен. Теперь выполните вход с новым паролем.", "success", true);
     } catch (error) {
       const users = getLocalUsers();
       const userIndex = users.findIndex((user) => user.email === identifier);
       if (userIndex !== -1) {
         users[userIndex].password = newPassword;
         setLocalUsers(users);
-        forgotMessage.textContent = "Пароль обновлен локально. Теперь выполните вход с новым паролем.";
+        setMessage(forgotMessage, "Пароль обновлен локально. Теперь выполните вход с новым паролем.", "success", true);
       } else {
-        forgotMessage.textContent = error.message;
+        setMessage(forgotMessage, error.message, "error", true);
       }
+    } finally {
+      setButtonLoading(resetPasswordBtn, false);
     }
   });
 }
+
+clearInvalidOnInput([
+  "regName",
+  "regEmail",
+  "regPassword",
+  "loginEmail",
+  "loginPassword",
+  "forgotIdentifier",
+  "forgotCode",
+  "newPassword"
+]);
+
+bindPasswordHint("regPassword", "regPasswordHint");
+bindPasswordHint("newPassword", "forgotPasswordHint");
+enhancePasswordInputs(["regPassword", "loginPassword", "newPassword"]);
 
 if (registerBtn) {
   bindEnterByIds(["regName", "regEmail", "regPassword"], () => registerBtn.click());

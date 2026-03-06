@@ -228,6 +228,7 @@ if (growthButton && leadsInput && calcResult) {
     const leads = Number(leadsInput.value || 0);
     if (leads <= 0) {
       calcResult.textContent = "Введите корректное количество лидов в месяц.";
+      calcResult.dataset.state = "error";
       return;
     }
 
@@ -247,6 +248,7 @@ if (growthButton && leadsInput && calcResult) {
     };
 
     calcResult.textContent = `Статистика: до автоматизации может теряться около ${formatCount(lostBefore)} лидов/мес (≈30%), после — около ${formatCount(lostAfter)} (≈10%). Экономия: ${formatCount(savedLeads)} лидов/мес (≈20%). Ускоренная обработка: ${formatCount(fasterReply)} обращений/мес (≈35%).`;
+    calcResult.dataset.state = "success";
   });
 
   leadsInput.addEventListener("keydown", (event) => {

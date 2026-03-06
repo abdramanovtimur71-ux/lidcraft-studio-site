@@ -17,9 +17,10 @@
       <div class="cards">
         <section class="card" id="registerSection">
           <h2>Регистрация</h2>
-          <input id="regName" class="field" type="text" placeholder="Ваше имя" />
-          <input id="regEmail" class="field" type="email" placeholder="Email" />
-          <input id="regPassword" class="field" type="password" placeholder="Пароль" />
+          <input id="regName" class="field" type="text" placeholder="Ваше имя" autocomplete="name" />
+          <input id="regEmail" class="field" type="email" placeholder="Email" autocomplete="email" inputmode="email" />
+          <input id="regPassword" class="field" type="password" placeholder="Пароль" autocomplete="new-password" />
+          <p id="regPasswordHint" class="field-help">Пароль: минимум 6 символов. Лучше использовать буквы, цифры и спецсимволы.</p>
           <label class="consent-check" for="regConsent">
             <input id="regConsent" type="checkbox" />
             Я согласен с <a href="legal.html" target="_blank" rel="noopener">условиями и политикой</a>
@@ -29,16 +30,16 @@
             Хочу получать новости и предложения (необязательно)
           </label>
           <button id="registerBtn" class="btn primary" type="button">Создать аккаунт</button>
-          <p id="regMessage" class="result-text"></p>
+          <p id="regMessage" class="result-text" aria-live="polite"></p>
         </section>
 
         <section class="card">
           <h2>Вход</h2>
-          <input id="loginEmail" class="field" type="email" placeholder="Email" />
-          <input id="loginPassword" class="field" type="password" placeholder="Пароль" />
+          <input id="loginEmail" class="field" type="email" placeholder="Email" autocomplete="username" inputmode="email" />
+          <input id="loginPassword" class="field" type="password" placeholder="Пароль" autocomplete="current-password" />
           <button id="loginBtn" class="btn primary" type="button">Войти</button>
           <button id="showForgotBtn" class="btn ghost" type="button">Забыли пароль?</button>
-          <p id="loginMessage" class="result-text"></p>
+          <p id="loginMessage" class="result-text" aria-live="polite"></p>
         </section>
 
         <section class="card" id="forgotBlock" style="display:none;">
@@ -48,13 +49,14 @@
             <option value="email">Email</option>
             <option value="sms">SMS</option>
           </select>
-          <input id="forgotIdentifier" class="field" type="text" placeholder="Email или телефон" />
+          <input id="forgotIdentifier" class="field" type="text" placeholder="Email или телефон" autocomplete="email" inputmode="email" />
           <button id="sendCodeBtn" class="btn primary" type="button">Отправить код</button>
 
-          <input id="forgotCode" class="field" type="text" placeholder="Код подтверждения" />
-          <input id="newPassword" class="field" type="password" placeholder="Новый пароль" />
+          <input id="forgotCode" class="field" type="text" placeholder="Код подтверждения" inputmode="numeric" autocomplete="one-time-code" />
+          <input id="newPassword" class="field" type="password" placeholder="Новый пароль" autocomplete="new-password" />
+          <p id="forgotPasswordHint" class="field-help">Новый пароль должен быть надежнее старого.</p>
           <button id="resetPasswordBtn" class="btn ghost" type="button">Сменить пароль</button>
-          <p id="forgotMessage" class="result-text"></p>
+          <p id="forgotMessage" class="result-text" aria-live="polite"></p>
         </section>
 
         <section class="card">

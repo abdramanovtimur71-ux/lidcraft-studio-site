@@ -159,6 +159,7 @@ const year = document.getElementById("year");
 const header = document.querySelector(".header");
 const navToggle = document.getElementById("navToggle");
 const mainNav = document.getElementById("mainNav");
+const quickContactFab = document.getElementById("quickContactFab");
 
 function getThemeName(themeCode) {
   return themeCode === "graphite" ? "Graphite Platinum" : "Midnight Gold";
@@ -234,6 +235,100 @@ if (header && navToggle && mainNav) {
       navToggle.setAttribute("aria-expanded", "false");
     }
   });
+
+  document.addEventListener("click", (event) => {
+    if (window.innerWidth > 900 || !header.classList.contains("nav-open")) {
+      return;
+    }
+
+    const target = event.target;
+    if (!(target instanceof Element)) {
+      return;
+    }
+
+    if (!target.closest("#mainNav") && !target.closest("#navToggle")) {
+      header.classList.remove("nav-open");
+      navToggle.setAttribute("aria-expanded", "false");
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && header.classList.contains("nav-open")) {
+      header.classList.remove("nav-open");
+      navToggle.setAttribute("aria-expanded", "false");
+      navToggle.focus();
+    }
+  });
+
+  const navSectionLinks = Array.from(
+    mainNav.querySelectorAll('a[href^="#"]')
+  );
+
+  function markCurrentLink(activeLink) {
+    navSectionLinks.forEach((link) => {
+      link.classList.toggle("is-current", link === activeLink);
+    });
+
+    if (activeLink) {
+      activeLink.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center"
+      });
+    }
+  }
+
+  if (navSectionLinks.length > 0) {
+    const sectionById = new Map();
+    navSectionLinks.forEach((link) => {
+      const sectionId = link.getAttribute("href")?.slice(1);
+      if (!sectionId) return;
+      const section = document.getElementById(sectionId);
+      if (section) {
+        sectionById.set(section, link);
+      }
+    });
+
+    if (sectionById.size > 0 && "IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+          if (visible.length > 0) {
+            const link = sectionById.get(visible[0].target);
+            markCurrentLink(link || null);
+          }
+        },
+        {
+          root: null,
+          threshold: [0.35, 0.6],
+          rootMargin: "-20% 0px -55% 0px"
+        }
+      );
+
+      sectionById.forEach((_, section) => observer.observe(section));
+    }
+
+    const firstHash = window.location.hash
+      ? mainNav.querySelector(`a[href="${window.location.hash}"]`)
+      : navSectionLinks[0];
+    markCurrentLink(firstHash instanceof HTMLAnchorElement ? firstHash : null);
+  }
+
+  mainNav.addEventListener(
+    "wheel",
+    (event) => {
+      if (window.innerWidth <= 900 || Math.abs(event.deltaY) <= Math.abs(event.deltaX)) {
+        return;
+      }
+
+      mainNav.scrollLeft += event.deltaY;
+      event.preventDefault();
+    },
+    { passive: false }
+  );
 }
 
 if (year) {
@@ -264,4 +359,20 @@ if (header) {
 
     lastScrollY = currentScrollY;
   }, { passive: true });
+}
+
+if (quickContactFab) {
+  const contactSection = document.getElementById("contact");
+  if (contactSection && "IntersectionObserver" in window) {
+    const fabObserver = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        quickContactFab.classList.toggle("is-hidden", entry.isIntersecting);
+      },
+      {
+        threshold: 0.2
+      }
+    );
+    fabObserver.observe(contactSection);
+  }
 }

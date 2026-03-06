@@ -50,8 +50,8 @@
 
           <article class="card">
             <h3>Управление профилем</h3>
-            <input id="profileName" class="field" type="text" placeholder="Имя" />
-            <input id="profileEmail" class="field" type="email" placeholder="Email" />
+            <input id="profileName" class="field" type="text" placeholder="Имя" autocomplete="name" />
+            <input id="profileEmail" class="field" type="email" placeholder="Email" autocomplete="email" inputmode="email" />
             <div class="cta-row">
               <button id="saveProfileBtn" class="btn primary" type="button">Сохранить профиль</button>
               <button id="exportDataBtn" class="btn ghost" type="button">Экспорт данных</button>
@@ -102,20 +102,21 @@
 
           <article class="card">
             <h3>Безопасность аккаунта</h3>
-            <input id="currentPasswordAccount" class="field" type="password" placeholder="Текущий пароль" />
-            <input id="newPasswordAccount" class="field" type="password" placeholder="Новый пароль" />
-            <input id="newPasswordRepeatAccount" class="field" type="password" placeholder="Повторите новый пароль" />
+            <input id="currentPasswordAccount" class="field" type="password" placeholder="Текущий пароль" autocomplete="current-password" />
+            <input id="newPasswordAccount" class="field" type="password" placeholder="Новый пароль" autocomplete="new-password" />
+            <p id="newPasswordAccountHint" class="field-help">Сильный пароль: 8+ символов, буквы в разных регистрах, цифры и спецсимвол.</p>
+            <input id="newPasswordRepeatAccount" class="field" type="password" placeholder="Повторите новый пароль" autocomplete="new-password" />
             <div class="cta-row">
               <button id="changePasswordBtn" class="btn ghost" type="button">Сменить пароль</button>
               <button id="extendSessionBtn" class="btn ghost" type="button">Продлить сессию</button>
             </div>
-            <p id="securityStatus" class="result-text">Рекомендуется менять пароль минимум раз в 90 дней.</p>
+            <p id="securityStatus" class="result-text" aria-live="polite">Рекомендуется менять пароль минимум раз в 90 дней.</p>
           </article>
 
           <article class="card">
             <h3>AI-защита промптов</h3>
             <p>Проверка запроса перед отправкой в ИИ: блокируем попытки вытащить системные инструкции и код проекта.</p>
-            <input id="aiPromptInput" class="field" type="text" placeholder="Введите тестовый запрос..." />
+            <input id="aiPromptInput" class="field" type="text" placeholder="Введите тестовый запрос..." autocomplete="off" />
             <div class="cta-row">
               <button id="aiPromptCheckBtn" class="btn ghost" type="button">Проверить запрос</button>
             </div>
