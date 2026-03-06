@@ -7,7 +7,7 @@
   - `https://your-domain.com/og-cover.jpg` на реальную обложку
   - `your_username` на ваш username
   - `000000000000` на номер WhatsApp в международном формате
-   - `hello@lidcraft-studio.site` на ваш email
+   - Контактные данные на ваши актуальные
    - `https://pay.cloudtips.ru/p/replace-start` на вашу ссылку оплаты Start
    - `https://pay.cloudtips.ru/p/replace-growth` на вашу ссылку оплаты Growth
    - `https://pay.cloudtips.ru/p/replace-scale` на вашу ссылку оплаты Scale
