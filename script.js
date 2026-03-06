@@ -145,11 +145,42 @@ let lang = safeGetFromStorage("auraLang") || "ru";
 if (!supportedLangs.includes(lang)) {
   lang = "ru";
 }
+
+const supportedThemes = ["midnight", "graphite"];
+let theme = safeGetFromStorage("auraTheme") || "midnight";
+if (!supportedThemes.includes(theme)) {
+  theme = "midnight";
+}
+
 const toggle = document.getElementById("langToggle");
+const themeSelect = document.getElementById("themeSelect");
+const themeLabel = document.getElementById("themeLabel");
 const year = document.getElementById("year");
 const header = document.querySelector(".header");
 const navToggle = document.getElementById("navToggle");
 const mainNav = document.getElementById("mainNav");
+
+function getThemeName(themeCode) {
+  return themeCode === "graphite" ? "Graphite Platinum" : "Midnight Gold";
+}
+
+function updateThemeLabel() {
+  if (!themeLabel) return;
+  const prefix = lang === "ru" ? "Тема" : "Theme";
+  themeLabel.textContent = `${prefix}: ${getThemeName(theme)}`;
+}
+
+function applyTheme(nextTheme) {
+  const normalizedTheme = supportedThemes.includes(nextTheme) ? nextTheme : "midnight";
+  theme = normalizedTheme;
+  document.body.classList.remove("theme-midnight", "theme-graphite");
+  document.body.classList.add(`theme-${normalizedTheme}`);
+  if (themeSelect) {
+    themeSelect.value = normalizedTheme;
+  }
+  updateThemeLabel();
+  safeSetToStorage("auraTheme", normalizedTheme);
+}
 
 function applyLanguage(nextLang) {
   const normalizedLang = supportedLangs.includes(nextLang) ? nextLang : "ru";
@@ -169,11 +200,18 @@ function applyLanguage(nextLang) {
   }
 
   safeSetToStorage("auraLang", normalizedLang);
+  updateThemeLabel();
 }
 
 if (toggle) {
   toggle.addEventListener("click", () => {
     applyLanguage(lang === "ru" ? "en" : "ru");
+  });
+}
+
+if (themeSelect) {
+  themeSelect.addEventListener("change", () => {
+    applyTheme(themeSelect.value);
   });
 }
 
@@ -203,6 +241,7 @@ if (year) {
 }
 
 applyLanguage(lang);
+applyTheme(theme);
 
 if (header) {
   let lastScrollY = window.scrollY;

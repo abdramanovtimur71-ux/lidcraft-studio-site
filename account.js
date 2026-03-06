@@ -20,6 +20,21 @@ function safeStorageSet(key, value) {
   }
 }
 
+const THEME_KEY = "auraTheme";
+const SUPPORTED_THEMES = ["midnight", "graphite"];
+
+function getThemeName(themeCode) {
+  return themeCode === "graphite" ? "Graphite Platinum" : "Midnight Gold";
+}
+
+function applyTheme(nextTheme) {
+  const normalizedTheme = SUPPORTED_THEMES.includes(nextTheme) ? nextTheme : "midnight";
+  document.body.classList.remove("theme-midnight", "theme-graphite");
+  document.body.classList.add(`theme-${normalizedTheme}`);
+  safeStorageSet(THEME_KEY, normalizedTheme);
+  return normalizedTheme;
+}
+
 function addHours(date, hours) {
   const next = new Date(date.getTime());
   next.setHours(next.getHours() + hours);
@@ -45,6 +60,31 @@ function isSubscriptionActive(user) {
   if (!user?.subscriptionEndsAt) return false;
   if (user.subscriptionActive === false) return false;
   return new Date(user.subscriptionEndsAt).getTime() > Date.now();
+}
+
+function isGuestUser(user) {
+  if (!user) return false;
+  if (user.role === "guest") return true;
+  return String(user.email || "").endsWith("@lidcraft.local");
+}
+
+function animateGuestMessages() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const revealNodes = Array.from(document.querySelectorAll("main .container > h1, #guestBanner, .result-text"))
+    .filter((node) => !node.hidden)
+    .filter((node) => window.getComputedStyle(node).display !== "none");
+
+  revealNodes.forEach((node, index) => {
+    node.classList.add("guest-reveal");
+    node.style.setProperty("--reveal-delay", `${index * 70}ms`);
+  });
+
+  requestAnimationFrame(() => {
+    revealNodes.forEach((node) => {
+      node.classList.add("is-visible");
+    });
+  });
 }
 
 function lockProtectedFeatures() {
@@ -175,6 +215,29 @@ if (userName && currentUser?.name) {
   userName.textContent = currentUser.name;
 }
 
+const guestBanner = document.getElementById("guestBanner");
+if (guestBanner && isGuestUser(currentUser)) {
+  guestBanner.hidden = false;
+}
+
+if (isGuestUser(currentUser)) {
+  animateGuestMessages();
+}
+
+const convertGuestBtn = document.getElementById("convertGuestBtn");
+if (convertGuestBtn && isGuestUser(currentUser)) {
+  convertGuestBtn.addEventListener("click", () => {
+    const guestDraft = {
+      name: (currentUser?.name || "").trim(),
+      email: (currentUser?.email || "").trim().toLowerCase()
+    };
+    safeStorageSet("auraGuestDraft", JSON.stringify(guestDraft));
+    safeStorageRemove("auraCurrentUser");
+    safeStorageRemove("auraSession");
+    window.location.href = "auth.html#upgrade";
+  });
+}
+
 const sessionStatus = document.getElementById("sessionStatus");
 if (sessionStatus && session?.expiresAt) {
   sessionStatus.textContent = `Сессия активна до: ${new Date(session.expiresAt).toLocaleString()}`;
@@ -198,6 +261,23 @@ if (logoutBtn) {
     safeStorageRemove("auraCurrentUser");
     safeStorageRemove("auraSession");
     window.location.href = "auth.html";
+  });
+}
+
+const themeSelect = document.getElementById("themeSelect");
+const themeLabel = document.getElementById("themeLabel");
+let currentTheme = applyTheme(safeStorageGet(THEME_KEY) || "midnight");
+if (themeLabel) {
+  themeLabel.textContent = `Тема: ${getThemeName(currentTheme)}`;
+}
+
+if (themeSelect) {
+  themeSelect.value = currentTheme;
+  themeSelect.addEventListener("change", () => {
+    currentTheme = applyTheme(themeSelect.value);
+    if (themeLabel) {
+      themeLabel.textContent = `Тема: ${getThemeName(currentTheme)}`;
+    }
   });
 }
 
@@ -379,7 +459,7 @@ if (exportDataBtn) {
 const clearDataBtn = document.getElementById("clearDataBtn");
 if (clearDataBtn) {
   clearDataBtn.addEventListener("click", () => {
-    const keysToKeep = ["auraLang"];
+    const keysToKeep = ["auraLang", "auraTheme"];
     const keys = Object.keys(localStorage);
     keys.forEach((key) => {
       if (!keysToKeep.includes(key)) {

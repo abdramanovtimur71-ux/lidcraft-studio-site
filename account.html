@@ -12,6 +12,11 @@
     <div class="container nav">
       <div class="brand"><img src="assets/lidcraft-logo.svg" alt="LidCraft Studio logo" /><span class="brand-text">LidCraft Studio — Кабинет</span></div>
       <div class="cta-row">
+        <span id="themeLabel" class="theme-label">Тема: Midnight Gold</span>
+        <select id="themeSelect" class="theme-select" aria-label="Выбрать тему">
+          <option value="midnight">Midnight Gold</option>
+          <option value="graphite">Graphite Platinum</option>
+        </select>
         <a class="btn ghost" href="index.html">Главная</a>
         <button id="logoutBtn" class="btn primary" type="button">Выйти</button>
       </div>
@@ -20,8 +25,16 @@
 
   <main class="section">
     <div class="container">
-      <h1>Добро пожаловать, <span id="userName">клиент</span></h1>
+      <h1 class="headline-reveal welcome-title">Добро пожаловать, <span id="userName">клиент</span></h1>
       <p>Здесь собрана расширенная информация по работе с LidCraft Studio и быстрые действия для запуска проекта.</p>
+
+      <section id="guestBanner" class="guest-banner" hidden>
+        <h2>Демо-режим (Гость)</h2>
+        <p>Вы используете гостевой доступ. Чтобы сохранить данные и работать без ограничений, создайте полноценный аккаунт.</p>
+        <div class="cta-row">
+          <button id="convertGuestBtn" class="btn primary" type="button">Преобразовать гостя в аккаунт</button>
+        </div>
+      </section>
 
       <section class="section">
         <h2>Безопасность, доступ и данные</h2>
@@ -43,6 +56,60 @@
               <button id="saveProfileBtn" class="btn primary" type="button">Сохранить профиль</button>
               <button id="exportDataBtn" class="btn ghost" type="button">Экспорт данных</button>
             </div>
+          </article>
+
+          <article class="card">
+            <h3>Настройки кабинета</h3>
+            <label for="settingsLanguage">Язык интерфейса</label>
+            <select id="settingsLanguage" class="field">
+              <option value="ru">Русский</option>
+              <option value="en">English</option>
+            </select>
+
+            <label for="settingsTimezone">Часовой пояс</label>
+            <select id="settingsTimezone" class="field">
+              <option value="Europe/Moscow">Europe/Moscow</option>
+              <option value="Asia/Almaty">Asia/Almaty</option>
+              <option value="Asia/Tashkent">Asia/Tashkent</option>
+              <option value="UTC">UTC</option>
+            </select>
+
+            <label for="settingsPrivacyMode">Режим приватности</label>
+            <select id="settingsPrivacyMode" class="field">
+              <option value="standard">Стандартный</option>
+              <option value="strict">Строгий (минимум локальных данных)</option>
+            </select>
+
+            <label for="settingsAutoLogout">Автовыход при бездействии</label>
+            <select id="settingsAutoLogout" class="field">
+              <option value="30">30 минут</option>
+              <option value="60">60 минут</option>
+              <option value="120">120 минут</option>
+            </select>
+
+            <div class="cta-row" style="align-items:center; gap:12px;">
+              <label><input id="notifyEmail" type="checkbox" /> Email-уведомления</label>
+              <label><input id="notifyTelegram" type="checkbox" /> Telegram-уведомления</label>
+              <label><input id="notifyDigest" type="checkbox" /> Недельный отчет</label>
+            </div>
+
+            <div class="cta-row">
+              <button id="saveSettingsBtn" class="btn primary" type="button">Сохранить настройки</button>
+              <button id="resetSettingsBtn" class="btn ghost" type="button">Сбросить</button>
+            </div>
+            <p id="settingsStatus" class="result-text">Настройки можно изменять в любое время.</p>
+          </article>
+
+          <article class="card">
+            <h3>Безопасность аккаунта</h3>
+            <input id="currentPasswordAccount" class="field" type="password" placeholder="Текущий пароль" />
+            <input id="newPasswordAccount" class="field" type="password" placeholder="Новый пароль" />
+            <input id="newPasswordRepeatAccount" class="field" type="password" placeholder="Повторите новый пароль" />
+            <div class="cta-row">
+              <button id="changePasswordBtn" class="btn ghost" type="button">Сменить пароль</button>
+              <button id="extendSessionBtn" class="btn ghost" type="button">Продлить сессию</button>
+            </div>
+            <p id="securityStatus" class="result-text">Рекомендуется менять пароль минимум раз в 90 дней.</p>
           </article>
 
           <article class="card">

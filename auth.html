@@ -12,13 +12,22 @@
     <div class="container">
       <h1>Вход и регистрация</h1>
       <p>Создайте аккаунт, чтобы получить доступ к расширенной информации, анализу и материалам.</p>
+      <p id="upgradeMessage" class="result-text" hidden></p>
 
       <div class="cards">
-        <section class="card">
+        <section class="card" id="registerSection">
           <h2>Регистрация</h2>
           <input id="regName" class="field" type="text" placeholder="Ваше имя" />
           <input id="regEmail" class="field" type="email" placeholder="Email" />
           <input id="regPassword" class="field" type="password" placeholder="Пароль" />
+          <label class="consent-check" for="regConsent">
+            <input id="regConsent" type="checkbox" />
+            Я согласен с <a href="legal.html" target="_blank" rel="noopener">условиями и политикой</a>
+          </label>
+          <label class="consent-check optional" for="regMarketingConsent">
+            <input id="regMarketingConsent" type="checkbox" />
+            Хочу получать новости и предложения (необязательно)
+          </label>
           <button id="registerBtn" class="btn primary" type="button">Создать аккаунт</button>
           <p id="regMessage" class="result-text"></p>
         </section>
@@ -54,6 +63,8 @@
           <p>— Примерные тесты готовности бизнеса</p>
           <p>— Пакеты работ и быстрый переход к оплате</p>
           <p>— Аргументация, почему выбирают LidCraft Studio</p>
+          <button id="guestLaunchBtn" class="btn primary" type="button">Гостевой запуск (без регистрации)</button>
+          <p class="result-text">Откроем кабинет в демо-режиме, чтобы гость мог запустить все основные функции прямо на сайте.</p>
           <a class="btn ghost" href="index.html">← На главную</a>
         </section>
       </div>

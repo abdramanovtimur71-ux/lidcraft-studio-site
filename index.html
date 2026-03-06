@@ -67,6 +67,11 @@
       </nav>
       <div class="nav-actions">
         <a class="btn primary nav-cta" href="#contact" data-i18n="navCta">Связаться</a>
+        <span id="themeLabel" class="theme-label">Theme: Midnight Gold</span>
+        <select id="themeSelect" class="theme-select" aria-label="Выбрать тему">
+          <option value="midnight">Midnight Gold</option>
+          <option value="graphite">Graphite Platinum</option>
+        </select>
         <button id="langToggle" class="lang-btn">EN</button>
       </div>
     </div>
@@ -85,12 +90,13 @@
       <div class="container hero-grid">
         <div>
           <span class="badge" data-i18n="heroBadge">Для малого и среднего бизнеса</span>
-          <h1 data-i18n="heroTitle">LidCraft Studio: технологии, которые превращаются в заявки и продажи</h1>
+          <h1 class="headline-reveal hero-title" data-i18n="heroTitle">LidCraft Studio: технологии, которые превращаются в заявки и продажи</h1>
           <p data-i18n="heroText">Помогаем бизнесу внедрять AI и автоматизацию без перегруза: от сайта и оффера до рабочих сценариев в Telegram, WhatsApp и CRM.</p>
           <div class="cta-row">
             <a class="btn primary" href="#contact" data-i18n="heroCta1">Обсудить проект</a>
             <a class="btn ghost" href="links.html" data-i18n="heroCta2">Все соцсети</a>
             <a class="btn ghost" href="auth.html">Создать аккаунт</a>
+            <a class="btn ghost" href="auth.html#guest">Гостевой запуск</a>
             <a class="btn ghost" href="demo-materials.html">Материалы для презентации</a>
           </div>
         </div>

@@ -59,7 +59,7 @@ function setLocalUsers(users) {
   safeStorageSet("auraUsers", JSON.stringify(users));
 }
 
-function createLocalUser(name, email, password) {
+function createLocalUser(name, email, password, extras = {}) {
   const now = new Date();
   return {
     id: `usr_${Date.now()}`,
@@ -69,7 +69,9 @@ function createLocalUser(name, email, password) {
     createdAt: now.toISOString(),
     subscriptionEndsAt: addDays(now, SUBSCRIPTION_DAYS).toISOString(),
     subscriptionPlan: "Start",
-    subscriptionActive: true
+    subscriptionActive: true,
+    acceptedLegal: extras.acceptedLegal === true,
+    marketingOptIn: extras.marketingOptIn === true
   };
 }
 
@@ -93,7 +95,10 @@ async function authWithFallback(mode, payload) {
         throw new Error("Пользователь с таким email уже зарегистрирован.");
       }
 
-      const localUser = createLocalUser(payload.name, payload.email, payload.password);
+      const localUser = createLocalUser(payload.name, payload.email, payload.password, {
+        acceptedLegal: payload.acceptedLegal,
+        marketingOptIn: payload.marketingOptIn
+      });
       setLocalUsers([...users, localUser]);
       return { user: localUser };
     }
@@ -128,6 +133,26 @@ async function apiPost(path, payload) {
 
 const registerBtn = document.getElementById("registerBtn");
 const loginBtn = document.getElementById("loginBtn");
+const guestLaunchBtn = document.getElementById("guestLaunchBtn");
+
+function startGuestLaunch() {
+  const now = new Date();
+  const guestUser = {
+    id: `guest_${Date.now()}`,
+    name: "Гость",
+    email: `guest_${Date.now()}@lidcraft.local`,
+    password: "",
+    createdAt: now.toISOString(),
+    subscriptionEndsAt: addDays(now, 2).toISOString(),
+    subscriptionPlan: "Guest Demo",
+    subscriptionActive: true,
+    role: "guest"
+  };
+
+  safeStorageSet("auraCurrentUser", JSON.stringify(guestUser));
+  saveSession(guestUser);
+  window.location.href = "account.html";
+}
 
 function bindEnterByIds(ids, handler) {
   ids.forEach((id) => {
@@ -147,6 +172,8 @@ if (registerBtn) {
     const name = document.getElementById("regName").value.trim();
     const email = document.getElementById("regEmail").value.trim().toLowerCase();
     const password = document.getElementById("regPassword").value;
+    const consent = document.getElementById("regConsent");
+    const marketingConsent = document.getElementById("regMarketingConsent");
     const regMessage = document.getElementById("regMessage");
 
     if (!name || !email || !password) {
@@ -159,8 +186,24 @@ if (registerBtn) {
       return;
     }
 
+    if (!consent?.checked) {
+      regMessage.textContent = "Подтвердите согласие с условиями и политикой.";
+      return;
+    }
+
     try {
-      const result = await authWithFallback("register", { name, email, password });
+      const result = await authWithFallback("register", {
+        name,
+        email,
+        password,
+        acceptedLegal: true,
+        marketingOptIn: Boolean(marketingConsent?.checked)
+      });
+      result.user = {
+        ...result.user,
+        acceptedLegal: true,
+        marketingOptIn: Boolean(marketingConsent?.checked)
+      };
       safeStorageSet("auraCurrentUser", JSON.stringify(result.user));
       saveSession(result.user);
       regMessage.textContent = "Регистрация успешна. Переходим в личный кабинет...";
@@ -196,6 +239,49 @@ if (loginBtn) {
       loginMessage.textContent = error.message;
     }
   });
+}
+
+if (guestLaunchBtn) {
+  guestLaunchBtn.addEventListener("click", () => {
+    startGuestLaunch();
+  });
+}
+
+function handleUpgradeHash() {
+  if (window.location.hash !== "#upgrade") return;
+
+  const message = document.getElementById("upgradeMessage");
+  const registerSection = document.getElementById("registerSection");
+  const regName = document.getElementById("regName");
+  const regEmail = document.getElementById("regEmail");
+
+  let draft = null;
+  try {
+    draft = JSON.parse(safeStorageGet("auraGuestDraft") || "null");
+  } catch {
+    draft = null;
+  }
+
+  if (draft?.name && regName) {
+    regName.value = draft.name;
+  }
+  if (draft?.email && regEmail) {
+    regEmail.value = draft.email.includes("@lidcraft.local") ? "" : draft.email;
+  }
+  safeStorageRemove("auraGuestDraft");
+
+  if (message) {
+    message.hidden = false;
+    message.textContent = "Вы были в гостевом режиме. Данные перенесены в форму регистрации: завершите создание аккаунта для постоянного доступа.";
+  }
+
+  if (registerSection) {
+    registerSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  setTimeout(() => {
+    if (regName) regName.focus();
+  }, 250);
 }
 
 const showForgotBtn = document.getElementById("showForgotBtn");
@@ -285,6 +371,12 @@ if (resetPasswordBtn && forgotBlock) {
     }
   });
 }
+
+if (window.location.hash === "#guest") {
+  startGuestLaunch();
+}
+
+handleUpgradeHash();
 
 window.addEventListener("beforeunload", () => {
   const messageNode = document.getElementById("loginMessage");
