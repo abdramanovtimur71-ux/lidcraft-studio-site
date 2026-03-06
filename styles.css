@@ -44,9 +44,10 @@ button,
 .header {
   position: sticky;
   top: 0;
-  background: rgba(15, 18, 33, 0.86);
-  backdrop-filter: blur(8px);
+  background: rgba(12, 16, 34, 0.9);
+  backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
+  box-shadow: 0 10px 24px rgba(5, 8, 24, 0.3);
   z-index: 10;
   transition: transform 0.25s ease;
   will-change: transform;
@@ -57,11 +58,11 @@ button,
 }
 
 .nav {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: space-between;
-  padding: 14px 0;
-  gap: 16px;
+  gap: 12px;
+  padding: 10px 0;
 }
 
 .brand {
@@ -69,7 +70,7 @@ button,
   align-items: center;
   gap: 10px;
   font-weight: 700;
-  font-size: 26px;
+  font-size: clamp(21px, 2.4vw, 26px);
   letter-spacing: 0.3px;
 }
 
@@ -89,8 +90,11 @@ button,
 
 nav {
   display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
+  gap: 8px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  padding: 2px 2px 2px 0;
 }
 
 nav a,
@@ -99,9 +103,12 @@ nav a,
   align-items: center;
   color: var(--text);
   text-decoration: none;
-  border: 1px solid transparent;
+  border: 1px solid rgba(127, 140, 255, 0.2);
+  background: rgba(127, 140, 255, 0.08);
   border-radius: 10px;
-  padding: 8px 10px;
+  padding: 7px 10px;
+  white-space: nowrap;
+  font-size: 14px;
 }
 
 nav a:hover,
@@ -119,33 +126,42 @@ input:focus-visible {
 
 .lang-btn {
   border: 1px solid var(--border);
-  background: var(--panel);
+  background: rgba(127, 140, 255, 0.12);
   color: var(--text);
-  padding: 8px 12px;
+  padding: 7px 11px;
   border-radius: 10px;
   cursor: pointer;
 }
 
 .translate-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: max-content minmax(220px, 1fr) minmax(170px, 230px) auto;
   align-items: center;
   gap: 10px;
-  padding: 0 0 12px;
-  flex-wrap: wrap;
+  margin: 0 0 10px;
+  padding: 10px;
+  border: 1px solid rgba(127, 140, 255, 0.22);
+  border-radius: 12px;
+  background: rgba(127, 140, 255, 0.08);
 }
 
 .translate-row .field.compact {
-  width: min(280px, 100%);
+  width: 100%;
 }
 
 .translate-row label {
   color: var(--text);
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .field.compact {
-  width: min(320px, 100%);
+  width: 100%;
   margin: 0;
+}
+
+#openTranslate {
+  white-space: nowrap;
 }
 
 .hero {
@@ -442,15 +458,15 @@ button[data-cab-quiz="yes"]:hover {
   }
 
   .nav {
-    align-items: flex-start;
-    flex-direction: column;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    align-items: start;
   }
 
   nav {
-    display: flex;
-    overflow-x: auto;
+    grid-column: 1 / -1;
     width: 100%;
-    padding-bottom: 4px;
+    padding-bottom: 2px;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
@@ -502,11 +518,14 @@ button[data-cab-quiz="yes"]:hover {
   }
 
   .translate-row {
+    grid-template-columns: 1fr;
     gap: 8px;
+    padding: 10px;
   }
 
   .translate-row label {
     width: 100%;
+    white-space: normal;
   }
 
   .translate-row .field.compact,
