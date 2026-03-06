@@ -115,7 +115,7 @@ def main():
     time.sleep(2)
     public_url = get_public_url()
     if public_url:
-        full_url = public_url.rstrip("/") + "/lidcraft-studio.html"
+        full_url = public_url.rstrip("/") + "/index.html"
         PUBLIC_URL_FILE.write_text(full_url, encoding="utf-8")
         log(f"Публичный URL: {full_url}")
     else:
@@ -133,7 +133,7 @@ def main():
         else:
             public_url = get_public_url(max_wait_sec=10)
             if public_url:
-                full_url = public_url.rstrip("/") + "/lidcraft-studio.html"
+                full_url = public_url.rstrip("/") + "/index.html"
                 PUBLIC_URL_FILE.write_text(full_url, encoding="utf-8")
                 log(f"Публичный URL восстановлен: {full_url}")
 
