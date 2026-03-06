@@ -8,4 +8,4 @@ LidCraft Studio — Короткая ссылка для клиентов:
 https://is.gd/Z9Bwhl
 
 LidCraft Studio — Постоянная бренд-ссылка (ваш закрепленный ngrok-домен):
-https://YOUR_RESERVED_NGROK_DOMAIN/lidcraft-studio.html
+https://unwanton-nonexpectantly-jenna.ngrok-free.dev/lidcraft-studio.html
