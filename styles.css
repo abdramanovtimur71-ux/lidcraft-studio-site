@@ -500,7 +500,7 @@ button[data-cab-quiz="yes"]:hover {
     left: 0;
     right: 0;
     top: calc(100% + 8px);
-    display: none;
+    display: flex;
     width: 100%;
     padding: 10px;
     border: 1px solid var(--border);
@@ -510,10 +510,23 @@ button[data-cab-quiz="yes"]:hover {
     flex-wrap: wrap;
     gap: 8px;
     z-index: 12;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px) scale(0.985);
+    transform-origin: top center;
+    pointer-events: none;
+    transition:
+      opacity 0.22s ease,
+      transform 0.22s ease,
+      visibility 0s linear 0.22s;
   }
 
   .header.nav-open nav {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    transition-delay: 0s;
   }
 
   nav a {
@@ -562,6 +575,12 @@ button[data-cab-quiz="yes"]:hover {
     font-size: 18px;
     font-weight: 700;
     padding: 14px 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header nav {
+    transition: none;
   }
 }
 
