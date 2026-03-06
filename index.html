@@ -52,7 +52,8 @@
   <header class="header">
     <div class="container nav">
       <div class="brand"><img src="assets/lidcraft-logo.svg" alt="LidCraft Studio logo" /><span class="brand-text">LidCraft Studio</span></div>
-      <nav>
+      <button id="navToggle" class="nav-toggle" type="button" aria-expanded="false" aria-controls="mainNav" aria-label="Открыть меню">☰</button>
+      <nav id="mainNav">
         <a href="#services" data-i18n="navServices">Услуги</a>
         <a href="#botdemo" data-i18n="navBotDemo">Бот</a>
         <a href="#bot-features">Возможности</a>
@@ -64,7 +65,10 @@
         <a href="auth.html">Вход/Регистрация</a>
         <a href="links.html" data-i18n="navLinks">Соцсети</a>
       </nav>
-      <button id="langToggle" class="lang-btn">EN</button>
+      <div class="nav-actions">
+        <a class="btn primary nav-cta" href="#contact" data-i18n="navCta">Связаться</a>
+        <button id="langToggle" class="lang-btn">EN</button>
+      </div>
     </div>
     <div class="container translate-row">
       <label for="globalLang">Язык для всех стран:</label>

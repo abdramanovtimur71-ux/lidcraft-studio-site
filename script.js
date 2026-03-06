@@ -6,6 +6,7 @@ const translations = {
     navPricing: "Тарифы",
     navContact: "Контакты",
     navLinks: "Соцсети",
+    navCta: "Связаться",
     heroBadge: "Для малого и среднего бизнеса",
     heroTitle: "LidCraft Studio: технологии, которые превращаются в заявки и продажи",
     heroText: "Помогаем бизнесу внедрять AI и автоматизацию без перегруза: от сайта и оффера до рабочих сценариев в Telegram, WhatsApp и CRM.",
@@ -67,6 +68,7 @@ const translations = {
     navPricing: "Pricing",
     navContact: "Contact",
     navLinks: "Socials",
+    navCta: "Contact Us",
     heroBadge: "For small and medium businesses",
     heroTitle: "LidCraft Studio: technology that turns into leads and sales",
     heroText: "We help businesses implement AI and automation without complexity: from website and offer to working Telegram, WhatsApp, and CRM workflows.",
@@ -146,6 +148,8 @@ if (!supportedLangs.includes(lang)) {
 const toggle = document.getElementById("langToggle");
 const year = document.getElementById("year");
 const header = document.querySelector(".header");
+const navToggle = document.getElementById("navToggle");
+const mainNav = document.getElementById("mainNav");
 
 function applyLanguage(nextLang) {
   const normalizedLang = supportedLangs.includes(nextLang) ? nextLang : "ru";
@@ -170,6 +174,27 @@ function applyLanguage(nextLang) {
 if (toggle) {
   toggle.addEventListener("click", () => {
     applyLanguage(lang === "ru" ? "en" : "ru");
+  });
+}
+
+if (header && navToggle && mainNav) {
+  navToggle.addEventListener("click", () => {
+    const isOpen = header.classList.toggle("nav-open");
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  mainNav.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      header.classList.remove("nav-open");
+      navToggle.setAttribute("aria-expanded", "false");
+    });
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 900) {
+      header.classList.remove("nav-open");
+      navToggle.setAttribute("aria-expanded", "false");
+    }
   });
 }
 

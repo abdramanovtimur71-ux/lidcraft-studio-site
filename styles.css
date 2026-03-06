@@ -63,6 +63,7 @@ button,
   align-items: center;
   gap: 12px;
   padding: 10px 0;
+  position: relative;
 }
 
 .brand {
@@ -109,6 +110,31 @@ nav a,
   padding: 7px 10px;
   white-space: nowrap;
   font-size: 14px;
+}
+
+.nav-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-cta {
+  padding: 8px 12px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.nav-toggle {
+  display: none;
+  border: 1px solid var(--border);
+  background: rgba(127, 140, 255, 0.1);
+  color: var(--text);
+  border-radius: 10px;
+  width: 38px;
+  height: 38px;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
 }
 
 nav a:hover,
@@ -458,23 +484,50 @@ button[data-cab-quiz="yes"]:hover {
   }
 
   .nav {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr auto auto;
     gap: 10px;
-    align-items: start;
+    align-items: center;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   nav {
-    grid-column: 1 / -1;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 8px);
+    display: none;
     width: 100%;
-    padding-bottom: 2px;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: rgba(12, 16, 34, 0.97);
+    box-shadow: 0 14px 28px rgba(5, 8, 24, 0.35);
+    flex-wrap: wrap;
+    gap: 8px;
+    z-index: 12;
+  }
+
+  .header.nav-open nav {
+    display: flex;
   }
 
   nav a {
-    flex: 0 0 auto;
-    padding: 7px 9px;
+    flex: 1 1 calc(50% - 8px);
+    justify-content: center;
+  }
+
+  .nav-actions {
+    gap: 6px;
+  }
+
+  .nav-cta {
+    padding: 7px 10px;
+    font-size: 13px;
   }
 
   .brand {
