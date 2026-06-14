@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#05070d" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <title>LidCraft Studio — автоматизация, сайты и AI-процессы для бизнеса</title>
   <meta name="description" content="LidCraft Studio помогает бизнесу выстроить продажи и поддержку: сайты, автоматизация коммуникаций, AI-консалтинг и сопровождение." />
   <meta name="google-site-verification" content="NCxZrstU0a1eLZ0L1OlstHjvXG3ny_E1UrSkDv-xDYA" />
@@ -13,25 +18,28 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="LidCraft Studio — автоматизация, сайты и AI-процессы" />
   <meta property="og:description" content="Запускаем решения, которые экономят время команде и приводят больше заявок." />
-  <meta property="og:url" content="https://abdramanovtimur71-ux.github.io/lidcraft-studio-site/" />
-  <meta property="og:image" content="https://abdramanovtimur71-ux.github.io/lidcraft-studio-site/assets/lidcraft-logo.svg" />
+  <meta property="og:url" content="https://lidcraft.kz/" />
+  <meta property="og:image" content="https://lidcraft.kz/assets/lidcraft-logo.svg" />
   <meta property="og:site_name" content="LidCraft Studio" />
   <meta property="og:locale" content="ru_RU" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="LidCraft Studio — автоматизация, сайты и AI-процессы" />
   <meta name="twitter:description" content="Сайты, AI-консалтинг и автоматизация коммуникаций под задачи бизнеса." />
-  <meta name="twitter:image" content="https://abdramanovtimur71-ux.github.io/lidcraft-studio-site/assets/lidcraft-logo.svg" />
-  <link rel="canonical" href="https://abdramanovtimur71-ux.github.io/lidcraft-studio-site/" />
+  <meta name="twitter:image" content="https://lidcraft.kz/assets/lidcraft-logo.svg" />
+  <link rel="canonical" href="https://lidcraft.kz/" />
   <link rel="icon" type="image/svg+xml" href="assets/lidcraft-logo.svg" />
+  <link rel="preload" as="image" href="assets/tg-demo-1.svg" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="modern-enhancements.css" />
+  <link rel="stylesheet" href="site-redesign.css" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "LidCraft Studio",
       "alternateName": "LidCraft",
-      "url": "https://abdramanovtimur71-ux.github.io/lidcraft-studio-site/",
-      "logo": "https://abdramanovtimur71-ux.github.io/lidcraft-studio-site/assets/lidcraft-logo.svg",
+      "url": "https://lidcraft.kz/",
+      "logo": "https://lidcraft.kz/assets/lidcraft-logo.svg",
       "description": "Автоматизация бизнеса, AI-консалтинг и сайты под ключ для роста заявок и продаж.",
       "sameAs": [
         "https://t.me/Timur_0_6_0_6"
@@ -43,7 +51,7 @@
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "LidCraft Studio",
-      "url": "https://abdramanovtimur71-ux.github.io/lidcraft-studio-site/",
+      "url": "https://lidcraft.kz/",
       "inLanguage": "ru"
     }
   </script>
@@ -54,34 +62,17 @@
       <div class="brand"><img src="assets/lidcraft-logo.svg" alt="LidCraft Studio logo" /><span class="brand-text">LidCraft Studio</span></div>
       <button id="navToggle" class="nav-toggle" type="button" aria-expanded="false" aria-controls="mainNav" aria-label="Открыть меню">☰</button>
       <nav id="mainNav">
-        <a href="#services" data-i18n="navServices">Услуги</a>
-        <a href="#botdemo" data-i18n="navBotDemo">Бот</a>
-        <a href="#bot-features">Возможности</a>
+        <a href="#" class="is-current">Главная</a>
+        <a href="#services">Услуги</a>
+        <a href="#trust">Результаты</a>
+        <a href="#cases">Кейсы</a>
+        <a href="#pricing">Тарифы</a>
         <a href="#analysis">Анализ</a>
-        <a href="#tests">Тест</a>
-        <a href="#cases" data-i18n="navCases">Кейсы</a>
-        <a href="#pricing" data-i18n="navPricing">Тарифы</a>
-        <a href="#contact" data-i18n="navContact">Контакты</a>
-        <a href="auth.html">Вход/Регистрация</a>
-        <a href="links.html" data-i18n="navLinks">Соцсети</a>
+        <a href="#contact">Контакты</a>
       </nav>
       <div class="nav-actions">
-        <a class="btn primary nav-cta" href="#contact" data-i18n="navCta">Связаться</a>
-        <span id="themeLabel" class="theme-label">Theme: Midnight Gold</span>
-        <select id="themeSelect" class="theme-select" aria-label="Выбрать тему">
-          <option value="midnight">Midnight Gold</option>
-          <option value="graphite">Graphite Platinum</option>
-        </select>
-        <button id="langToggle" class="lang-btn">EN</button>
+        <a class="btn primary nav-cta" href="auth.html">Войти</a>
       </div>
-    </div>
-    <div class="container translate-row">
-      <label for="globalLang">Язык для всех стран:</label>
-      <input id="langSearch" class="field compact" type="text" placeholder="Поиск языка / страны..." autocomplete="off" />
-      <select id="globalLang" class="field compact">
-        <option value="en">English</option>
-      </select>
-      <button id="openTranslate" class="btn ghost" type="button">Открыть перевод сайта</button>
     </div>
   </header>
 
@@ -89,115 +80,354 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <span class="badge" data-i18n="heroBadge">Для малого и среднего бизнеса</span>
-          <h1 class="headline-reveal hero-title" data-i18n="heroTitle">LidCraft Studio: технологии, которые превращаются в заявки и продажи</h1>
-          <p data-i18n="heroText">Помогаем бизнесу внедрять AI и автоматизацию без перегруза: от сайта и оффера до рабочих сценариев в Telegram, WhatsApp и CRM.</p>
+          <p class="hero-eyebrow" data-i18n="heroBadge">AI-ускорение для малого и среднего бизнеса</p>
+          <h1 class="headline-reveal hero-title" data-i18n="heroTitle">LidCraft Studio превращает хаос в воронку заявок за 14 дней</h1>
+          <p class="hero-sub" data-i18n="heroText">Связываем сайт, бот, CRM и постпродажи в единую систему. Клиенты получают ответ за минуты, команда — прозрачные цифры, вы — прогнозируемый рост без расширения штата.</p>
+          <ul class="hero-promise">
+            <li>Диагностика и новая формулировка оффера за 48 часов.</li>
+            <li>Telegram/WhatsApp сценарии с голосом, AI и webhooks.</li>
+            <li>Панель лидов, SLA и повторных касаний в одном окне.</li>
+          </ul>
           <div class="cta-row">
-            <a class="btn primary" href="#contact" data-i18n="heroCta1">Обсудить проект</a>
-            <a class="btn ghost" href="links.html" data-i18n="heroCta2">Все соцсети</a>
-            <a class="btn ghost" href="auth.html">Создать аккаунт</a>
-            <a class="btn ghost" href="auth.html#guest">Гостевой запуск</a>
-            <a class="btn ghost" href="demo-materials.html">Материалы для презентации</a>
+            <a class="btn primary" href="#contact" data-i18n="heroCta1" data-track="hero_audit">Запросить аудит</a>
+            <a class="btn ghost" href="#cases" data-i18n="heroCtaCases" data-track="hero_cases">Смотреть кейсы</a>
+          </div>
+          <p class="hero-cta-note" data-i18n="heroCtaNote">Ответим в Telegram или WhatsApp с планом запуска и ближайшим сроком старта.</p>
+        </div>
+        <div class="hero-card hero-card--score glass-card hover-lift">
+          <div class="score-row reveal stagger-1">
+            <span>Часов рутины, которые снимаем в среднем</span>
+            <strong class="gradient-text">−14 ч/нед</strong>
+          </div>
+          <div class="score-row reveal stagger-2">
+            <span>Лиды, которые возвращаем в обработку</span>
+            <strong class="gradient-text">+22%</strong>
+          </div>
+          <div class="score-line reveal stagger-3">
+            <span>Скорость ответа</span>
+            <div class="score-meter">
+              <span class="score-meter-fill" style="--progress:82%"></span>
+            </div>
+            <span>1–5 мин</span>
+          </div>
+          <p class="hero-note reveal stagger-4">Данные по проектам услуг, e-commerce и EdTech за 2025–2026 гг.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section proof-strip" id="offer-fit">
+      <div class="container proof-grid">
+        <article class="proof-card glass-card hover-lift reveal stagger-1">
+          <span class="proof-index gradient-text">01</span>
+          <h2 data-i18n="fitTitle">Кому подходим</h2>
+          <ul>
+            <li data-i18n="fitItem1">Сервисному бизнесу, где заявки теряются в чатах и звонках.</li>
+            <li data-i18n="fitItem2">E-commerce, где поддержка съедает время команды.</li>
+            <li data-i18n="fitItem3">Экспертным продуктам, где нужен путь от контента до созвона.</li>
+          </ul>
+        </article>
+        <article class="proof-card glass-card hover-lift reveal stagger-2">
+          <span class="proof-index gradient-text">02</span>
+          <h2 data-i18n="solveTitle">Что закрываем за 14 дней</h2>
+          <ul>
+            <li data-i18n="solveItem1">Новый оффер и понятный первый экран без лишнего шума.</li>
+            <li data-i18n="solveItem2">Маршрут заявки: сайт → бот → CRM → уведомление менеджеру.</li>
+            <li data-i18n="solveItem3">FAQ, SLA и повторные касания, чтобы лид не выпадал.</li>
+          </ul>
+        </article>
+        <article class="proof-card glass-card hover-lift reveal stagger-3">
+          <span class="proof-index gradient-text">03</span>
+          <h2 data-i18n="resultTitle">Что получаете на выходе</h2>
+          <ul>
+            <li data-i18n="resultItem1">Рабочий лендинг, а не только макет.</li>
+            <li data-i18n="resultItem2">Форму и каналы связи, которые реально конвертируют.</li>
+            <li data-i18n="resultItem3">Понятный план следующего спринта по данным, а не по ощущениям.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="signature" class="section signature compact-hidden">
+      <div class="container signature-grid">
+        <div class="signature-copy">
+          <p class="section-eyebrow">Signature Canvas</p>
+          <h2>Делаем сайт эстетичным, удобным и не похожим на шаблон</h2>
+          <p>Мы проектируем полотно в несколько слоёв: эмоциональный фон, функциональные акценты и быстрые действия. Так страница остаётся красивой и при этом ведёт к заявке буквально за три касания.</p>
+          <ul class="signature-list">
+            <li>
+              <span>01</span>
+              <div>
+                <strong>Арт-подложка</strong>
+                <p>Мягкие свечения и сетка координат подчёркивают премиум-ощущение бренда.</p>
+              </div>
+            </li>
+            <li>
+              <span>02</span>
+              <div>
+                <strong>Функциональные плитки</strong>
+                <p>Комбинируем hero, социальное доказательство и чек-листы, чтобы пользователь сразу понял маршрут.</p>
+              </div>
+            </li>
+            <li>
+              <span>03</span>
+              <div>
+                <strong>Панель действия</strong>
+                <p>Панель действия быстро ведёт к кейсам, материалам и заявке без лишней прокрутки.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="signature-canvas" aria-hidden="true">
+          <div class="canvas-halo"></div>
+          <div class="canvas-card">
+            <span class="canvas-label">Hero + Flow</span>
+            <strong>72 сек.</strong>
+            <p>Среднее время до клика по CTA.</p>
+          </div>
+          <div class="canvas-card canvas-card--accent">
+            <span class="canvas-label">Social proof</span>
+            <strong>+32% доверия</strong>
+            <p>Когда пользователь видит понятные кейсы и сильный оффер.</p>
+          </div>
+          <div class="canvas-card canvas-card--outline">
+            <span class="canvas-label">Materials lab</span>
+            <strong>5 наборов</strong>
+            <p>Чек-листы, инструкции и маршрут запуска.</p>
+          </div>
+          <div class="canvas-stamp">
+            <span>UX orbit</span>
+            <small>crafted by LidCraft</small>
           </div>
         </div>
-        <div class="hero-card">
-          <p class="kpi" data-i18n="kpi1">⚡ Первые результаты: от 3 дней</p>
-          <p class="kpi" data-i18n="kpi2">📈 Цель: больше целевых заявок и меньше рутины</p>
-          <p class="kpi" data-i18n="kpi3">🤝 Работаем в формате «под ключ» с сопровождением</p>
-          <p class="kpi" data-i18n="kpi4">🧩 Решения под вашу нишу, а не шаблон «для всех»</p>
-        </div>
       </div>
     </section>
 
-    <section id="services" class="section">
+    <section id="journey" class="section journey compact-hidden">
       <div class="container">
-        <h2 data-i18n="servicesTitle">Услуги</h2>
-        <div class="cards">
-          <article class="card">
-            <h3 data-i18n="s1Title">AI-консалтинг</h3>
-            <p data-i18n="s1Text">Разбираем текущие процессы, считаем экономику внедрения и даем понятный план действий.</p>
+        <div class="journey-header">
+          <div>
+            <h2>Маршрут проекта: от гипотезы до масштабирования</h2>
+            <p>Каждый шаг снимает конкретный риск: понятно, кто отвечает, какие метрики отслеживаем и что получает команда.</p>
+          </div>
+          <div class="journey-meta">
+            <span>Средний цикл</span>
+            <strong>14 дней до первой версии</strong>
+          </div>
+        </div>
+        <div class="journey-grid">
+          <article class="journey-step">
+            <span class="journey-index">01</span>
+            <h3>Диагностика</h3>
+            <p>Интервью, выгрузка цифр, ревизия клиентского опыта. Итог — карта узких мест и быстрый расчёт окупаемости.</p>
+            <ul>
+              <li>Спринт по поисковым запросам конкурентов.</li>
+              <li>Прослушка диалогов и анализ скриптов.</li>
+              <li>Черновой план сайта и бота в Figma.</li>
+            </ul>
           </article>
-          <article class="card">
-            <h3 data-i18n="s2Title">Автоматизация коммуникаций</h3>
-            <p data-i18n="s2Text">Настраиваем сценарии обработки заявок, напоминания и автоответы в мессенджерах и CRM.</p>
+          <article class="journey-step">
+            <span class="journey-index">02</span>
+            <h3>Запуск ядра</h3>
+            <p>Hero-страница, лид-форма и мультиканальный бот с голосовыми и автоответами.</p>
+            <ul>
+              <li>FastAPI, Redis и Green-API для стабильных ответов.</li>
+              <li>Сбор лидов в CRM, Notion или Sheets.</li>
+              <li>SLA первого ответа — до 5 минут.</li>
+            </ul>
           </article>
-          <article class="card">
-            <h3 data-i18n="s3Title">Сайты и упаковка</h3>
-            <p data-i18n="s3Text">Создаем лендинги и страницы услуг с сильным оффером, кейсами и удобной заявкой.</p>
+          <article class="journey-step">
+            <span class="journey-index">03</span>
+            <h3>Масштабирование</h3>
+            <p>Локализации, квизы, прогрев, автоматические отчёты и платежные ссылки.</p>
+            <ul>
+              <li>Контент-хаб и автоматические переводы.</li>
+              <li>Триггеры в рассылках и рекламе.</li>
+              <li>Контроль LTV и повторных сделок.</li>
+            </ul>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="process" class="section">
+    <section id="services" class="section compact-hidden">
+      <div class="container">
+        <h2 data-i18n="servicesTitle">Что получаете на каждом уровне</h2>
+        <div class="cards service-suites">
+          <article class="card">
+            <h3 data-i18n="s1Title">Signal</h3>
+            <p>Аудит, формулировка ценности и быстрый прототип, чтобы протестировать гипотезы до крупных затрат.</p>
+            <ul>
+              <li>Hero-экран и обновлённый оффер</li>
+              <li>Бриф и база FAQ для бота</li>
+              <li>Карта процессов и метрик</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3 data-i18n="s2Title">Motion</h3>
+            <p>Лид-машина под ключ: сценарии, голосовые ответы, интеграции с CRM и точные уведомления по каждому обращению.</p>
+            <ul>
+              <li>Мультиязычный бот с голосом и AI</li>
+              <li>WhatsApp/Telegram webhooks и виджет</li>
+              <li>Панель SLA, оповещения и отчёты</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3 data-i18n="s3Title">Pulse</h3>
+            <p>Рост и LTV: персональные триггеры, апселл-воронки, автоматизированные рассылки и контент-хаб.</p>
+            <ul>
+              <li>Контент-хаб и SEO-модуль</li>
+              <li>Маршруты повторных покупок</li>
+              <li>Еженедельный консалтинг</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="process" class="section compact-hidden">
       <div class="container">
         <h2 data-i18n="processTitle">Как мы работаем</h2>
         <div class="cards">
           <article class="card">
             <h3 data-i18n="pr1Title">1. Диагностика</h3>
-            <p data-i18n="pr1Text">Короткий созвон: определяем цель, сроки и приоритеты.</p>
+            <p data-i18n="pr1Text">30-минутный созвон: фиксируем цели, ограничения и собираем данные для прототипа.</p>
           </article>
           <article class="card">
             <h3 data-i18n="pr2Title">2. План и запуск</h3>
-            <p data-i18n="pr2Text">Согласовываем структуру и запускаем первую рабочую версию.</p>
+            <p data-i18n="pr2Text">Согласовываем структуру сайта и бота, подключаем интеграции, тестируем первую версию.</p>
           </article>
           <article class="card">
             <h3 data-i18n="pr3Title">3. Оптимизация</h3>
-            <p data-i18n="pr3Text">Смотрим цифры, дорабатываем сценарии и усиливаем результат.</p>
+            <p data-i18n="pr3Text">Отслеживаем метрики, добавляем сценарии, делимся отчётами и планируем следующие итерации.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="botdemo" class="section alt">
+    <section id="site-demo" class="section alt">
       <div class="container">
-        <h2 data-i18n="botDemoTitle">Telegram-бот в работе</h2>
-        <p data-i18n="botDemoText">Показываем клиенту, как бот общается, какие вопросы уточняет и как вы получаете уведомления по каждому входящему сообщению.</p>
+        <h2 data-i18n="botDemoTitle">Сайт LidCraft в работе</h2>
+        <p data-i18n="botDemoText">Показываем, как страница ведёт клиента от первого экрана до заявки: скорость загрузки, блоки доверия, уведомления менеджера.</p>
 
-        <div class="demo-gallery">
-          <figure class="demo-item">
-            <img src="assets/tg-demo-1.svg" alt="Пример диалога клиента с ботом" loading="lazy" />
-            <figcaption data-i18n="botDemoCap1">Пример реального диалога: бот уточняет задачу и ведет к брифу.</figcaption>
-          </figure>
-          <figure class="demo-item">
-            <img src="assets/tg-demo-2.svg" alt="Уведомления владельцу проекта" loading="lazy" />
-            <figcaption data-i18n="botDemoCap2">Вы получаете информацию о новом контакте и каждом сообщении клиента.</figcaption>
-          </figure>
-          <figure class="demo-item">
-            <img src="assets/tg-demo-3.svg" alt="Схема работы Telegram бота" loading="lazy" />
-            <figcaption data-i18n="botDemoCap3">Прозрачный процесс: клиент пишет → бот отвечает → вы контролируете лид.</figcaption>
-          </figure>
+        <div class="bot-demo-interactive">
+          <div class="bot-demo-visual">
+            <img id="siteDemoMedia" src="assets/tg-demo-1.svg" alt="Демонстрация ключевых экранов сайта" loading="lazy" />
+          </div>
+          <div class="bot-demo-panel">
+            <p id="siteDemoSummary">Сайт собирает оффер, FAQ и кейсы на одном полотне, чтобы клиент сразу понял ценность и сделал заявку.</p>
+            <ul id="siteDemoHighlights" class="demo-highlights">
+              <li>На первом экране: оффер, квиз и CTA для быстрого ответа.</li>
+              <li>Динамические блоки соцдоказательства и процесс работы.</li>
+              <li>Заявка падает в CRM и отправляет push менеджеру.</li>
+            </ul>
+            <div class="demo-cta">
+              <button id="siteDemoCopy" class="btn ghost" type="button" data-i18n="botDemoCopy" data-success-ru="Сводка скопирована" data-success-en="Summary copied" data-success-kk="Есеп көшірілді" data-fallback-ru="Добавили в заявку" data-fallback-en="Added to form" data-fallback-kk="Формаға қостық">Скопировать сводку</button>
+              <a class="btn primary" href="#contact" data-i18n="botDemoCta">Запросить похожий сайт</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bot-demo-metrics">
+          <article class="bot-metric-card">
+            <span class="metric-eyebrow" data-i18n="botMetricSpeedLabel">Скорость загрузки</span>
+            <strong>0.9 c</strong>
+            <p data-i18n="botMetricSpeedText">Оптимизируем медиаконтент и скрипты, чтобы первый экран прогружался быстрее 1 секунды.</p>
+          </article>
+          <article class="bot-metric-card">
+            <span class="metric-eyebrow" data-i18n="botMetricVoiceLabel">Конверсия в лид</span>
+            <strong>5.1%</strong>
+            <p data-i18n="botMetricVoiceText">Комбо из квиза, social proof и виджета обратной связи поднимает конверсию c 2% до 5%+.</p>
+          </article>
+          <article class="bot-metric-card">
+            <span class="metric-eyebrow" data-i18n="botMetricManagerLabel">Редактирование</span>
+            <strong>&lt; 15 мин</strong>
+            <p data-i18n="botMetricManagerText">Через Notion/Markdown и авто-деплой редактируем тексты и блоки без привлечения разработчика.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section id="bot-features" class="section">
+    <section id="site-features" class="section compact-hidden">
       <div class="container">
-        <h2>Что умеет бот LidCraft Studio</h2>
+        <h2>Что умеет сайт LidCraft Studio</h2>
         <div class="cards">
           <article class="card">
-            <h3>Голосовые ответы</h3>
-            <p>Бот может отправлять клиенту голосовые сообщения, когда это уместно, и сохранять естественный стиль общения.</p>
+            <h3>Глубокий hero-блок</h3>
+            <p>Первый экран собирает оффер, квиз и CTA — можно менять тексты в Notion и деплоить без разработчика.</p>
           </article>
           <article class="card">
-            <h3>Понимание голосовых от клиента</h3>
-            <p>Если клиент отправил голосовое, бот распознает речь и отвечает по содержанию без потери контекста.</p>
+            <h3>Динамический контент</h3>
+            <p>Кейсы, показатели и отзывы подгружаются из CMS или Google Sheets и мгновенно обновляются на странице.</p>
           </article>
           <article class="card">
-            <h3>Обработка звонков</h3>
-            <p>Можно выбрать режим: отклонять звонки с кратким ответом, только отклонять, или не отклонять и продолжать диалог в чате.</p>
+            <h3>Комбо CTA</h3>
+            <p>Формы, квизы, мессенджер-кнопки и быстрые заявки работают параллельно, чтобы не терять лиды.</p>
           </article>
           <article class="card">
-            <h3>Кратко и по делу</h3>
-            <p>Бот отвечает коротко и понятно, а при запросе клиента дает более расширенное объяснение.</p>
+            <h3>SEO + скорость</h3>
+            <p>Статика, lazy-load и структурированные данные помогают быстрее индексироваться и не проседать по Core Web Vitals.</p>
           </article>
           <article class="card">
-            <h3>Широкий диапазон тем</h3>
-            <p>Поддерживает разговор по задачам бизнеса и смежным вопросам, помогает удержать клиента в диалоге.</p>
+            <h3>Интеграции</h3>
+            <p>Каждая форма шлёт данные в CRM, Notion, Telegram или Sheets с тегами и источниками.</p>
           </article>
           <article class="card">
-            <h3>Расширяемые возможности</h3>
-            <p>Можно подключать дополнительные сценарии: FAQ, маршрутизация, интеграции с CRM и аналитикой.</p>
+            <h3>Расширяемая архитектура</h3>
+            <p>Добавляем лендинги под новые офферы, локализации и paywall-модули без пересборки всей системы.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="trust" class="section trust">
+      <div class="container trust-grid">
+        <div class="trust-copy">
+          <p class="section-eyebrow" data-i18n="trustEyebrow">Доверие</p>
+          <h2 data-i18n="trustTitle">Услуги, e-commerce и EdTech уже подключили LidCraft Studio</h2>
+          <p data-i18n="trustText">Встраиваемся в рабочие процессы клиента и запускаем бота там, где эффект наступает быстрее всего: горячая линия, записи, CRM и рассылки.</p>
+          <div class="logo-row">
+            <span class="logo-pill">RetailLab</span>
+            <span class="logo-pill">Expertify</span>
+            <span class="logo-pill">Kaspi PRO</span>
+            <span class="logo-pill">CityMed</span>
+          </div>
+          <ul class="trust-list">
+            <li data-i18n="trustList1">Ответ за 1–5 минут даже в пиковые сезоны.</li>
+            <li data-i18n="trustList2">Потери лидов падают с ~30% до 10%.</li>
+            <li data-i18n="trustList3">Каждое обращение фиксируется в CRM или таблицах.</li>
+          </ul>
+          <div class="trust-metrics">
+            <article>
+              <span data-i18n="trustMetricSlaLabel">SLA &lt;5 мин</span>
+              <strong>94%</strong>
+              <small data-i18n="trustMetricSlaText">чатов закрываются ботом быстрее, чем отвечает менеджер.</small>
+            </article>
+            <article>
+              <span data-i18n="trustMetricNpsLabel">NPS</span>
+              <strong>64</strong>
+              <small data-i18n="trustMetricNpsText">оценка клиентов после первой недели работы бота.</small>
+            </article>
+            <article>
+              <span data-i18n="trustMetricHoursLabel">Высвобождено</span>
+              <strong>14 ч/нед</strong>
+              <small data-i18n="trustMetricHoursText">среднее снижение ручных касаний у команд продаж.</small>
+            </article>
+          </div>
+        </div>
+        <div class="testimonials">
+          <article class="quote-card">
+            <p>«В WhatsApp появляется до 40 обращений в день, и бот LidCraft держит SLA 5 минут, пока менеджеры в пути.»</p>
+            <div class="quote-meta">
+              <strong>Алия Садыкова</strong>
+              <span>RetailLab, услуги</span>
+            </div>
+          </article>
+          <article class="quote-card">
+            <p>«Автоворонка + FAQ в Telegram сняли с команды 14 часов рутины в неделю и дали +32% конверсии в предоплату.»</p>
+            <div class="quote-meta">
+              <strong>Игорь Савин</strong>
+              <span>Expertify, EdTech</span>
+            </div>
           </article>
         </div>
       </div>
@@ -206,24 +436,60 @@
     <section id="cases" class="section alt">
       <div class="container">
         <h2 data-i18n="casesTitle">Кейсы</h2>
-        <div class="cards">
-          <article class="card">
-            <h3 data-i18n="c1Title">Ниша: услуги</h3>
-            <p data-i18n="c1Text">Снизили потери заявок за счет автоответов и четкого маршрута клиента.</p>
+        <div class="case-grid">
+          <article class="case-card">
+            <div class="case-header">
+              <span class="case-industry">Услуги</span>
+              <div class="case-metric">
+                <strong>−68%</strong>
+                <span>потерь лидов</span>
+              </div>
+            </div>
+            <p>Салон красоты с пиковыми чатами вечером. Настроили автоответы, голосовые подсказки и фиксацию в CRM.</p>
+            <ul>
+              <li>Ответ ≤ 5 минут, даже при 40 сообщениях/день.</li>
+              <li>Уведомления менеджеру в Telegram и Google Sheets.</li>
+              <li>Автодобавление тегов по услуге и бюджету.</li>
+            </ul>
+            <blockquote>«Поток сохранился, а команда дожимает только “тёплых” клиентов.»</blockquote>
           </article>
-          <article class="card">
-            <h3 data-i18n="c2Title">Ниша: e-commerce</h3>
-            <p data-i18n="c2Text">Автоматизировали ответы на частые вопросы и ускорили обработку заказов.</p>
+          <article class="case-card">
+            <div class="case-header">
+              <span class="case-industry">E-commerce</span>
+              <div class="case-metric">
+                <strong>+14</strong>
+                <span>часов в неделю</span>
+              </div>
+            </div>
+            <p>Интернет-магазин гаджетов. Бот разобрал FAQ, проверку наличия и статусы заказов.</p>
+            <ul>
+              <li>Встроили ответы в WhatsApp + сайт виджет.</li>
+              <li>Синхронизация с CRM по API.</li>
+              <li>Конверсия в повторную покупку выросла на 18%.</li>
+            </ul>
+            <blockquote>«Менеджеры фокусируются на апсейле, а не на трекинге посылок.»</blockquote>
           </article>
-          <article class="card">
-            <h3 data-i18n="c3Title">Ниша: экспертный бизнес</h3>
-            <p data-i18n="c3Text">Построили простую воронку: контент → заявка → консультация → продажа.</p>
+          <article class="case-card">
+            <div class="case-header">
+              <span class="case-industry">Экспертный бизнес</span>
+              <div class="case-metric">
+                <strong>+45%</strong>
+                <span>LTV</span>
+              </div>
+            </div>
+            <p>Онлайн-школа. Создали воронку «контент → заявка → консультация → продажа» с прогревом и напоминаниями.</p>
+            <ul>
+              <li>Сбор брифов внутри Telegram и WhatsApp.</li>
+              <li>Запуск мини-квизов для сегментации.</li>
+              <li>Апселл на сопровождение через 21 день.</li>
+            </ul>
+            <blockquote>«Прозрачная аналитика и чёткое понимание, кто уже готов платить.»</blockquote>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="benefits" class="section">
+    <section id="benefits" class="section compact-hidden">
       <div class="container">
         <h2>Почему с LidCraft Studio работа становится лучше</h2>
         <div class="cards">
@@ -243,7 +509,44 @@
       </div>
     </section>
 
-    <section id="benchmark" class="section alt">
+    <section id="architecture" class="section architecture compact-hidden">
+      <div class="container">
+        <h2>Архитектура решения</h2>
+        <p>Показываем, как данные проходят путь от сайта и чат-бота до CRM и отчетов. Так бизнес заранее понимает, какие точки мы контролируем.</p>
+        <div class="architecture-flow">
+          <article class="arch-step">
+            <span class="arch-index">1</span>
+            <h3>Сайт + лендинги</h3>
+            <p>Формы и квизы собирают данные, автоматически проставляя UTM и сегмент.</p>
+          </article>
+          <article class="arch-step">
+            <span class="arch-index">2</span>
+            <h3>Мессенджеры</h3>
+            <p>Боты в Telegram и WhatsApp прогревают, фиксируют бриф и напоминают клиенту.</p>
+          </article>
+          <article class="arch-step">
+            <span class="arch-index">3</span>
+            <h3>FastAPI + Redis</h3>
+            <p>Логика ответов, маршрутизация и защита от дубликатов работают на бекенде.</p>
+          </article>
+          <article class="arch-step">
+            <span class="arch-index">4</span>
+            <h3>CRM + отчеты</h3>
+            <p>Лиды попадают в Bitrix24, Notion или Google Sheets, формируя прозрачную воронку.</p>
+          </article>
+        </div>
+        <div class="stack-row">
+          <span class="stack-pill">FastAPI</span>
+          <span class="stack-pill">Redis</span>
+          <span class="stack-pill">Green-API</span>
+          <span class="stack-pill">Telegram Bot API</span>
+          <span class="stack-pill">Google Sheets</span>
+          <span class="stack-pill">Bitrix24</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="benchmark" class="section alt compact-hidden">
       <div class="container">
         <h2>Что улучшили на основе лучших мировых сайтов</h2>
         <div class="cards">
@@ -280,12 +583,85 @@
             <p>Потери лидов: 5–15%</p>
             <p>Ручная рутина: в 2–3 раза ниже</p>
           </article>
-          <article class="card">
-            <h3>Прогноз роста</h3>
-            <label for="leadsInput">Ваши лиды в месяц</label>
-            <input id="leadsInput" type="number" min="0" placeholder="Например, 120" class="field" />
-            <button id="calcGrowth" class="btn primary" type="button">Рассчитать</button>
-            <p id="calcResult" class="result-text">Введите значение и получите примерный прогноз улучшения.</p>
+          <article class="card analysis-delta">
+            <h3>Что меняется в первую неделю</h3>
+            <ul class="analysis-list">
+              <li><strong>Скорость реакции</strong> Автоответ и уведомления в Telegram держат SLA до 60 секунд.</li>
+              <li><strong>Контроль воронки</strong> UTM и причины отказов сразу летят в Notion-дашборд.</li>
+              <li><strong>Экономия команды</strong> Квизы и виджеты закрывают до 70% повторных вопросов.</li>
+            </ul>
+            <p class="analysis-note">Обновляем показатели каждые 7 дней и присылаем апдейт менеджеру.</p>
+          </article>
+          <article class="card calc-card">
+            <h3 data-i18n="calcTitle">Прогноз роста</h3>
+            <div class="calc-grid">
+              <label for="leadsInput" data-i18n="calcLeadsLabel">Лидов в месяц</label>
+              <input id="leadsInput" type="number" min="0" placeholder="Например, 120" class="field" />
+              <label for="avgCheck" data-i18n="calcAvgCheckLabel">Средний чек (₸)</label>
+              <input id="avgCheck" type="number" min="0" placeholder="Например, 45000" class="field" />
+              <label for="conversionBefore" data-i18n="calcConversionBefore">Конверсия до (%)</label>
+              <input id="conversionBefore" type="number" min="0" max="100" placeholder="Например, 12" class="field" />
+              <label for="conversionAfter" data-i18n="calcConversionAfter">Цель конверсии (%)</label>
+              <input id="conversionAfter" type="number" min="0" max="100" placeholder="Например, 22" class="field" />
+              <label for="teamSize" data-i18n="calcTeamSizeLabel">Часов команды на обработку</label>
+              <input id="teamSize" type="number" min="0" placeholder="Например, 40" class="field" />
+              <label for="industrySelect" data-i18n="calcIndustryLabel">Ниша</label>
+              <select id="industrySelect" class="field">
+                <option value="services">Services</option>
+                <option value="ecommerce">E-commerce</option>
+                <option value="edtech">EdTech</option>
+              </select>
+            </div>
+            <div class="calc-actions">
+              <button id="calcGrowth" class="btn primary" type="button" data-i18n="calcButton">Рассчитать</button>
+              <button id="calcShare" class="btn ghost" type="button" data-i18n="calcShare" data-success-ru="Сводка скопирована" data-success-en="Summary copied" data-success-kk="Есеп көшірілді" data-fallback-ru="Добавили в заявку" data-fallback-en="Added to form" data-fallback-kk="Формаға қостық">Отправить расчёт команде</button>
+            </div>
+            <p id="calcResult" class="result-text" data-i18n="calcResultPlaceholder">Введите данные, чтобы увидеть потенциал роста.</p>
+            <div class="analysis-visual">
+              <div class="bar-row">
+                <span>Потери до</span>
+                <div class="bar-track"><span class="bar-fill" data-bar="lost-before" style="--value:30%;"></span></div>
+                <span class="bar-value" id="lostBeforeValue">30%</span>
+              </div>
+              <div class="bar-row">
+                <span>Потери после</span>
+                <div class="bar-track"><span class="bar-fill" data-bar="lost-after" style="--value:10%;"></span></div>
+                <span class="bar-value" id="lostAfterValue">10%</span>
+              </div>
+              <div class="bar-row">
+                <span>Сэкономлено</span>
+                <div class="bar-track"><span class="bar-fill" data-bar="saved" style="--value:20%;"></span></div>
+                <span class="bar-value" id="savedPercent">20%</span>
+              </div>
+            </div>
+            <div class="insight-pills">
+              <div class="insight-pill">
+                <span id="savedLeads">0</span>
+                <small>лидов сохраняем ежемесячно</small>
+              </div>
+              <div class="insight-pill">
+                <span id="savedRevenue">0 ₸</span>
+                <small>потенциал доп. выручки</small>
+              </div>
+            </div>
+            <div id="calcInsights" class="calc-insights">
+              <article>
+                <strong id="calcWinRate">+0%</strong>
+                <small data-i18n="calcInsightWin">рост win-rate при быстром ответе</small>
+              </article>
+              <article>
+                <strong id="calcHoursSaved">0 ч</strong>
+                <small data-i18n="calcInsightHours">экономия времени команды</small>
+              </article>
+              <article>
+                <strong id="calcEscalations">0%</strong>
+                <small data-i18n="calcInsightEsc">диалогов уходит менеджеру</small>
+              </article>
+            </div>
+            <div id="calcFollowup" class="calc-followup">
+              <p id="calcFollowupText">Хотите увидеть расчёт под ваши цифры? Попросите команду подготовить точный прогноз.</p>
+              <button id="calcPrefill" class="btn ghost" type="button" data-i18n="calcPrefill">Получить точный прогноз</button>
+            </div>
           </article>
         </div>
       </div>
@@ -297,20 +673,20 @@
         <div class="cards pricing">
           <article class="card">
             <h3 data-i18n="p1Title">Start</h3>
-            <p class="price">$99</p>
-            <p data-i18n="p1Text">Экспресс-аудит, карта задач и 1 консультация.</p>
+            <p class="price">79 000 ₸</p>
+            <p data-i18n="p1Text">Экспресс-аудит, карта задач и 1 консультация. Точный расчёт: +216 000 ₸/мес при 120 лидах, 45 000 ₸ чеке и росте 12% → 16%.</p>
             <a class="btn primary" href="https://pay.cloudtips.ru/p/replace-start" target="_blank" rel="noopener">Оплатить Start</a>
           </article>
           <article class="card featured">
             <h3 data-i18n="p2Title">Growth</h3>
-            <p class="price">$299</p>
-            <p data-i18n="p2Text">Настройка ключевых сценариев и запуск первой автоматизации.</p>
+            <p class="price">189 000 ₸</p>
+            <p data-i18n="p2Text">Запуск сайта, сценариев и первой автоматизации. Точный расчёт: +540 000 ₸/мес при 120 лидах, 45 000 ₸ чеке и росте 12% → 22%.</p>
             <a class="btn primary" href="https://pay.cloudtips.ru/p/replace-growth" target="_blank" rel="noopener">Оплатить Growth</a>
           </article>
           <article class="card">
             <h3 data-i18n="p3Title">Scale</h3>
-            <p class="price">$799</p>
-            <p data-i18n="p3Text">Комплексный запуск: сайт, интеграции, сопровождение и аналитика.</p>
+            <p class="price">399 000 ₸</p>
+            <p data-i18n="p3Text">Комплекс: сайт, интеграции, сопровождение и аналитика. Точный расчёт: +864 000 ₸/мес при 120 лидах, 45 000 ₸ чеке и росте 12% → 28%.</p>
             <a class="btn primary" href="https://pay.cloudtips.ru/p/replace-scale" target="_blank" rel="noopener">Оплатить Scale</a>
           </article>
         </div>
@@ -318,7 +694,52 @@
       </div>
     </section>
 
-    <section id="tests" class="section">
+    <section id="premium-standard" class="section premium-standard">
+      <div class="container">
+        <div class="premium-standard-head">
+          <div>
+            <p class="section-eyebrow">Premium Standard</p>
+            <h2>Как мы делаем сайт премиум-класса для работы с клиентами</h2>
+            <p>Фиксируем стандарт качества до запуска: SLA по заявкам, контроль этапов, безопасность данных и понятная отчётность для руководителя.</p>
+          </div>
+          <a class="btn primary" href="#contact" data-track="premium_standard_cta">Запросить premium-план</a>
+        </div>
+        <div class="premium-grid">
+          <article class="card premium-card">
+            <span>01</span>
+            <h3>Client-ready UX</h3>
+            <p>Сценарии спроектированы так, чтобы клиент за 60–90 секунд понимал ценность и доходил до заявки без лишних кликов.</p>
+            <ul>
+              <li>Ясный оффер + доказательства в первом экране.</li>
+              <li>CTA для сайта, Telegram и WhatsApp одновременно.</li>
+              <li>Логика блоков под разные ниши и сегменты.</li>
+            </ul>
+          </article>
+          <article class="card premium-card">
+            <span>02</span>
+            <h3>Продажи под контролем</h3>
+            <p>Каждая заявка попадает в воронку с источником, приоритетом и ответственным менеджером.</p>
+            <ul>
+              <li>Маршрут: сайт → CRM → уведомление менеджеру.</li>
+              <li>SLA первого ответа до 5 минут.</li>
+              <li>Отчёт по статусам и потерям лидов каждую неделю.</li>
+            </ul>
+          </article>
+          <article class="card premium-card">
+            <span>03</span>
+            <h3>Надёжность и безопасность</h3>
+            <p>Доступы, ключи и вебхуки ведём как рабочий продукт, а не «на доверии» в чате.</p>
+            <ul>
+              <li>Ротация токенов и контроль прав доступа.</li>
+              <li>Резервные сценарии отправки заявок.</li>
+              <li>Протокол изменений для команды клиента.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="tests" class="section compact-hidden">
       <div class="container">
         <h2>Примерный тест: готов ли бизнес к автоматизации</h2>
         <div class="quiz-box">
@@ -329,6 +750,48 @@
           </div>
           <p id="quizProgress" class="result-text">Вопрос 1 из 5</p>
           <p id="quizResult" class="result-text">Ответьте на вопросы — получите ориентировочную оценку.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="phone-login" class="section alt phone-login compact-hidden">
+      <div class="container">
+        <p class="section-eyebrow">Авторизация</p>
+        <h2>Вход по номеру телефона с SMS-кодом</h2>
+        <p>Людям не нужно вспоминать пароль: получаем номер, отправляем одноразовый код через выбранного провайдера и фиксируем все попытки в CRM.</p>
+        <div class="sms-login-grid">
+          <form id="smsLoginForm" class="card sms-login-panel" novalidate>
+            <div class="sms-login-head">
+              <h3>Запрос кода</h3>
+              <p>Поддерживаем Twilio, SMSC и Kaspi Pay. Номер проверяем, код генерируем и логируем в отчёте.</p>
+            </div>
+            <label for="smsPhoneInput">Номер телефона</label>
+            <div class="sms-form-row">
+              <input id="smsPhoneInput" type="tel" class="field" placeholder="+7 777 000-00-00" inputmode="tel" autocomplete="tel-national" />
+              <button id="smsSendCode" class="btn primary" type="button">Получить код</button>
+            </div>
+            <div id="smsCodeBlock" class="sms-code-block">
+              <label for="smsCodeInput">Код из SMS</label>
+              <div class="sms-form-row">
+                <input id="smsCodeInput" type="text" class="field" placeholder="123456" inputmode="numeric" autocomplete="one-time-code" maxlength="6" />
+                <button id="smsVerifyButton" class="btn ghost" type="button">Подтвердить вход</button>
+              </div>
+              <small id="smsResendHint">Можно запросить новый код через 45 секунд.</small>
+            </div>
+            <p id="smsLoginStatus" class="result-text">Введите номер телефона — пришлём одноразовый код в SMS.</p>
+          </form>
+          <div class="card sms-login-feed">
+            <h3>Что увидит клиент</h3>
+            <div class="sms-preview">
+              <span>SMS login</span>
+              <p>Ваш код для входа: <strong>482 936</strong>. LidCraft Studio.</p>
+            </div>
+            <ul id="smsLoginTimeline" class="sms-login-timeline"></ul>
+            <div class="sms-login-meta">
+              <span>Провайдеры: Twilio, SMSC, Kaspi Pay</span>
+              <span>Логи отправляем в CRM и Notion</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -353,18 +816,176 @@
       </div>
     </section>
 
+    <section id="materials" class="section compact-hidden">
+      <div class="container">
+        <div class="materials-header">
+          <div>
+            <h2>Материалы и обновления</h2>
+            <p>Собрали чек-листы, презентации и публичные заметки, чтобы команда могла подготовиться до созвона.</p>
+          </div>
+          <div class="materials-progress">
+            <span>Новые материалы каждую неделю</span>
+            <div class="progress-track"><span class="progress-fill" style="--progress:68%;"></span></div>
+          </div>
+        </div>
+        <div class="materials-grid">
+          <article class="card">
+            <h3>Материалы проекта</h3>
+            <p>Чек-листы, сценарии и ответы на частые вопросы от команды LidCraft Studio.</p>
+            <a class="btn primary" href="TOP_SITE_INSIGHTS.md">Открыть материалы</a>
+          </article>
+          <article class="card">
+            <h3>Шпаргалка по запуску</h3>
+            <p>План на 10 шагов: от фиксации оффера до подключения CRM и аналитики.</p>
+            <a class="btn ghost" href="TOP_SITE_INSIGHTS.md">Скачать чек-лист</a>
+          </article>
+          <article class="card">
+            <h3>Плейбук безопасности</h3>
+            <p>Гайд по безопасному хранению токенов, вебхуков и доступов к CRM.</p>
+            <a class="btn ghost" href="SECURITY_HARDENING.md">Читать playbook</a>
+          </article>
+          <article class="card">
+            <h3>Deploy & Care</h3>
+            <p>Пошаговая инструкция, как обновлять сайт и бота после релиза.</p>
+            <a class="btn ghost" href="DEPLOY_AND_EDIT.md">Открыть инструкцию</a>
+          </article>
+          <article class="card">
+            <h3>Публичная витрина</h3>
+            <p>Ленты соцсетей, тестовые кабинеты, шаблоны сообщений — всё в одном месте.</p>
+            <a class="btn ghost" href="links.html">Перейти к ссылкам</a>
+          </article>
+          <article class="card">
+            <h3>SEO-компас</h3>
+            <p>Meta-тексты, OG-шаблоны и список обязательных тегов перед релизом.</p>
+            <a class="btn ghost" href="TOP_SITE_INSIGHTS.md">Скачать гайд</a>
+          </article>
+          <article class="card">
+            <h3>Структура сайта</h3>
+            <p>Актуальный sitemap.xml и готовые UTM-параметры для новых лендингов.</p>
+            <a class="btn ghost" href="sitemap.xml">Открыть sitemap</a>
+          </article>
+        </div>
+        <div class="materials-lab">
+          <article class="card materials-checklist">
+            <h3>SEO чек-лист</h3>
+            <ul>
+              <li>Title ≤ 65 символов и уникальный H1.</li>
+              <li>Meta description до 155 символов + CTA.</li>
+              <li>Open Graph и Twitter Card для шеринга.</li>
+              <li>Карта ключевых слов и перелинковка.</li>
+            </ul>
+          </article>
+          <article class="card materials-checklist">
+            <h3>Контент-хаб</h3>
+            <ol>
+              <li>Hero, оффер и квиз → сбор намерения.</li>
+              <li>Кейсы + social proof → доверие.</li>
+              <li>Материалы, чек-листы, SEO → повторные визиты.</li>
+            </ol>
+          </article>
+          <article class="card materials-playground">
+            <div class="materials-scope-head">
+              <div>
+                <h3>Materials lab</h3>
+                <p id="materialsScopeIntro">Выберите направление — увидите, какие активы готовы, а что ещё дорабатываем.</p>
+              </div>
+              <span class="scope-badge" id="materialsScopeOwner">Марина • контент</span>
+            </div>
+            <div class="materials-scope-chips" role="tablist">
+              <button class="scope-chip is-active" type="button" data-material-scope="seo" aria-pressed="true">SEO-релиз</button>
+              <button class="scope-chip" type="button" data-material-scope="automation" aria-pressed="false">Автоматизация</button>
+              <button class="scope-chip" type="button" data-material-scope="security" aria-pressed="false">Security</button>
+            </div>
+            <p class="materials-scope-brief" id="materialsScopeSummary">Обновляем OG, sitemap и проверяем schema — нужно 2 дня на вычитку и прогон через Lighthouse.</p>
+            <ul class="materials-scope-checklist" id="materialsScopeChecklist">
+              <li>Перепроверяем теги title/description и H1.</li>
+              <li>Поднимаем sitemap и RSS в одном пакете.</li>
+              <li>Добавляем structured data для hero и FAQ.</li>
+            </ul>
+            <div class="materials-scope-footer">
+              <div class="materials-metric">
+                <small>ETA</small>
+                <strong id="materialsScopeEta">2 дня</strong>
+              </div>
+              <div class="materials-metric">
+                <small>Формат</small>
+                <strong id="materialsScopeFormat">Notion + PDF</strong>
+              </div>
+              <a class="btn ghost" id="materialsScopeLink" href="TOP_SITE_INSIGHTS.md" target="_blank" rel="noopener">Скачать шаблон</a>
+            </div>
+          </article>
+        </div>
+        <div class="materials-tags">
+          <span>#seo</span>
+          <span>#automation</span>
+          <span>#botflows</span>
+          <span>#security</span>
+          <span>#deployment</span>
+        </div>
+      </div>
+    </section>
+
     <section id="contact" class="section alt">
       <div class="container">
         <h2 data-i18n="contactTitle">Контакты</h2>
-        <p data-i18n="contactText">Напишите нам в удобной соцсети — в ответ получите короткий план запуска под ваш кейс.</p>
-        <div class="contact-links">
-          <a href="https://t.me/Timur_0_6_0_6?text=%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%2C%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%20LidCraft%20Studio" target="_blank" rel="noopener">Telegram</a>
-          <a href="https://wa.me/000000000000?text=%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%20LidCraft%20Studio" target="_blank" rel="noopener">WhatsApp</a>
-          <a href="links.html" data-i18n="allSocials">Все соцсети</a>
+        <div class="contact-grid">
+          <div>
+            <p data-i18n="contactText">Напишите нам в удобной соцсети — в ответ получите короткий план запуска под ваш кейс.</p>
+            <div class="contact-links">
+              <a href="https://t.me/Timur_0_6_0_6?text=%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%2C%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%20LidCraft%20Studio" target="_blank" rel="noopener" data-track="telegram_contact">Telegram</a>
+              <a href="https://wa.me/77010702788?text=%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20LidCraft%20Studio" target="_blank" rel="noopener" data-track="whatsapp_contact">WhatsApp +7 701 070 27 88</a>
+              <a href="links.html" data-i18n="allSocials" data-track="all_socials">Все соцсети</a>
+            </div>
+            <ul class="contact-list">
+              <li>Соберём мини-бриф за 10 минут.</li>
+              <li>Подскажем, какой тариф подойдёт и что ожидать по срокам.</li>
+              <li>Покажем, как сайт ведёт пользователя именно в вашей нише.</li>
+            </ul>
+          </div>
+          <form id="quickLeadForm" class="lead-form" novalidate>
+            <div class="lead-form-grid">
+              <div>
+                <label for="leadName" data-i18n="leadNameLabel">Имя или компания*</label>
+                <input id="leadName" name="name" class="field" type="text" placeholder="Мария, RetailLab" data-i18n-placeholder="leadNamePlaceholder" required />
+              </div>
+              <div>
+                <label for="leadChannel" data-i18n="leadChannelLabel">Куда ответить*</label>
+                <select id="leadChannel" name="preferred" class="field" required>
+                  <option value="" data-i18n="leadChannelPlaceholder">Выберите канал</option>
+                  <option value="telegram">Telegram</option>
+                  <option value="whatsapp">WhatsApp</option>
+                  <option value="phone">Телефон</option>
+                  <option value="email">Email</option>
+                </select>
+              </div>
+            </div>
+            <label for="leadBusiness" data-i18n="leadBusinessLabel">Ниша / продукт</label>
+            <input id="leadBusiness" name="business" class="field" type="text" placeholder="онлайн-школа, косметология..." data-i18n-placeholder="leadBusinessPlaceholder" />
+            <label for="leadMessage" data-i18n="leadMessageLabel">Что нужно автоматизировать*</label>
+            <textarea id="leadMessage" name="message" class="field" rows="3" placeholder="Например: входящие заявки, ответы в WhatsApp, CRM и отчёты" data-i18n-placeholder="leadMessagePlaceholder" required></textarea>
+            <p class="lead-hint" data-i18n="leadHint">Чем конкретнее задача, тем быстрее вернёмся с планом и оценкой срока.</p>
+            <button class="btn primary" type="submit" data-track="lead_form_submit" data-i18n="leadSubmit">Отправить заявку</button>
+            <p class="form-status" id="leadStatus">Ответим в течение рабочего дня.</p>
+          </form>
         </div>
       </div>
     </section>
   </main>
+
+  <nav class="command-dock" aria-label="Быстрые действия по сайту">
+    <a class="dock-chip" href="#site-demo">
+      <span>Демо</span>
+      <small>Открыть пример</small>
+    </a>
+    <button class="dock-chip dock-chip--accent" type="button" data-prefill="Нужен индивидуальный UI-аудит и нестандартные секции под наш бренд.">
+      <span>UI-аудит</span>
+      <small>Запросить</small>
+    </button>
+    <a class="dock-chip" href="TOP_SITE_INSIGHTS.md" target="_blank" rel="noopener">
+      <span>Материалы</span>
+      <small>Чек-лист</small>
+    </a>
+  </nav>
 
   <footer class="footer">
     <div class="container">
@@ -375,20 +996,104 @@
 
   <a id="quickContactFab" class="quick-contact-fab" href="#contact">Быстрая заявка</a>
 
-  <script src="script.js"></script>
-  <script src="site-features.js"></script>
+  <div class="mobile-cta-bar" aria-label="Быстрые контакты">
+    <a class="mobile-cta mobile-cta--telegram" href="https://t.me/Timur_0_6_0_6?text=%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%2C%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%20LidCraft%20Studio" target="_blank" rel="noopener" data-track="telegram_mobile">Telegram</a>
+    <a class="mobile-cta mobile-cta--whatsapp" href="https://wa.me/77010702788?text=%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20LidCraft%20Studio" target="_blank" rel="noopener" data-track="whatsapp_mobile">WhatsApp</a>
+    <a class="mobile-cta mobile-cta--brief" href="#contact" data-track="brief_mobile">Бриф</a>
+  </div>
+
+  <script src="script.js?v=20260615"></script>
+  <script src="site-features.js?v=20260615"></script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "ProfessionalService",
       "name": "LidCraft Studio",
-      "url": "https://abdramanovtimur71-ux.github.io/lidcraft-studio-site/",
+      "url": "https://lidcraft.kz/",
       "description": "AI-консалтинг, сайты и автоматизация бизнес-процессов",
       "areaServed": "Worldwide",
       "sameAs": [
         "https://t.me/Timur_0_6_0_6",
-        "https://instagram.com/your_username",
-        "https://www.tiktok.com/@your_username"
+        "https://wa.me/77010702788",
+        "https://lidcraft.kz/links.html"
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Сколько времени занимает запуск?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Первая рабочая версия обычно готова в течение 3–7 дней, затем добавляем сценарии и аналитику."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Подойдет ли это моему бизнесу?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "На стартовом созвоне проверяем задачу и предлагаем только то, что окупается по цифрам."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Есть ли поддержка после запуска?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Да. Можно выбрать сопровождение, еженедельные апдейты и реакцию на пики нагрузки."
+          }
+        }
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "Как подготовить сайт LidCraft к релизу",
+      "description": "Пошаговый чек-лист: диагностика, запуск ядра и оптимизация SEO-активов.",
+      "totalTime": "P14D",
+      "supply": [
+        { "@type": "HowToSupply", "name": "Контент и оффер" },
+        { "@type": "HowToSupply", "name": "CRM и каналы коммуникаций" }
+      ],
+      "tool": [
+        { "@type": "HowToTool", "name": "FastAPI backend" },
+        { "@type": "HowToTool", "name": "Дизайн-система LidCraft" }
+      ],
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Диагностика",
+          "url": "https://lidcraft.kz/#journey",
+          "itemListElement": [
+            { "@type": "HowToDirection", "text": "Соберите текущие метрики лидов и оффер." },
+            { "@type": "HowToDirection", "text": "Определите, какие каналы требуют ответа ≤5 минут." }
+          ]
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Запуск ядра",
+          "url": "https://lidcraft.kz/#site-demo",
+          "itemListElement": [
+            { "@type": "HowToDirection", "text": "Соберите hero, квиз и блоки доверия." },
+            { "@type": "HowToDirection", "text": "Свяжите формы с CRM и настройте уведомления." }
+          ]
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Оптимизация",
+          "url": "https://lidcraft.kz/#materials",
+          "itemListElement": [
+            { "@type": "HowToDirection", "text": "Добавьте SEO-чек-лист и материалы для клиентов." },
+            { "@type": "HowToDirection", "text": "Обновляйте sitemap и structured data перед релизом." }
+          ]
+        }
       ]
     }
   </script>

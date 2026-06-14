@@ -1,54 +1,129 @@
+// Push-уведомления
+function requestPushPermission() {
+  if ('Notification' in window) {
+    Notification.requestPermission().then(function(permission) {
+      if (permission === 'granted') {
+        showWelcomeNotification();
+      }
+    });
+  }
+}
+
+function showWelcomeNotification() {
+  if ('Notification' in window && Notification.permission === 'granted') {
+    new Notification('LidCraft Studio', {
+      body: 'Добро пожаловать! Следите за новыми функциями и акциями.',
+      icon: 'assets/lidcraft-logo.svg'
+    });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  requestPushPermission();
+});
+
+// Кнопка для показа/скрытия блока выбора языка
 const translations = {
   ru: {
     navServices: "Услуги",
-    navBotDemo: "Бот",
+    navBotDemo: "Сайт",
     navCases: "Кейсы",
     navPricing: "Тарифы",
     navContact: "Контакты",
     navLinks: "Соцсети",
     navCta: "Связаться",
-    heroBadge: "Для малого и среднего бизнеса",
-    heroTitle: "LidCraft Studio: технологии, которые превращаются в заявки и продажи",
-    heroText: "Помогаем бизнесу внедрять AI и автоматизацию без перегруза: от сайта и оффера до рабочих сценариев в Telegram, WhatsApp и CRM.",
-    heroCta1: "Обсудить проект",
-    heroCta2: "Все соцсети",
-    kpi1: "⚡ Первые результаты: от 3 дней",
-    kpi2: "📈 Цель: больше целевых заявок и меньше рутины",
-    kpi3: "🤝 Работаем в формате «под ключ» с сопровождением",
-    kpi4: "🧩 Решения под вашу нишу, а не шаблон «для всех»",
-    servicesTitle: "Услуги",
-    s1Title: "AI-консалтинг",
-    s1Text: "Разбираем текущие процессы, считаем экономику внедрения и даем понятный план действий.",
-    s2Title: "Автоматизация коммуникаций",
-    s2Text: "Настраиваем сценарии обработки заявок, напоминания и автоответы в мессенджерах и CRM.",
-    s3Title: "Сайты и упаковка",
-    s3Text: "Создаем лендинги и страницы услуг с сильным оффером, кейсами и удобной заявкой.",
+    heroBadge: "AI-ускорение для малого и среднего бизнеса",
+    heroTitle: "LidCraft Studio превращает хаос в воронку заявок за 14 дней",
+    heroText: "Связываем сайт, бот, CRM и постпродажи в единую систему. Клиенты получают ответ за минуты, команда — прозрачные цифры, вы — прогнозируемый рост без расширения штата.",
+    heroCta1: "Запросить аудит",
+    heroCta2: "Все каналы связи",
+    heroCtaCases: "Смотреть кейсы",
+    heroCtaNote: "Ответим в Telegram или WhatsApp с планом запуска и ближайшим сроком старта.",
+    fitTitle: "Кому подходим",
+    fitItem1: "Сервисному бизнесу, где заявки теряются в чатах и звонках.",
+    fitItem2: "E-commerce, где поддержка съедает время команды.",
+    fitItem3: "Экспертным продуктам, где нужен путь от контента до созвона.",
+    solveTitle: "Что закрываем за 14 дней",
+    solveItem1: "Новый оффер и понятный первый экран без лишнего шума.",
+    solveItem2: "Маршрут заявки: сайт → бот → CRM → уведомление менеджеру.",
+    solveItem3: "FAQ, SLA и повторные касания, чтобы лид не выпадал.",
+    resultTitle: "Что получаете на выходе",
+    resultItem1: "Рабочий лендинг, а не только макет.",
+    resultItem2: "Форму и каналы связи, которые реально конвертируют.",
+    resultItem3: "Понятный план следующего спринта по данным, а не по ощущениям.",
+    servicesTitle: "Что получаете на каждом уровне",
+    s1Title: "Signal",
+    s1Text: "Аудит, формулировка ценности и быстрый прототип, чтобы протестировать гипотезы до крупных затрат.",
+    s2Title: "Motion",
+    s2Text: "Лид-машина под ключ: сценарии, голосовые ответы, интеграции с CRM и точные уведомления по каждому обращению.",
+    s3Title: "Pulse",
+    s3Text: "Рост и LTV: персональные триггеры, апселл-воронки, автоматизированные рассылки и контент-хаб.",
     processTitle: "Как мы работаем",
     pr1Title: "1. Диагностика",
-    pr1Text: "Короткий созвон: определяем цель, сроки и приоритеты.",
+    pr1Text: "30-минутный созвон: фиксируем цели, ограничения и собираем данные для прототипа.",
     pr2Title: "2. План и запуск",
-    pr2Text: "Согласовываем структуру и запускаем первую рабочую версию.",
+    pr2Text: "Согласовываем структуру сайта и бота, подключаем интеграции, тестируем первую версию.",
     pr3Title: "3. Оптимизация",
-    pr3Text: "Смотрим цифры, дорабатываем сценарии и усиливаем результат.",
-    botDemoTitle: "Telegram-бот в работе",
-    botDemoText: "Показываем клиенту, как бот общается, какие вопросы уточняет и как вы получаете уведомления по каждому входящему сообщению.",
-    botDemoCap1: "Пример реального диалога: бот уточняет задачу и ведет к брифу.",
-    botDemoCap2: "Вы получаете информацию о новом контакте и каждом сообщении клиента.",
-    botDemoCap3: "Прозрачный процесс: клиент пишет → бот отвечает → вы контролируете лид.",
+    pr3Text: "Отслеживаем метрики, добавляем сценарии, делимся отчётами и планируем следующие итерации.",
+    botDemoTitle: "Сайт LidCraft в работе",
+    botDemoText: "Показываем, как страница ведёт клиента от первого экрана до заявки: скорость загрузки, блоки доверия, уведомления менеджера.",
+    botDemoCopy: "Скопировать сводку",
+    botDemoCta: "Запросить похожий сайт",
+    botMetricSpeedLabel: "Скорость загрузки",
+    botMetricSpeedText: "Оптимизируем медиаконтент и скрипты, чтобы первый экран прогружался быстрее 1 секунды.",
+    botMetricVoiceLabel: "Конверсия в лид",
+    botMetricVoiceText: "Комбо из квиза, social proof и виджета обратной связи поднимает конверсию c 2% до 5%+.",
+    botMetricManagerLabel: "Редактирование",
+    botMetricManagerText: "Через Notion/Markdown и авто-деплой редактируем тексты и блоки без разработчика.",
+    botDemoCap1: "Первый экран: оффер, квиз и CTA сразу ведут к действию.",
+    botDemoCap2: "Заявки уходят в CRM и пингуют менеджера в Telegram/WhatsApp.",
+    botDemoCap3: "Прозрачный процесс: сайт → CRM → уведомление → повторные касания.",
+    liveBotLabel: "Live-просмотр",
+    liveBotTitle: "Живая трансляция сайта прямо в браузере",
+    liveBotText: "Демонстрируем, как сайт реагирует на действия пользователя: клики, квизы, заявку и уведомление менеджера в реальном времени.",
+    liveBotPoint1: "Снимаем экран и действия без подключения сторонних сервисов.",
+    liveBotPoint2: "Показываем, как появляются кейсы, pop-up и CTA на конкретном сценарии.",
+    liveBotPoint3: "Любую заявку сразу видит менеджер в CRM и мессенджерах.",
+    liveBotInputLabel: "Комментарий к сайту",
+    liveBotPlaceholder: "Спросите про блок или сценарий сайта",
+    liveBotSend: "Спросить про сайт",
+    liveBotStatUptime: "Аптайм",
+    liveBotStatLatency: "Задержка",
+    liveBotStatEscalations: "Обновления",
+    trustEyebrow: "Доверие",
+    trustTitle: "Услуги, e-commerce и EdTech уже подключили LidCraft Studio",
+    trustText: "Встраиваемся в рабочие процессы клиента и запускаем сайт там, где эффект наступает быстрее всего: горячая линия, записи, CRM и рассылки.",
+    trustList1: "Ответ за 1–5 минут даже в пиковые сезоны.",
+    trustList2: "Потери лидов падают с ~30% до 10%.",
+    trustList3: "Каждое обращение фиксируется в CRM или таблицах.",
+    trustMetricSlaLabel: "SLA <5 мин",
+    trustMetricSlaText: "чатов закрываем быстрее, чем отвечает менеджер.",
+    trustMetricNpsLabel: "NPS",
+    trustMetricNpsText: "оценка клиентов после первой недели работы сайта.",
+    trustMetricHoursLabel: "Высвобождено",
+    trustMetricHoursText: "среднее снижение ручных касаний у команд продаж.",
     casesTitle: "Кейсы",
-    c1Title: "Ниша: услуги",
-    c1Text: "Снизили потери заявок за счет автоответов и четкого маршрута клиента.",
-    c2Title: "Ниша: e-commerce",
-    c2Text: "Автоматизировали ответы на частые вопросы и ускорили обработку заказов.",
-    c3Title: "Ниша: экспертный бизнес",
-    c3Text: "Построили простую воронку: контент → заявка → консультация → продажа.",
     pricingTitle: "Тарифы",
     p1Title: "Start",
-    p1Text: "Экспресс-аудит, карта задач и 1 консультация.",
+    p1Text: "Экспресс-аудит, карта задач и 1 консультация. Точный расчёт: +216 000 ₸/мес при 120 лидах, 45 000 ₸ чеке и росте 12% → 16%.",
     p2Title: "Growth",
-    p2Text: "Настройка ключевых сценариев и запуск первой автоматизации.",
+    p2Text: "Запуск сайта, сценариев и первой автоматизации. Точный расчёт: +540 000 ₸/мес при 120 лидах, 45 000 ₸ чеке и росте 12% → 22%.",
     p3Title: "Scale",
-    p3Text: "Комплексный запуск: сайт, интеграции, сопровождение и аналитика.",
+    p3Text: "Комплекс: сайт, интеграции, сопровождение и аналитика. Точный расчёт: +864 000 ₸/мес при 120 лидах, 45 000 ₸ чеке и росте 12% → 28%.",
+    calcTitle: "Прогноз роста",
+    calcLeadsLabel: "Лидов в месяц",
+    calcAvgCheckLabel: "Средний чек (₸)",
+    calcConversionBefore: "Конверсия до (%)",
+    calcConversionAfter: "Цель конверсии (%)",
+    calcTeamSizeLabel: "Часов команды на обработку",
+    calcIndustryLabel: "Ниша",
+    calcButton: "Рассчитать",
+    calcShare: "Отправить расчёт команде",
+    calcResultPlaceholder: "Введите данные, чтобы увидеть потенциал роста.",
+    calcInsightWin: "рост win-rate при быстром ответе",
+    calcInsightHours: "экономия времени команды",
+    calcInsightEsc: "диалогов уходит менеджеру",
+    calcPrefill: "Получить точный прогноз",
     faqTitle: "Частые вопросы",
     f1Title: "Сколько времени занимает запуск?",
     f1Text: "Первая рабочая версия обычно готова в течение 3–7 дней.",
@@ -58,70 +133,140 @@ const translations = {
     f3Text: "Да, можно выбрать сопровождение и регулярные доработки.",
     contactTitle: "Контакты",
     contactText: "Напишите нам в удобной соцсети — в ответ получите короткий план запуска под ваш кейс.",
+    leadNameLabel: "Имя или компания*",
+    leadNamePlaceholder: "Мария, RetailLab",
+    leadChannelLabel: "Куда ответить*",
+    leadChannelPlaceholder: "Выберите канал",
+    leadBusinessLabel: "Ниша / продукт",
+    leadBusinessPlaceholder: "онлайн-школа, косметология...",
+    leadMessageLabel: "Что нужно автоматизировать*",
+    leadMessagePlaceholder: "Например: входящие заявки, ответы в WhatsApp, CRM и отчёты",
+    leadHint: "Чем конкретнее задача, тем быстрее вернёмся с планом и оценкой срока.",
+    leadSubmit: "Отправить заявку",
     allSocials: "Все соцсети",
     footerText: "Название и материалы сайта защищены авторским правом."
   },
   en: {
     navServices: "Services",
-    navBotDemo: "Bot",
+    navBotDemo: "Site",
     navCases: "Cases",
     navPricing: "Pricing",
     navContact: "Contact",
     navLinks: "Socials",
-    navCta: "Contact Us",
-    heroBadge: "For small and medium businesses",
-    heroTitle: "LidCraft Studio: technology that turns into leads and sales",
-    heroText: "We help businesses implement AI and automation without complexity: from website and offer to working Telegram, WhatsApp, and CRM workflows.",
-    heroCta1: "Discuss project",
-    heroCta2: "All socials",
-    kpi1: "⚡ First results: from 3 days",
-    kpi2: "📈 Goal: more qualified leads, less routine",
-    kpi3: "🤝 End-to-end delivery with support",
-    kpi4: "🧩 Custom workflows for your niche, not generic templates",
-    servicesTitle: "Services",
-    s1Title: "AI consulting",
-    s1Text: "We analyze your current process, evaluate ROI, and provide a clear implementation plan.",
-    s2Title: "Communication automation",
-    s2Text: "We set up lead-handling workflows, reminders, and auto-replies in messengers and CRM.",
-    s3Title: "Websites & positioning",
-    s3Text: "We build landing pages with strong messaging, social proof, and lead capture.",
+    navCta: "Contact us",
+    heroBadge: "AI acceleration for SMBs",
+    heroTitle: "LidCraft Studio turns chaos into a predictable funnel in 14 days",
+    heroText: "We connect the site, bot, CRM, and post-sale workflows into one system. Customers get answers in minutes, the team sees clean numbers, and you get forecastable growth without extra hires.",
+    heroCta1: "Request an audit",
+    heroCta2: "All communication channels",
+    heroCtaCases: "See cases",
+    heroCtaNote: "We reply in Telegram or WhatsApp with a launch plan and the nearest available start window.",
+    fitTitle: "Who we fit",
+    fitItem1: "Service businesses losing leads in chats and calls.",
+    fitItem2: "E-commerce teams buried under support requests.",
+    fitItem3: "Expert products that need a path from content to a call.",
+    solveTitle: "What we solve in 14 days",
+    solveItem1: "Sharper offer and a first screen without noise.",
+    solveItem2: "Lead route: site → bot → CRM → manager alert.",
+    solveItem3: "FAQ, SLA, and follow-up logic so leads do not disappear.",
+    resultTitle: "What you get",
+    resultItem1: "A working landing page, not just a mockup.",
+    resultItem2: "A form and contact channels built to convert.",
+    resultItem3: "A data-based next sprint plan instead of guesswork.",
+    servicesTitle: "What you get at each level",
+    s1Title: "Signal",
+    s1Text: "Audit, refined value proposition, and a fast prototype so you can test hypotheses before major spend.",
+    s2Title: "Motion",
+    s2Text: "A lead machine on day one: scripts, voice replies, CRM integrations, and precise notifications for every request.",
+    s3Title: "Pulse",
+    s3Text: "Growth & LTV: personalized triggers, upsell funnels, automated campaigns, and a content hub.",
     processTitle: "How we work",
     pr1Title: "1. Discovery",
-    pr1Text: "Short call to define goals, timeline, and priorities.",
-    pr2Title: "2. Plan and launch",
-    pr2Text: "We align the structure and launch the first working version.",
+    pr1Text: "30-minute call to capture goals, constraints, and data for the prototype.",
+    pr2Title: "2. Launch core",
+    pr2Text: "Align the site and bot structure, wire integrations, and ship the first version.",
     pr3Title: "3. Optimization",
-    pr3Text: "We review metrics, refine workflows, and improve outcomes.",
-    botDemoTitle: "Telegram bot in action",
-    botDemoText: "Show clients exactly how the bot replies, what it asks, and how you receive updates for every incoming message.",
-    botDemoCap1: "Real dialog example: the bot clarifies the task and moves the lead to a brief.",
-    botDemoCap2: "You receive contact details and every inbound message from the client.",
-    botDemoCap3: "Transparent flow: client writes → bot replies → you control the lead.",
+    pr3Text: "Track metrics, add scenarios, share reports, and plan the next sprint.",
+    botDemoTitle: "LidCraft site in action",
+    botDemoText: "See how the page guides a visitor from hero to submission: load speed, trust blocks, manager alerts.",
+    botDemoCopy: "Copy summary",
+    botDemoCta: "Request a similar site",
+    botMetricSpeedLabel: "Load speed",
+    botMetricSpeedText: "We optimize media and scripts so the hero renders in under a second.",
+    botMetricVoiceLabel: "Lead conversion",
+    botMetricVoiceText: "Quiz + social proof + support widget lift conversion from 2% to 5%+.",
+    botMetricManagerLabel: "Editing",
+    botMetricManagerText: "Edit copy in Notion/Markdown and auto-deploy without involving developers.",
+    botDemoCap1: "Hero: offer, quiz, and CTA prompt action instantly.",
+    botDemoCap2: "Submissions hit the CRM and ping a manager in Telegram/WhatsApp.",
+    botDemoCap3: "Transparent flow: site → CRM → alert → follow-ups.",
+    liveBotLabel: "Live preview",
+    liveBotTitle: "Live site stream inside your browser",
+    liveBotText: "Watch the site respond to clicks, quizzes, submissions, and manager alerts in real time.",
+    liveBotPoint1: "Screen capture without third-party services.",
+    liveBotPoint2: "Show how cases, pop-ups, and CTAs appear in a chosen scenario.",
+    liveBotPoint3: "Every submission instantly pings a manager in CRM and messengers.",
+    liveBotInputLabel: "Site comment",
+    liveBotPlaceholder: "Ask about a block or scenario",
+    liveBotSend: "Ask about the site",
+    liveBotStatUptime: "Uptime",
+    liveBotStatLatency: "Latency",
+    liveBotStatEscalations: "Refresh rate",
+    trustEyebrow: "Trust",
+    trustTitle: "Services, e-commerce, and EdTech already run on LidCraft Studio",
+    trustText: "We embed into client workflows and launch the site where impact is fastest: hotlines, bookings, CRM, and broadcasts.",
+    trustList1: "Replies land within 1–5 minutes even at peak load.",
+    trustList2: "Lead loss drops from ~30% to 10%.",
+    trustList3: "Every inquiry is logged in the CRM or sheets.",
+    trustMetricSlaLabel: "SLA <5 min",
+    trustMetricSlaText: "of chats are closed faster than a manager could reply.",
+    trustMetricNpsLabel: "NPS",
+    trustMetricNpsText: "client score after the first week online.",
+    trustMetricHoursLabel: "Hours freed",
+    trustMetricHoursText: "average reduction of manual touches for sales teams.",
     casesTitle: "Cases",
-    c1Title: "Industry: services",
-    c1Text: "Reduced lead leakage with automated replies and a clear client route.",
-    c2Title: "Industry: e-commerce",
-    c2Text: "Automated FAQs and accelerated order processing.",
-    c3Title: "Industry: experts",
-    c3Text: "Built a simple funnel: content → request → consultation → sale.",
     pricingTitle: "Pricing",
     p1Title: "Start",
-    p1Text: "Express audit, task map, and one strategy call.",
+    p1Text: "Express audit, task map, and one consult. Exact scenario: +216,000 KZT/month at 120 leads, 45,000 KZT average check, conversion 12% → 16%.",
     p2Title: "Growth",
-    p2Text: "Core workflow setup and first automation launch.",
+    p2Text: "Site launch, key scenarios, and first automation. Exact scenario: +540,000 KZT/month at 120 leads, 45,000 KZT average check, conversion 12% → 22%.",
     p3Title: "Scale",
-    p3Text: "Full rollout: website, integrations, support, and analytics.",
+    p3Text: "Full launch: site, integrations, support, and analytics. Exact scenario: +864,000 KZT/month at 120 leads, 45,000 KZT average check, conversion 12% → 28%.",
+    calcTitle: "Growth forecast",
+    calcLeadsLabel: "Leads per month",
+    calcAvgCheckLabel: "Average check (₸)",
+    calcConversionBefore: "Conversion before (%)",
+    calcConversionAfter: "Target conversion (%)",
+    calcTeamSizeLabel: "Team hours spent",
+    calcIndustryLabel: "Industry",
+    calcButton: "Calculate",
+    calcShare: "Share with team",
+    calcResultPlaceholder: "Enter your data to see the potential.",
+    calcInsightWin: "win-rate lift from faster replies",
+    calcInsightHours: "team hours saved",
+    calcInsightEsc: "dialogs escalated to a manager",
+    calcPrefill: "Get an accurate forecast",
     faqTitle: "FAQ",
     f1Title: "How long does launch take?",
-    f1Text: "The first working version is usually ready in 3–7 days.",
+    f1Text: "The first working version is usually ready within 3–7 days.",
     f2Title: "Will this fit my business?",
-    f2Text: "During the initial call we validate your case and recommend only what can pay off.",
-    f3Title: "Do you provide support after launch?",
-    f3Text: "Yes, you can choose ongoing support and regular improvements.",
+    f2Text: "We validate the task on the intro call and recommend only what pays off.",
+    f3Title: "Do you provide post-launch support?",
+    f3Text: "Yes, pick a care plan and ongoing improvements.",
     contactTitle: "Contact",
-    contactText: "Message us on any social platform and get a short launch plan for your case.",
+    contactText: "Message us on your preferred channel and get a short launch plan tailored to you.",
+    leadNameLabel: "Name or company*",
+    leadNamePlaceholder: "Maria, RetailLab",
+    leadChannelLabel: "Best reply channel*",
+    leadChannelPlaceholder: "Choose a channel",
+    leadBusinessLabel: "Industry / product",
+    leadBusinessPlaceholder: "online school, beauty clinic...",
+    leadMessageLabel: "What do you want to automate?*",
+    leadMessagePlaceholder: "For example: inbound leads, WhatsApp replies, CRM, and reports",
+    leadHint: "The more specific the task, the faster we return with a plan and timeline.",
+    leadSubmit: "Send request",
     allSocials: "All socials",
-    footerText: "Brand name and website materials are protected by copyright."
+    footerText: "Site name and materials are protected by copyright."
   }
 };
 
@@ -141,7 +286,8 @@ function safeSetToStorage(key, value) {
 }
 
 const supportedLangs = Object.keys(translations);
-let lang = safeGetFromStorage("auraLang") || "ru";
+const FORCE_RU_UI = true;
+let lang = "ru";
 if (!supportedLangs.includes(lang)) {
   lang = "ru";
 }
@@ -184,7 +330,8 @@ function applyTheme(nextTheme) {
 }
 
 function applyLanguage(nextLang) {
-  const normalizedLang = supportedLangs.includes(nextLang) ? nextLang : "ru";
+  const requestedLang = FORCE_RU_UI ? "ru" : nextLang;
+  const normalizedLang = supportedLangs.includes(requestedLang) ? requestedLang : "ru";
   lang = normalizedLang;
   document.documentElement.lang = normalizedLang;
   const dictionary = translations[normalizedLang] || translations.ru;
@@ -193,6 +340,13 @@ function applyLanguage(nextLang) {
     const key = element.getAttribute("data-i18n");
     if (dictionary[key]) {
       element.textContent = dictionary[key];
+    }
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+    const key = element.getAttribute("data-i18n-placeholder");
+    if (dictionary[key] && "placeholder" in element) {
+      element.setAttribute("placeholder", dictionary[key]);
     }
   });
 
@@ -217,22 +371,30 @@ if (themeSelect) {
 }
 
 if (header && navToggle && mainNav) {
+  const setNavToggleState = (isOpen) => {
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+    navToggle.setAttribute("aria-label", isOpen ? "Закрыть меню" : "Открыть меню");
+    navToggle.textContent = isOpen ? "X" : "☰";
+  };
+
+  setNavToggleState(false);
+
   navToggle.addEventListener("click", () => {
     const isOpen = header.classList.toggle("nav-open");
-    navToggle.setAttribute("aria-expanded", String(isOpen));
+    setNavToggleState(isOpen);
   });
 
   mainNav.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", () => {
       header.classList.remove("nav-open");
-      navToggle.setAttribute("aria-expanded", "false");
+      setNavToggleState(false);
     });
   });
 
   window.addEventListener("resize", () => {
     if (window.innerWidth > 900) {
       header.classList.remove("nav-open");
-      navToggle.setAttribute("aria-expanded", "false");
+      setNavToggleState(false);
     }
   });
 
@@ -248,14 +410,14 @@ if (header && navToggle && mainNav) {
 
     if (!target.closest("#mainNav") && !target.closest("#navToggle")) {
       header.classList.remove("nav-open");
-      navToggle.setAttribute("aria-expanded", "false");
+      setNavToggleState(false);
     }
   });
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && header.classList.contains("nav-open")) {
       header.classList.remove("nav-open");
-      navToggle.setAttribute("aria-expanded", "false");
+      setNavToggleState(false);
       navToggle.focus();
     }
   });
@@ -341,10 +503,9 @@ applyTheme(theme);
 if (header) {
   let lastScrollY = window.scrollY;
   const delta = 8;
+  let touchStartY = null;
 
-  window.addEventListener("scroll", () => {
-    const currentScrollY = window.scrollY;
-
+  const updateHeaderVisibility = (currentScrollY) => {
     if (currentScrollY <= 0) {
       header.classList.remove("header-hidden");
       lastScrollY = 0;
@@ -358,7 +519,37 @@ if (header) {
     }
 
     lastScrollY = currentScrollY;
+  };
+
+  window.addEventListener("scroll", () => {
+    updateHeaderVisibility(window.scrollY);
   }, { passive: true });
+
+  window.addEventListener("touchstart", (event) => {
+    if (!event.touches || event.touches.length !== 1) {
+      touchStartY = null;
+      return;
+    }
+    touchStartY = event.touches[0].clientY;
+  }, { passive: true });
+
+  window.addEventListener("touchmove", (event) => {
+    if (touchStartY === null || !event.touches || event.touches.length !== 1) return;
+
+    const touchY = event.touches[0].clientY;
+    const diff = touchY - touchStartY;
+    if (Math.abs(diff) < 6) return;
+
+    if (diff < 0) {
+      header.classList.add("header-hidden");
+    } else {
+      header.classList.remove("header-hidden");
+    }
+  }, { passive: true });
+
+  window.addEventListener("touchend", () => {
+    touchStartY = null;
+  });
 }
 
 if (quickContactFab) {
