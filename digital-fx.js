@@ -168,6 +168,7 @@
     initReveal();
     initHeroTyping();
     initAuroraParallax();
+    initChatDemo();
   }
 
   // ---- Hero: typing niches ----
@@ -247,6 +248,115 @@
       raf = null;
       aurora.style.transform =
         "translate(" + targetX * 30 + "px," + targetY * 30 + "px)";
+    }
+  }
+
+  // ---- Live bot chat demo ----
+  function initChatDemo() {
+    var thread = document.getElementById("chatThread");
+    if (!thread) return;
+
+    var steps = document.querySelectorAll(".chat-steps li");
+
+    var script = [
+      { type: "user", text: "Здравствуйте! Записаться на стрижку и бороду в субботу?", step: 0 },
+      { type: "typing", after: 500 },
+      { type: "bot", text: "Здравствуйте 👋 Конечно! В субботу есть окна в 12:00, 15:30 и 18:00. Какое удобно?", step: 1 },
+      { type: "user", text: "Давайте 15:30", step: 0 },
+      { type: "typing", after: 600 },
+      { type: "bot", text: "Отлично! Уточните имя и телефон — закреплю запись и пришлю напоминание.", step: 2 },
+      { type: "user", text: "Тимур, +7 700 123-45-67", step: 0 },
+      { type: "typing", after: 700 },
+      { type: "bot", text: "Готово, Тимур! Запись на сб, 15:30 подтверждена ✅ Напомню за 2 часа.", step: 3 },
+      { type: "system", text: "Лид создан в CRM · менеджеру отправлен push", step: 4 },
+    ];
+
+    var idx = 0;
+    var started = false;
+
+    function setActiveStep(n) {
+      if (!steps.length || !n) return;
+      steps.forEach(function (li, i) {
+        li.classList.toggle("is-active", i === n - 1);
+      });
+    }
+
+    function scrollDown() {
+      thread.scrollTop = thread.scrollHeight;
+    }
+
+    function addMessage(item) {
+      var el = document.createElement("div");
+      el.className = "chat-msg " + item.type;
+      el.textContent = item.text;
+      thread.appendChild(el);
+      scrollDown();
+    }
+
+    function showTyping(cb, delay) {
+      var t = document.createElement("div");
+      t.className = "chat-typing";
+      t.innerHTML = "<span></span><span></span><span></span>";
+      thread.appendChild(t);
+      scrollDown();
+      setTimeout(function () {
+        t.remove();
+        cb();
+      }, delay || 900);
+    }
+
+    function next() {
+      if (idx >= script.length) {
+        setTimeout(function () {
+          thread.innerHTML = "";
+          idx = 0;
+          setActiveStep(0);
+          setTimeout(next, 900);
+        }, 4200);
+        return;
+      }
+      var item = script[idx];
+      idx++;
+
+      if (item.type === "typing") {
+        showTyping(next, item.after);
+        return;
+      }
+      addMessage(item);
+      if (item.step) setActiveStep(item.step);
+
+      var pause = item.type === "user" ? 900 : 1500;
+      setTimeout(next, pause);
+    }
+
+    function start() {
+      if (started) return;
+      started = true;
+      if (reduceMotion) {
+        script.forEach(function (item) {
+          if (item.type !== "typing") addMessage(item);
+        });
+        setActiveStep(4);
+        return;
+      }
+      next();
+    }
+
+    if ("IntersectionObserver" in window) {
+      var obs = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              start();
+              obs.disconnect();
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+      obs.observe(thread);
+    } else {
+      start();
     }
   }
 
