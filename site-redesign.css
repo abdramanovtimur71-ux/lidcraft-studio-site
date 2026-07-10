@@ -1523,6 +1523,101 @@ body::after {
   text-shadow: 0 0 18px rgba(59, 130, 246, 0.4);
 }
 
+/* ===== UNIVERSAL SCROLL REVEAL (all pages) ===== */
+.fx-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.fx-reveal.fx-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered children delays for grids */
+.fx-reveal.fx-d1 { transition-delay: 0.06s; }
+.fx-reveal.fx-d2 { transition-delay: 0.12s; }
+.fx-reveal.fx-d3 { transition-delay: 0.18s; }
+.fx-reveal.fx-d4 { transition-delay: 0.24s; }
+.fx-reveal.fx-d5 { transition-delay: 0.30s; }
+.fx-reveal.fx-d6 { transition-delay: 0.36s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  body::after { animation: none !important; }
+}
+
+/* ===== UNIVERSAL MICRO-INTERACTIONS ===== */
+
+/* Buttons: smooth lift + press */
+.btn {
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.2s ease !important;
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover { transform: translateY(-2px); }
+}
+.btn:active { transform: translateY(0) scale(0.98); }
+
+/* Nav links: animated underline */
+nav a {
+  position: relative;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease !important;
+}
+
+/* Inputs & selects: focus glow */
+.field:focus,
+input.field:focus,
+select.field:focus,
+textarea.field:focus,
+.theme-select:focus {
+  outline: none;
+  border-color: rgba(94, 234, 212, 0.7) !important;
+  box-shadow: 0 0 0 3px rgba(94, 234, 212, 0.15) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Meta pills & metric chips: subtle hover lift */
+@media (hover: hover) and (pointer: fine) {
+  .account-meta-pill,
+  .metric-chip,
+  .proof-pill,
+  .bot-metric-card {
+    transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+  }
+  .account-meta-pill:hover,
+  .metric-chip:hover,
+  .proof-pill:hover,
+  .bot-metric-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--lux-line-strong) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+  }
+}
+
+/* Links list / action list items: gentle slide on hover */
+@media (hover: hover) and (pointer: fine) {
+  .action-list li,
+  .privacy-list li {
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+  .action-list li:hover,
+  .privacy-list li:hover {
+    transform: translateX(4px);
+  }
+}
+
+/* Smooth theme/color transitions everywhere */
+.card, .dashboard-card, .btn, .field, nav a, .account-meta-pill, .metric-chip {
+  transition-property: transform, box-shadow, border-color, background, color;
+}
+
 /* ================================================== */
 
 @media (hover: hover) and (pointer: fine) {

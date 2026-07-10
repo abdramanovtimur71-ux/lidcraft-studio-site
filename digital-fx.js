@@ -86,9 +86,91 @@
     });
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initCounters);
-  } else {
+  // ---- Universal scroll reveal (skips pages/elements already using .reveal) ----
+  function initReveal() {
+    // If the page already runs the legacy ".reveal" system, don't double-animate
+    // its elements; but we still add reveal to elements without it.
+    var selectors = [
+      ".card",
+      ".dashboard-card",
+      ".account-meta-pill",
+      ".account-hero-intro",
+      ".account-section-head",
+      ".settings-group",
+      ".quiz-box",
+      ".proof-pill",
+      ".bot-metric-card",
+      ".case-card",
+      ".quote-card",
+      ".testimonials article",
+      ".contact-card",
+      ".links-card",
+      ".legal-card",
+      "section > h2",
+    ];
+
+    var candidates = [];
+    selectors.forEach(function (sel) {
+      Array.prototype.forEach.call(document.querySelectorAll(sel), function (el) {
+        if (
+          el.classList.contains("reveal") ||
+          el.classList.contains("headline-reveal") ||
+          el.classList.contains("fx-reveal") ||
+          el.closest(".reveal")
+        ) {
+          return;
+        }
+        candidates.push(el);
+      });
+    });
+
+    if (!candidates.length) return;
+
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      candidates.forEach(function (el) {
+        el.classList.add("fx-reveal", "fx-in");
+      });
+      return;
+    }
+
+    // Stagger siblings within the same parent for a polished cascade
+    var groupCounts = {};
+    candidates.forEach(function (el) {
+      el.classList.add("fx-reveal");
+      var parent = el.parentElement;
+      var key = parent
+        ? parent.tagName + "-" + (parent.className || "x")
+        : "root";
+      groupCounts[key] = (groupCounts[key] || 0) % 6;
+      groupCounts[key] += 1;
+      el.classList.add("fx-d" + groupCounts[key]);
+    });
+
+    var revealObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("fx-in");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+    );
+
+    candidates.forEach(function (el) {
+      revealObserver.observe(el);
+    });
+  }
+
+  function boot() {
     initCounters();
+    initReveal();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
   }
 })();
