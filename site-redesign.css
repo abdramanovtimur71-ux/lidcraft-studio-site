@@ -1104,6 +1104,42 @@ select:focus-visible {
   color: #9ab7d9;
 }
 
+.demo-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.proof-pill {
+  margin: 0;
+  border: 1px solid rgba(138, 190, 248, 0.26);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: linear-gradient(180deg, rgba(11, 23, 43, 0.92), rgba(8, 17, 33, 0.9));
+}
+
+.proof-pill small {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #95b4d8;
+  margin-bottom: 4px;
+}
+
+.proof-pill strong {
+  display: block;
+  font-size: 20px;
+  line-height: 1.1;
+  color: #edf6ff;
+}
+
+.demo-proof-note {
+  margin: 0;
+  font-size: 13px;
+  color: #8fafd4;
+}
+
 @media (max-width: 980px) {
   .demo-viewport-head {
     flex-direction: column;
@@ -1117,5 +1153,9 @@ select:focus-visible {
   .demo-tab {
     flex: 1;
     justify-content: center;
+  }
+
+  .demo-proof-grid {
+    grid-template-columns: 1fr;
   }
 }

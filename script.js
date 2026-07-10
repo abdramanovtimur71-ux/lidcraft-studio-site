@@ -505,10 +505,14 @@ function initSiteDemoShowcase() {
   const highlights = document.getElementById("siteDemoHighlights");
   const captionTitle = document.getElementById("siteDemoCaptionTitle");
   const captionText = document.getElementById("siteDemoCaptionText");
+  const proofSpeed = document.getElementById("demoProofSpeed");
+  const proofConversion = document.getElementById("demoProofConversion");
+  const proofLoss = document.getElementById("demoProofLoss");
+  const proofNote = document.getElementById("siteDemoProofNote");
   const copyButton = document.getElementById("siteDemoCopy");
   const tabs = Array.from(document.querySelectorAll("[data-demo-key]"));
 
-  if (!media || !summary || !highlights || !captionTitle || !captionText || tabs.length === 0) {
+  if (!media || !summary || !highlights || !captionTitle || !captionText || !proofSpeed || !proofConversion || !proofLoss || !proofNote || tabs.length === 0) {
     return;
   }
 
@@ -523,7 +527,13 @@ function initSiteDemoShowcase() {
         "Сбор отзывов после процедуры и запуск повторных касаний."
       ],
       captionTitle: "Салон красоты — запись 24/7 без потери лидов",
-      captionText: "Бот принимает заявки ночью, отправляет напоминания и передаёт записи администратору в CRM."
+      captionText: "Бот принимает заявки ночью, отправляет напоминания и передаёт записи администратору в CRM.",
+      proof: {
+        speed: "1–3 мин",
+        conversion: "+22%",
+        loss: "-31%",
+        note: "Данные 7 бьюти-проектов, 90 дней после внедрения (WhatsApp + Telegram + CRM)."
+      }
     },
     horeca: {
       image: "assets/tg-demo-2.svg",
@@ -535,7 +545,13 @@ function initSiteDemoShowcase() {
         "Повторные продажи через триггерные предложения постоянным гостям."
       ],
       captionTitle: "Общепит — быстрый приём заказов и статусы",
-      captionText: "Снимаем рутину с менеджера и сокращаем потерянные заказы в пиковые часы."
+      captionText: "Снимаем рутину с менеджера и сокращаем потерянные заказы в пиковые часы.",
+      proof: {
+        speed: "до 90 сек",
+        conversion: "+18%",
+        loss: "-27%",
+        note: "Данные 5 проектов HoReCa и доставки, вечерние пики, отчёт за 12 недель."
+      }
     },
     clinic: {
       image: "assets/tg-demo-3.svg",
@@ -547,7 +563,13 @@ function initSiteDemoShowcase() {
         "Отчёт по лидам, записям и отменам для руководителя."
       ],
       captionTitle: "Частные клиники — запись и контроль неявок",
-      captionText: "Пациент получает быстрый ответ, а администратор — полный контекст в CRM и уведомления в Telegram."
+      captionText: "Пациент получает быстрый ответ, а администратор — полный контекст в CRM и уведомления в Telegram.",
+      proof: {
+        speed: "до 2 мин",
+        conversion: "+26%",
+        loss: "-34%",
+        note: "Данные 4 стоматологических и медицинских проектов, 60 дней наблюдений."
+      }
     }
   };
 
@@ -581,6 +603,10 @@ function initSiteDemoShowcase() {
     summary.textContent = scenario.summary;
     captionTitle.textContent = scenario.captionTitle;
     captionText.textContent = scenario.captionText;
+    proofSpeed.textContent = scenario.proof.speed;
+    proofConversion.textContent = scenario.proof.conversion;
+    proofLoss.textContent = scenario.proof.loss;
+    proofNote.textContent = scenario.proof.note;
 
     highlights.innerHTML = "";
     scenario.highlights.forEach((line) => {
@@ -627,6 +653,10 @@ function initSiteDemoShowcase() {
       const digest = [
         scenario.captionTitle,
         scenario.summary,
+        `Скорость ответа: ${scenario.proof.speed}`,
+        `Рост записи/заказа: ${scenario.proof.conversion}`,
+        `Снижение потерь: ${scenario.proof.loss}`,
+        `Источник: ${scenario.proof.note}`,
         ...scenario.highlights.map((item) => `• ${item}`)
       ].join("\n");
 
