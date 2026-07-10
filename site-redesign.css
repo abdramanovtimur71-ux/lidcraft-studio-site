@@ -1287,20 +1287,21 @@ select:focus-visible {
 
 /* =========== SUPER PREMIUM TECH BLACK VERCEL STYLE =========== */
 :root {
-  --lux-bg: #000000;
-  --lux-panel: rgba(255, 255, 255, 0.02);
-  --lux-panel-2: rgba(255, 255, 255, 0.04);
+  --lux-bg: #030712;
+  --lux-panel: rgba(255, 255, 255, 0.03);
+  --lux-panel-2: rgba(255, 255, 255, 0.05);
   --lux-line: rgba(255, 255, 255, 0.08);
   --lux-line-strong: rgba(255, 255, 255, 0.15);
-  --lux-text: #ededed;
-  --lux-muted: #888888;
-  --lux-cyan: #0070f3;
+  --lux-text: #f3f4f6;
+  --lux-muted: #9ca3af;
+  --lux-cyan: #3b82f6;
   --lux-indigo: #ffffff;
   --lux-gold: #ffffff;
 }
 
 body {
-  background: var(--lux-bg) !important;
+  background: radial-gradient(circle at 50% 0%, #0f172a 0%, #030712 100%) !important;
+  background-attachment: fixed !important;
 }
 
 .card {
