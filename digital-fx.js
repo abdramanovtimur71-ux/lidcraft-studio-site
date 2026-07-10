@@ -174,6 +174,7 @@
     initTilt();
     initPricingToggle();
     initTechPolish();
+    initConversion();
   }
 
   // ---- Hero: typing niches ----
@@ -545,6 +546,101 @@
       { passive: true }
     );
     update();
+  }
+
+  // ---- Conversion: sticky mobile CTA + exit-intent popup ----
+  function initConversion() {
+    var contact = document.getElementById("contact");
+    var hero = document.querySelector(".hero");
+    // Only run on the landing page (needs a contact target)
+    if (!contact) return;
+
+    // Sticky mobile CTA
+    var bar = document.createElement("div");
+    bar.className = "sticky-cta";
+    bar.innerHTML =
+      '<div class="sticky-cta-text"><strong>Готовы не терять заявки?</strong>' +
+      "<span>Бесплатный аудит воронки за 24 часа</span></div>" +
+      '<a class="btn primary" href="#contact" data-track="sticky_cta">Запросить аудит</a>';
+    document.body.appendChild(bar);
+
+    var ticking = false;
+    function onScroll() {
+      ticking = false;
+      var y = window.pageYOffset || document.documentElement.scrollTop;
+      var pastHero = hero ? hero.offsetHeight * 0.8 : 500;
+      var contactTop = contact.getBoundingClientRect().top;
+      // Show after hero, hide when contact form is in view
+      var show = y > pastHero && contactTop > window.innerHeight;
+      bar.classList.toggle("is-visible", show);
+    }
+    window.addEventListener(
+      "scroll",
+      function () {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(onScroll);
+        }
+      },
+      { passive: true }
+    );
+    onScroll();
+
+    bar.querySelector("a").addEventListener("click", function () {
+      bar.classList.remove("is-visible");
+    });
+
+    // Exit-intent popup (desktop, once per session)
+    var supportsHover =
+      window.matchMedia &&
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+    if (supportsHover && !sessionStorage.getItem("lc_exit_shown")) {
+      var modal = document.createElement("div");
+      modal.className = "exit-modal";
+      modal.innerHTML =
+        '<div class="exit-card" role="dialog" aria-modal="true" aria-label="Специальное предложение">' +
+        '<button class="exit-close" type="button" aria-label="Закрыть">&times;</button>' +
+        '<p class="exit-eyebrow">Не уходите с пустыми руками</p>' +
+        "<h3>Бесплатный аудит воронки</h3>" +
+        "<p>Покажем, где вы теряете заявки, и дадим план запуска бота и CRM за 14 дней — бесплатно.</p>" +
+        '<div class="cta-row"><a class="btn primary" href="#contact" data-track="exit_cta">Получить аудит</a></div>' +
+        "</div>";
+      document.body.appendChild(modal);
+
+      var closeBtn = modal.querySelector(".exit-close");
+      var ctaBtn = modal.querySelector(".btn");
+
+      function closeModal() {
+        modal.classList.remove("is-open");
+      }
+      function openModal() {
+        if (sessionStorage.getItem("lc_exit_shown")) return;
+        modal.classList.add("is-open");
+        sessionStorage.setItem("lc_exit_shown", "1");
+      }
+
+      closeBtn.addEventListener("click", closeModal);
+      ctaBtn.addEventListener("click", closeModal);
+      modal.addEventListener("click", function (e) {
+        if (e.target === modal) closeModal();
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeModal();
+      });
+
+      var armed = false;
+      setTimeout(function () {
+        armed = true;
+      }, 5000);
+
+      document.addEventListener("mouseout", function (e) {
+        if (!armed) return;
+        if (!e.relatedTarget && e.clientY <= 0) {
+          openModal();
+        }
+      });
+    }
   }
 
   if (document.readyState === "loading") {
