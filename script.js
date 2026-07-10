@@ -1,27 +1,3 @@
-// Push-уведомления
-function requestPushPermission() {
-  if ('Notification' in window) {
-    Notification.requestPermission().then(function(permission) {
-      if (permission === 'granted') {
-        showWelcomeNotification();
-      }
-    });
-  }
-}
-
-function showWelcomeNotification() {
-  if ('Notification' in window && Notification.permission === 'granted') {
-    new Notification('LidCraft Studio', {
-      body: 'Добро пожаловать! Следите за новыми функциями и акциями.',
-      icon: 'assets/lidcraft-logo.svg'
-    });
-  }
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-  requestPushPermission();
-});
-
 // Кнопка для показа/скрытия блока выбора языка
 const translations = {
   ru: {
@@ -497,8 +473,35 @@ if (year) {
   year.textContent = new Date().getFullYear();
 }
 
+function initRevealAnimations() {
+  const animatedElements = Array.from(document.querySelectorAll(".reveal, .headline-reveal"));
+  if (animatedElements.length === 0) return;
+
+  if (!("IntersectionObserver" in window)) {
+    animatedElements.forEach((element) => element.classList.add("is-visible"));
+    return;
+  }
+
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        revealObserver.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: 0.2,
+      rootMargin: "0px 0px -8% 0px"
+    }
+  );
+
+  animatedElements.forEach((element) => revealObserver.observe(element));
+}
+
 applyLanguage(lang);
 applyTheme(theme);
+initRevealAnimations();
 
 if (header) {
   let lastScrollY = window.scrollY;

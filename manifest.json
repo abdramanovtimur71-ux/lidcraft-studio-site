@@ -1,0 +1,17 @@
+{
+  "name": "LidCraft Studio",
+  "short_name": "LidCraft",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#05070d",
+  "theme_color": "#05070d",
+  "description": "Сайты, AI-автоматизация и growth-системы для бизнеса.",
+  "icons": [
+    {
+      "src": "assets/lidcraft-logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
