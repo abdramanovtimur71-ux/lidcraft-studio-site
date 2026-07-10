@@ -499,9 +499,162 @@ function initRevealAnimations() {
   animatedElements.forEach((element) => revealObserver.observe(element));
 }
 
+function initSiteDemoShowcase() {
+  const media = document.getElementById("siteDemoMedia");
+  const summary = document.getElementById("siteDemoSummary");
+  const highlights = document.getElementById("siteDemoHighlights");
+  const captionTitle = document.getElementById("siteDemoCaptionTitle");
+  const captionText = document.getElementById("siteDemoCaptionText");
+  const copyButton = document.getElementById("siteDemoCopy");
+  const tabs = Array.from(document.querySelectorAll("[data-demo-key]"));
+
+  if (!media || !summary || !highlights || !captionTitle || !captionText || tabs.length === 0) {
+    return;
+  }
+
+  const demoScenarios = {
+    beauty: {
+      image: "assets/tg-demo-1.svg",
+      alt: "Сценарий для салона красоты: запись, напоминания и CRM",
+      summary: "Салон красоты получает запись 24/7: бот фиксирует время, услугу, мастера и передаёт данные администратору без задержек.",
+      highlights: [
+        "Автозапись через Telegram/WhatsApp даже в нерабочее время.",
+        "Напоминания о визите за 24 часа и за 2 часа до записи.",
+        "Сбор отзывов после процедуры и запуск повторных касаний."
+      ],
+      captionTitle: "Салон красоты — запись 24/7 без потери лидов",
+      captionText: "Бот принимает заявки ночью, отправляет напоминания и передаёт записи администратору в CRM."
+    },
+    horeca: {
+      image: "assets/tg-demo-2.svg",
+      alt: "Сценарий для общепита: заказы, статусы и повторные продажи",
+      summary: "Для кафе и доставки бот принимает заказ, уточняет детали и автоматически отправляет статус клиенту до момента доставки.",
+      highlights: [
+        "Приём заказа в мессенджере с проверкой адреса и состава.",
+        "Статусы «Готовится» и «Курьер выехал» без ручной переписки.",
+        "Повторные продажи через триггерные предложения постоянным гостям."
+      ],
+      captionTitle: "Общепит — быстрый приём заказов и статусы",
+      captionText: "Снимаем рутину с менеджера и сокращаем потерянные заказы в пиковые часы."
+    },
+    clinic: {
+      image: "assets/tg-demo-3.svg",
+      alt: "Сценарий для частной клиники: запись и контроль посещаемости",
+      summary: "Для стоматологий и клиник бот ведёт пациента от первого запроса до визита: запись, анкета, напоминание и уведомление администратора.",
+      highlights: [
+        "Запись на первичный приём с маршрутизацией по специализации.",
+        "Автонапоминания и снижение процента неявок.",
+        "Отчёт по лидам, записям и отменам для руководителя."
+      ],
+      captionTitle: "Частные клиники — запись и контроль неявок",
+      captionText: "Пациент получает быстрый ответ, а администратор — полный контекст в CRM и уведомления в Telegram."
+    }
+  };
+
+  const scenarioKeys = Object.keys(demoScenarios);
+  let activeKey = tabs.find((tab) => tab.classList.contains("is-active"))?.getAttribute("data-demo-key") || "beauty";
+  if (!demoScenarios[activeKey]) {
+    activeKey = "beauty";
+  }
+
+  const setTabState = (nextKey) => {
+    tabs.forEach((tab) => {
+      const isActive = tab.getAttribute("data-demo-key") === nextKey;
+      tab.classList.toggle("is-active", isActive);
+      tab.setAttribute("aria-selected", String(isActive));
+    });
+  };
+
+  const renderScenario = (nextKey) => {
+    const scenario = demoScenarios[nextKey];
+    if (!scenario) return;
+    activeKey = nextKey;
+    setTabState(nextKey);
+
+    media.classList.add("is-transitioning");
+    window.setTimeout(() => {
+      media.src = scenario.image;
+      media.alt = scenario.alt;
+      media.classList.remove("is-transitioning");
+    }, 170);
+
+    summary.textContent = scenario.summary;
+    captionTitle.textContent = scenario.captionTitle;
+    captionText.textContent = scenario.captionText;
+
+    highlights.innerHTML = "";
+    scenario.highlights.forEach((line) => {
+      const item = document.createElement("li");
+      item.textContent = line;
+      highlights.appendChild(item);
+    });
+  };
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const nextKey = tab.getAttribute("data-demo-key");
+      if (!nextKey || nextKey === activeKey) return;
+      renderScenario(nextKey);
+    });
+  });
+
+  let autoplayId = null;
+  const startAutoplay = () => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (autoplayId) window.clearInterval(autoplayId);
+    autoplayId = window.setInterval(() => {
+      const currentIndex = scenarioKeys.indexOf(activeKey);
+      const nextIndex = (currentIndex + 1) % scenarioKeys.length;
+      renderScenario(scenarioKeys[nextIndex]);
+    }, 6800);
+  };
+
+  const stopAutoplay = () => {
+    if (!autoplayId) return;
+    window.clearInterval(autoplayId);
+    autoplayId = null;
+  };
+
+  const showcase = media.closest(".bot-demo-visual");
+  if (showcase) {
+    showcase.addEventListener("mouseenter", stopAutoplay);
+    showcase.addEventListener("mouseleave", startAutoplay);
+  }
+
+  if (copyButton) {
+    copyButton.addEventListener("click", async () => {
+      const scenario = demoScenarios[activeKey];
+      const digest = [
+        scenario.captionTitle,
+        scenario.summary,
+        ...scenario.highlights.map((item) => `• ${item}`)
+      ].join("\n");
+
+      try {
+        await navigator.clipboard.writeText(digest);
+      } catch (error) {
+        // Fallback for browsers with restricted clipboard API.
+        const helper = document.createElement("textarea");
+        helper.value = digest;
+        helper.setAttribute("readonly", "");
+        helper.style.position = "absolute";
+        helper.style.left = "-9999px";
+        document.body.appendChild(helper);
+        helper.select();
+        document.execCommand("copy");
+        helper.remove();
+      }
+    });
+  }
+
+  renderScenario(activeKey);
+  startAutoplay();
+}
+
 applyLanguage(lang);
 applyTheme(theme);
 initRevealAnimations();
+initSiteDemoShowcase();
 
 if (header) {
   let lastScrollY = window.scrollY;
