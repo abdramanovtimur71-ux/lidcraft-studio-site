@@ -1504,6 +1504,25 @@ body::after {
   box-shadow: 0 0 12px rgba(94, 234, 212, 0.5) !important;
 }
 
+/* Animated stat numbers on the landing page */
+.stat-num,
+.proof-index,
+.trust-metrics strong,
+.case-metric strong,
+.bot-metric-card strong,
+.hero-card--score .score-row strong,
+.materials-metric strong {
+  font-family: "JetBrains Mono", "SF Mono", "Fira Code", ui-monospace, "Cascadia Code", Menlo, Consolas, monospace !important;
+  letter-spacing: -0.02em !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.proof-index {
+  display: inline-block;
+  opacity: 0.9;
+  text-shadow: 0 0 18px rgba(59, 130, 246, 0.4);
+}
+
 /* ================================================== */
 
 @media (hover: hover) and (pointer: fine) {
