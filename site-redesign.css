@@ -996,3 +996,13 @@ select:focus-visible {
 #analysis .calc-card {
   grid-column: 1 / -1;
 }
+
+/* Final fallback: force plain readable brand text for embedded browsers */
+.brand .brand-text {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #eaf2ff !important;
+  -webkit-text-fill-color: #eaf2ff !important;
+  text-shadow: 0 0 18px rgba(148, 173, 214, 0.18);
+}
