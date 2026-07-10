@@ -965,3 +965,20 @@ select:focus-visible {
     max-width: none;
   }
 }
+
+/* Robust brand text rendering across embedded browsers */
+.brand-text {
+  background: none !important;
+  color: #eaf2ff !important;
+  -webkit-text-fill-color: currentColor;
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .brand-text {
+    background: linear-gradient(94deg, #f3f9ff 0%, #9fd8ff 45%, #b2beff 100%) !important;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent;
+  }
+}
