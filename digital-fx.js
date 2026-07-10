@@ -644,13 +644,16 @@
     }
   }
 
-  // ---- App-like settings tabs (account page) ----
+  // ---- App-like settings modal (account page) ----
   function initSettingsTabs() {
+    var modal = document.getElementById("settingsModal");
     var nav = document.querySelector(".settings-nav");
     if (!nav) return;
     var buttons = nav.querySelectorAll(".settings-nav-btn");
     var panels = document.querySelectorAll(".settings-panel");
     if (!buttons.length || !panels.length) return;
+
+    var isMobile = function () { return window.matchMedia("(max-width: 760px)").matches; };
 
     function activate(tab) {
       buttons.forEach(function (b) {
@@ -669,6 +672,7 @@
     buttons.forEach(function (btn) {
       btn.addEventListener("click", function () {
         activate(btn.getAttribute("data-settings-tab"));
+        if (modal && isMobile()) modal.classList.add("show-panel");
       });
     });
 
@@ -678,6 +682,54 @@
       b.addEventListener("click", function () {
         if (mainSave) mainSave.click();
       });
+    });
+
+    if (!modal) return;
+
+    function syncProfile() {
+      var nameEl = document.getElementById("settingsProfileName");
+      var mailEl = document.getElementById("settingsProfileEmail");
+      var avaEl = document.getElementById("settingsAvatar");
+      var nameInput = document.getElementById("profileName");
+      var mailInput = document.getElementById("profileEmail");
+      var userName = document.getElementById("userName");
+      var name =
+        (nameInput && nameInput.value) ||
+        (userName && userName.textContent) ||
+        "Пользователь";
+      var mail = (mailInput && mailInput.value) || "—";
+      if (nameEl) nameEl.textContent = name;
+      if (mailEl) mailEl.textContent = mail;
+      if (avaEl) avaEl.textContent = (name.trim()[0] || "L").toUpperCase();
+    }
+
+    function openModal() {
+      syncProfile();
+      modal.classList.add("is-open");
+      modal.classList.remove("show-panel");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+    function closeModal() {
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    var opener = document.getElementById("openSettingsBtn");
+    if (opener) opener.addEventListener("click", openModal);
+
+    modal.querySelectorAll("[data-settings-close]").forEach(function (el) {
+      el.addEventListener("click", closeModal);
+    });
+    var backBtn = modal.querySelector("[data-settings-back]");
+    if (backBtn) {
+      backBtn.addEventListener("click", function () {
+        modal.classList.remove("show-panel");
+      });
+    }
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && modal.classList.contains("is-open")) closeModal();
     });
   }
 
