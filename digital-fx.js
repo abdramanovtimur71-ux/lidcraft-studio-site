@@ -166,6 +166,88 @@
   function boot() {
     initCounters();
     initReveal();
+    initHeroTyping();
+    initAuroraParallax();
+  }
+
+  // ---- Hero: typing niches ----
+  function initHeroTyping() {
+    var target = document.getElementById("heroTyped");
+    if (!target) return;
+
+    var words = [
+      "рестораны и доставку",
+      "салоны красоты",
+      "частные клиники",
+      "барбершопы",
+      "стоматологии",
+      "фитнес-студии",
+      "локальные сервисы",
+    ];
+
+    if (reduceMotion) {
+      target.textContent = words[0];
+      return;
+    }
+
+    var wordIndex = 0;
+    var charIndex = 0;
+    var deleting = false;
+
+    function tick() {
+      var current = words[wordIndex];
+      if (!deleting) {
+        charIndex++;
+        target.textContent = current.slice(0, charIndex);
+        if (charIndex === current.length) {
+          deleting = true;
+          return setTimeout(tick, 1600);
+        }
+        return setTimeout(tick, 70);
+      } else {
+        charIndex--;
+        target.textContent = current.slice(0, charIndex);
+        if (charIndex === 0) {
+          deleting = false;
+          wordIndex = (wordIndex + 1) % words.length;
+          return setTimeout(tick, 240);
+        }
+        return setTimeout(tick, 36);
+      }
+    }
+    tick();
+  }
+
+  // ---- Hero: aurora parallax following the mouse ----
+  function initAuroraParallax() {
+    var aurora = document.querySelector(".hero-aurora");
+    if (!aurora || reduceMotion) return;
+
+    var hero = aurora.closest(".hero");
+    if (!hero) return;
+
+    var raf = null;
+    var targetX = 0;
+    var targetY = 0;
+
+    hero.addEventListener("mousemove", function (e) {
+      var rect = hero.getBoundingClientRect();
+      targetX = (e.clientX - rect.left) / rect.width - 0.5;
+      targetY = (e.clientY - rect.top) / rect.height - 0.5;
+      if (!raf) raf = requestAnimationFrame(apply);
+    });
+
+    hero.addEventListener("mouseleave", function () {
+      targetX = 0;
+      targetY = 0;
+      if (!raf) raf = requestAnimationFrame(apply);
+    });
+
+    function apply() {
+      raf = null;
+      aurora.style.transform =
+        "translate(" + targetX * 30 + "px," + targetY * 30 + "px)";
+    }
   }
 
   if (document.readyState === "loading") {

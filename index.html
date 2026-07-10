@@ -29,9 +29,9 @@
   <link rel="canonical" href="https://lidcraft.kz/" />
   <link rel="icon" type="image/svg+xml" href="assets/lidcraft-logo.svg" />
   <link rel="preload" as="image" href="assets/tg-demo-1.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260710c" />
-  <link rel="stylesheet" href="modern-enhancements.css?v=20260710c" />
-  <link rel="stylesheet" href="site-redesign.css?v=20260710c" />
+  <link rel="stylesheet" href="styles.css?v=20260710d" />
+  <link rel="stylesheet" href="modern-enhancements.css?v=20260710d" />
+  <link rel="stylesheet" href="site-redesign.css?v=20260710d" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -79,10 +79,16 @@
 
   <main id="mainContent">
     <section class="hero">
+      <div class="hero-aurora" aria-hidden="true">
+        <span class="aurora-blob aurora-blob--1"></span>
+        <span class="aurora-blob aurora-blob--2"></span>
+        <span class="aurora-blob aurora-blob--3"></span>
+      </div>
       <div class="container hero-grid">
         <div>
           <p class="hero-eyebrow" data-i18n="heroBadge">AI-ускорение для малого и среднего бизнеса</p>
           <h1 class="headline-reveal hero-title" data-i18n="heroTitle">LidCraft Studio помогает общепиту, салонам и частным клиникам не терять заявки за 14 дней</h1>
+          <p class="hero-typed-line" aria-live="polite">Автоматизируем <span id="heroTyped" class="hero-typed-word"></span></p>
           <p class="hero-sub" data-i18n="heroText">Запускаем сайт, чат-бота и CRM-маршрут для ресторанов, доставки, салонов красоты, стоматологий и других локальных сервисов. Клиенты получают ответ за минуты, а вы — прозрачную воронку и рост повторных продаж.</p>
           <ul class="hero-promise">
             <li>Онлайн-запись и напоминания для салонов и клиник.</li>
@@ -96,6 +102,15 @@
           <p class="hero-cta-note" data-i18n="heroCtaNote">Ответим в Telegram или WhatsApp с планом запуска и ближайшим сроком старта.</p>
         </div>
         <div class="hero-card hero-card--score glass-card hover-lift">
+          <div class="hero-pipeline" aria-hidden="true">
+            <span class="pipeline-node" data-step="1">Сайт</span>
+            <span class="pipeline-arrow"></span>
+            <span class="pipeline-node" data-step="2">Бот</span>
+            <span class="pipeline-arrow"></span>
+            <span class="pipeline-node" data-step="3">CRM</span>
+            <span class="pipeline-arrow"></span>
+            <span class="pipeline-node" data-step="4">Менеджер</span>
+          </div>
           <div class="score-row reveal stagger-1">
             <span>Часов рутины, которые снимаем в среднем</span>
             <strong class="gradient-text stat-num">−14 ч/нед</strong>
@@ -1058,7 +1073,7 @@
 
   <script src="script.js?v=20260615"></script>
   <script src="site-features.js?v=20260615"></script>
-  <script src="digital-fx.js?v=20260710c" defer></script>
+  <script src="digital-fx.js?v=20260710d" defer></script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
