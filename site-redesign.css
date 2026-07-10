@@ -2001,6 +2001,91 @@ textarea.field:focus,
   .chat-typing span { animation: none !important; }
 }
 
+/* ===== INTERACTIVE PROCESS TIMELINE ===== */
+.timeline {
+  list-style: none;
+  margin: 30px 0 0;
+  padding: 0;
+  position: relative;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 19px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--lux-line);
+}
+
+.timeline::after {
+  content: "";
+  position: absolute;
+  left: 19px;
+  top: 6px;
+  width: 2px;
+  height: var(--timeline-progress, 0%);
+  background: linear-gradient(180deg, #3b82f6, #5eead4);
+  box-shadow: 0 0 14px rgba(94, 234, 212, 0.4);
+  transition: height 0.3s ease-out;
+}
+
+.timeline-item {
+  position: relative;
+  padding: 0 0 30px 56px;
+}
+
+.timeline-item:last-child { padding-bottom: 0; }
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: 4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--lux-bg);
+  border: 2px solid var(--lux-line);
+  z-index: 1;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.timeline-item.is-active::before {
+  border-color: #5eead4;
+  background: #5eead4;
+  box-shadow: 0 0 16px rgba(94, 234, 212, 0.6);
+}
+
+.timeline-day {
+  display: inline-block;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: #7dd3fc;
+  padding: 3px 10px;
+  border: 1px solid var(--lux-line);
+  border-radius: 999px;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.timeline-item h3 {
+  margin: 0 0 6px;
+  font-size: clamp(18px, 1.6vw, 22px);
+}
+
+.timeline-item p {
+  margin: 0;
+  color: var(--lux-muted);
+  max-width: 620px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline::after { transition: none; }
+}
+
 /* ================================================== */
 
 @media (hover: hover) and (pointer: fine) {

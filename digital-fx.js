@@ -169,6 +169,7 @@
     initHeroTyping();
     initAuroraParallax();
     initChatDemo();
+    initTimeline();
   }
 
   // ---- Hero: typing niches ----
@@ -358,6 +359,45 @@
     } else {
       start();
     }
+  }
+
+  // ---- Scroll-driven process timeline ----
+  function initTimeline() {
+    var timeline = document.getElementById("processTimeline");
+    if (!timeline) return;
+    var items = timeline.querySelectorAll(".timeline-item");
+    if (!items.length) return;
+
+    var ticking = false;
+
+    function update() {
+      ticking = false;
+      var rect = timeline.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var trigger = vh * 0.55;
+
+      var total = rect.height;
+      var passed = trigger - rect.top;
+      var progress = Math.max(0, Math.min(1, passed / total));
+      timeline.style.setProperty("--timeline-progress", progress * 100 + "%");
+
+      items.forEach(function (item) {
+        var r = item.getBoundingClientRect();
+        var dotY = r.top + 12;
+        item.classList.toggle("is-active", dotY <= trigger);
+      });
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    update();
   }
 
   if (document.readyState === "loading") {
