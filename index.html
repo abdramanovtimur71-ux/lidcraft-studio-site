@@ -29,9 +29,9 @@
   <link rel="canonical" href="https://lidcraft.kz/" />
   <link rel="icon" type="image/svg+xml" href="assets/lidcraft-logo.svg" />
   <link rel="preload" as="image" href="assets/tg-demo-1.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260710h" />
-  <link rel="stylesheet" href="modern-enhancements.css?v=20260710h" />
-  <link rel="stylesheet" href="site-redesign.css?v=20260710h" />
+  <link rel="stylesheet" href="styles.css?v=20260710i" />
+  <link rel="stylesheet" href="modern-enhancements.css?v=20260710i" />
+  <link rel="stylesheet" href="site-redesign.css?v=20260710i" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -861,23 +861,46 @@
     <section id="pricing" class="section">
       <div class="container">
         <h2 data-i18n="pricingTitle">Тарифы</h2>
+        <p>Выберите формат: разовый запуск под ключ или годовое сопровождение с поддержкой и развитием.</p>
+        <div class="pricing-toggle" role="tablist" aria-label="Режим оплаты">
+          <button class="pricing-toggle-btn is-active" type="button" data-mode="once" role="tab" aria-selected="true">Разовый запуск</button>
+          <button class="pricing-toggle-btn" type="button" data-mode="year" role="tab" aria-selected="false">Год <span class="pricing-save">−20%</span></button>
+        </div>
         <div class="cards pricing">
-          <article class="card">
+          <article class="card price-card">
             <h3 data-i18n="p1Title">Start</h3>
-            <p class="price">79 000 ₸</p>
+            <p class="price"><span class="price-value" data-once="79 000 ₸" data-year="63 000 ₸/мес">79 000 ₸</span></p>
             <p data-i18n="p1Text">Экспресс-аудит, карта задач и 1 консультация. Точный расчёт: +216 000 ₸/мес при 120 лидах, 45 000 ₸ чеке и росте 12% → 16%.</p>
+            <ul class="price-features">
+              <li>Экспресс-аудит воронки</li>
+              <li>Карта задач и приоритеты</li>
+              <li>1 стратегическая консультация</li>
+            </ul>
             <a class="btn primary" href="https://pay.cloudtips.ru/p/replace-start" target="_blank" rel="noopener">Оплатить Start</a>
           </article>
-          <article class="card featured">
+          <article class="card featured price-card">
+            <span class="price-badge">Популярный</span>
             <h3 data-i18n="p2Title">Growth</h3>
-            <p class="price">189 000 ₸</p>
+            <p class="price"><span class="price-value" data-once="189 000 ₸" data-year="151 000 ₸/мес">189 000 ₸</span></p>
             <p data-i18n="p2Text">Запуск сайта, сценариев и первой автоматизации. Точный расчёт: +540 000 ₸/мес при 120 лидах, 45 000 ₸ чеке и росте 12% → 22%.</p>
+            <ul class="price-features">
+              <li>Сайт + сценарии бота</li>
+              <li>Интеграция с CRM</li>
+              <li>Уведомления менеджеру и SLA</li>
+              <li>Первая автоматизация воронки</li>
+            </ul>
             <a class="btn primary" href="https://pay.cloudtips.ru/p/replace-growth" target="_blank" rel="noopener">Оплатить Growth</a>
           </article>
-          <article class="card">
+          <article class="card price-card">
             <h3 data-i18n="p3Title">Scale</h3>
-            <p class="price">399 000 ₸</p>
+            <p class="price"><span class="price-value" data-once="399 000 ₸" data-year="319 000 ₸/мес">399 000 ₸</span></p>
             <p data-i18n="p3Text">Комплекс: сайт, интеграции, сопровождение и аналитика. Точный расчёт: +864 000 ₸/мес при 120 лидах, 45 000 ₸ чеке и росте 12% → 28%.</p>
+            <ul class="price-features">
+              <li>Всё из Growth</li>
+              <li>Глубокие интеграции по API</li>
+              <li>Сопровождение и аналитика</li>
+              <li>Еженедельная оптимизация</li>
+            </ul>
             <a class="btn primary" href="https://pay.cloudtips.ru/p/replace-scale" target="_blank" rel="noopener">Оплатить Scale</a>
           </article>
         </div>
@@ -1195,7 +1218,7 @@
 
   <script src="script.js?v=20260615"></script>
   <script src="site-features.js?v=20260615"></script>
-  <script src="digital-fx.js?v=20260710h" defer></script>
+  <script src="digital-fx.js?v=20260710i" defer></script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",

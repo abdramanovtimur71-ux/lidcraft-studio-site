@@ -2236,6 +2236,109 @@ textarea.field:focus,
   .marquee-track { animation: none; }
 }
 
+/* ===== SAAS PRICING ===== */
+.pricing-toggle {
+  display: flex;
+  width: fit-content;
+  gap: 4px;
+  padding: 5px;
+  margin: 20px auto 30px;
+  border: 1px solid var(--lux-line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.pricing-toggle-btn {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 14px;
+  padding: 9px 20px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--lux-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.pricing-toggle-btn.is-active {
+  color: #04121f;
+  background: linear-gradient(135deg, #5eead4, #3b82f6);
+  font-weight: 600;
+}
+
+.pricing-save {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(52, 211, 153, 0.25);
+  color: #34d399;
+}
+.pricing-toggle-btn.is-active .pricing-save {
+  background: rgba(4, 18, 31, 0.25);
+  color: #04121f;
+}
+
+.price-card { position: relative; display: flex; flex-direction: column; }
+
+.price-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 999px;
+  color: #04121f;
+  background: linear-gradient(135deg, #5eead4, #3b82f6);
+  box-shadow: 0 6px 20px rgba(94, 234, 212, 0.4);
+  white-space: nowrap;
+}
+
+.price-value {
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  display: inline-block;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.price-value.price-switching {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.price-features {
+  list-style: none;
+  margin: 8px 0 20px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+.price-features li {
+  position: relative;
+  padding-left: 26px;
+  font-size: 14.5px;
+  color: var(--lux-text);
+}
+.price-features li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 15px;
+  height: 9px;
+  border-left: 2px solid #5eead4;
+  border-bottom: 2px solid #5eead4;
+  transform: rotate(-45deg);
+}
+.price-card .btn { margin-top: auto; }
+
 /* ================================================== */
 
 @media (hover: hover) and (pointer: fine) {

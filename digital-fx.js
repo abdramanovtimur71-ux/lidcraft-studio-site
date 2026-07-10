@@ -172,6 +172,7 @@
     initTimeline();
     initCaseFilter();
     initTilt();
+    initPricingToggle();
   }
 
   // ---- Hero: typing niches ----
@@ -470,6 +471,33 @@
           el.style.transform = "";
         }
       }
+    });
+  }
+
+  // ---- Pricing month/year toggle ----
+  function initPricingToggle() {
+    var buttons = document.querySelectorAll(".pricing-toggle-btn");
+    var values = document.querySelectorAll(".price-value");
+    if (!buttons.length || !values.length) return;
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var mode = btn.getAttribute("data-mode");
+        buttons.forEach(function (b) {
+          b.classList.toggle("is-active", b === btn);
+          b.setAttribute("aria-selected", b === btn ? "true" : "false");
+        });
+
+        values.forEach(function (v) {
+          var next = v.getAttribute("data-" + mode);
+          if (!next) return;
+          v.classList.add("price-switching");
+          setTimeout(function () {
+            v.textContent = next;
+            v.classList.remove("price-switching");
+          }, 200);
+        });
+      });
     });
   }
 
