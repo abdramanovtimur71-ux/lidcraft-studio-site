@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20260710k" />
-  <link rel="stylesheet" href="site-redesign.css?v=20260710k" />
+  <link rel="stylesheet" href="styles.css?v=20260710l" />
+  <link rel="stylesheet" href="site-redesign.css?v=20260710l" />
 </head>
 <body>
   <header class="header">
@@ -167,127 +167,241 @@
       </section>
 
       <section class="section account-settings-section">
-        <h2>Настройки и конфиденциальность</h2>
-        <p class="account-section-note">Стандартный центр управления доступом, уведомлениями и приватностью данных.</p>
-        <div class="cards">
-          <article class="card account-card-status">
-            <h3>Статус доступа</h3>
-            <p id="sessionStatus" class="result-text">Проверяем сессию...</p>
-            <p id="subscriptionStatus" class="result-text">Проверяем подписку...</p>
-            <div class="cta-row">
-              <a class="btn primary" href="#pricing" id="renewAccessBtn">Продлить подписку</a>
-            </div>
-          </article>
+        <h2>Настройки</h2>
+        <p class="account-section-note">Управление профилем, уведомлениями, приватностью и безопасностью — как в привычных приложениях.</p>
 
-          <article class="card account-card-profile">
-            <h3>Управление профилем</h3>
-            <input id="profileName" class="field" type="text" placeholder="Имя" autocomplete="name" />
-            <input id="profileEmail" class="field" type="email" placeholder="Email" autocomplete="email" inputmode="email" />
-            <div class="cta-row">
-              <button id="saveProfileBtn" class="btn primary" type="button">Сохранить профиль</button>
-              <button id="exportDataBtn" class="btn ghost" type="button">Экспорт данных</button>
-            </div>
-          </article>
+        <div class="settings-app">
+          <aside class="settings-nav" role="tablist" aria-label="Разделы настроек">
+            <button class="settings-nav-btn is-active" type="button" role="tab" aria-selected="true" data-settings-tab="profile">
+              <span class="settings-nav-ico" aria-hidden="true">👤</span>
+              <span>Профиль</span>
+            </button>
+            <button class="settings-nav-btn" type="button" role="tab" aria-selected="false" data-settings-tab="access">
+              <span class="settings-nav-ico" aria-hidden="true">🎫</span>
+              <span>Доступ и подписка</span>
+            </button>
+            <button class="settings-nav-btn" type="button" role="tab" aria-selected="false" data-settings-tab="notifications">
+              <span class="settings-nav-ico" aria-hidden="true">🔔</span>
+              <span>Уведомления</span>
+            </button>
+            <button class="settings-nav-btn" type="button" role="tab" aria-selected="false" data-settings-tab="privacy">
+              <span class="settings-nav-ico" aria-hidden="true">🛡️</span>
+              <span>Приватность</span>
+            </button>
+            <button class="settings-nav-btn" type="button" role="tab" aria-selected="false" data-settings-tab="security">
+              <span class="settings-nav-ico" aria-hidden="true">🔒</span>
+              <span>Безопасность</span>
+            </button>
+            <button class="settings-nav-btn" type="button" role="tab" aria-selected="false" data-settings-tab="interface">
+              <span class="settings-nav-ico" aria-hidden="true">🎛️</span>
+              <span>Интерфейс</span>
+            </button>
+            <button class="settings-nav-btn" type="button" role="tab" aria-selected="false" data-settings-tab="data">
+              <span class="settings-nav-ico" aria-hidden="true">🗂️</span>
+              <span>Данные</span>
+            </button>
+          </aside>
 
-          <article class="card account-settings-card">
-            <h3>Настройки кабинета</h3>
-            <div class="settings-group">
-              <h4>Интерфейс и сессия</h4>
-              <label for="settingsLanguage">Язык интерфейса</label>
-              <select id="settingsLanguage" class="field">
-                <option value="ru">Русский</option>
-                <option value="en">English</option>
-              </select>
-
-              <label for="settingsTimezone">Часовой пояс</label>
-              <select id="settingsTimezone" class="field">
-                <option value="Europe/Moscow">Europe/Moscow</option>
-                <option value="Asia/Almaty">Asia/Almaty</option>
-                <option value="Asia/Tashkent">Asia/Tashkent</option>
-                <option value="UTC">UTC</option>
-              </select>
-
-              <label for="settingsAutoLogout">Автовыход при бездействии</label>
-              <select id="settingsAutoLogout" class="field">
-                <option value="30">30 минут</option>
-                <option value="60">60 минут</option>
-                <option value="120">120 минут</option>
-              </select>
-            </div>
-
-            <div class="settings-group">
-              <h4>Уведомления</h4>
-              <div class="settings-checks">
-                <label><input id="notifyEmail" type="checkbox" /> Email-уведомления</label>
-                <label><input id="notifyTelegram" type="checkbox" /> Telegram-уведомления</label>
-                <label><input id="notifyDigest" type="checkbox" /> Недельный отчет</label>
+          <div class="settings-panels">
+            <!-- Профиль -->
+            <div class="settings-panel is-active" data-settings-panel="profile">
+              <div class="settings-panel-head">
+                <h3>Управление профилем</h3>
+                <p>Основные данные аккаунта и быстрый экспорт.</p>
+              </div>
+              <div class="settings-field">
+                <label for="profileName">Имя</label>
+                <input id="profileName" class="field" type="text" placeholder="Имя" autocomplete="name" />
+              </div>
+              <div class="settings-field">
+                <label for="profileEmail">Email</label>
+                <input id="profileEmail" class="field" type="email" placeholder="Email" autocomplete="email" inputmode="email" />
+              </div>
+              <div class="cta-row">
+                <button id="saveProfileBtn" class="btn primary" type="button">Сохранить профиль</button>
+                <button id="exportDataBtn" class="btn ghost" type="button">Экспорт данных</button>
               </div>
             </div>
 
-            <div class="settings-group">
-              <h4>Конфиденциальность</h4>
-              <label for="settingsPrivacyMode">Режим приватности</label>
-              <select id="settingsPrivacyMode" class="field">
-                <option value="standard">Стандартный</option>
-                <option value="strict">Строгий (минимум локальных данных)</option>
-              </select>
-              <div class="settings-checks settings-checks--privacy">
-                <label><input id="privacyAnalytics" type="checkbox" /> Разрешить аналитику использования</label>
-                <label><input id="privacyPersonalization" type="checkbox" /> Персонализировать подсказки по истории</label>
-                <label><input id="privacyCrashReports" type="checkbox" /> Отправлять диагностические отчеты</label>
-                <label><input id="privacyThirdParty" type="checkbox" /> Разрешить интеграции со сторонними сервисами</label>
+            <!-- Доступ и подписка -->
+            <div class="settings-panel" data-settings-panel="access">
+              <div class="settings-panel-head">
+                <h3>Статус доступа</h3>
+                <p>Текущая сессия и подписка.</p>
+              </div>
+              <p id="sessionStatus" class="result-text">Проверяем сессию...</p>
+              <p id="subscriptionStatus" class="result-text">Проверяем подписку...</p>
+              <div class="cta-row">
+                <a class="btn primary" href="#pricing" id="renewAccessBtn">Продлить подписку</a>
+                <button id="extendSessionBtn" class="btn ghost" type="button">Продлить сессию</button>
               </div>
             </div>
 
-            <div class="cta-row">
-              <button id="saveSettingsBtn" class="btn primary" type="button">Сохранить настройки</button>
-              <button id="resetSettingsBtn" class="btn ghost" type="button">Сбросить</button>
+            <!-- Уведомления -->
+            <div class="settings-panel" data-settings-panel="notifications">
+              <div class="settings-panel-head">
+                <h3>Уведомления</h3>
+                <p>Выберите, о чём и куда вам сообщать.</p>
+              </div>
+              <label class="switch-row">
+                <span class="switch-text"><strong>Email-уведомления</strong><small>Заявки и важные события на почту</small></span>
+                <span class="switch"><input id="notifyEmail" type="checkbox" /><span class="switch-track"></span></span>
+              </label>
+              <label class="switch-row">
+                <span class="switch-text"><strong>Telegram-уведомления</strong><small>Мгновенные пуши в Telegram</small></span>
+                <span class="switch"><input id="notifyTelegram" type="checkbox" /><span class="switch-track"></span></span>
+              </label>
+              <label class="switch-row">
+                <span class="switch-text"><strong>Недельный отчёт</strong><small>Сводка по воронке раз в неделю</small></span>
+                <span class="switch"><input id="notifyDigest" type="checkbox" /><span class="switch-track"></span></span>
+              </label>
+              <div class="cta-row">
+                <button class="btn primary" type="button" data-settings-save="notifications">Сохранить</button>
+              </div>
             </div>
-            <p id="settingsStatus" class="result-text">Настройки можно изменять в любое время.</p>
-          </article>
 
-          <article class="card account-card-privacy">
-            <h3>Приватность и контроль данных</h3>
-            <ul class="privacy-list">
-              <li>Сессии привязаны к вашему email и истекают автоматически.</li>
-              <li>Экспорт данных доступен в один клик в формате CSV.</li>
-              <li>Можно очистить локальные данные и завершить текущий вход.</li>
-            </ul>
-            <div class="cta-row">
-              <button id="revokeSessionsBtn" class="btn ghost" type="button">Завершить текущую сессию</button>
-              <button id="downloadConsentBtn" class="btn ghost" type="button">Скачать настройки приватности</button>
+            <!-- Приватность -->
+            <div class="settings-panel" data-settings-panel="privacy">
+              <div class="settings-panel-head">
+                <h3>Конфиденциальность</h3>
+                <p>Контроль над данными и режимом приватности.</p>
+              </div>
+              <div class="settings-field">
+                <label for="settingsPrivacyMode">Режим приватности</label>
+                <select id="settingsPrivacyMode" class="field">
+                  <option value="standard">Стандартный</option>
+                  <option value="strict">Строгий (минимум локальных данных)</option>
+                </select>
+              </div>
+              <label class="switch-row">
+                <span class="switch-text"><strong>Аналитика использования</strong><small>Помогает улучшать продукт</small></span>
+                <span class="switch"><input id="privacyAnalytics" type="checkbox" /><span class="switch-track"></span></span>
+              </label>
+              <label class="switch-row">
+                <span class="switch-text"><strong>Персонализация</strong><small>Подсказки на основе истории</small></span>
+                <span class="switch"><input id="privacyPersonalization" type="checkbox" /><span class="switch-track"></span></span>
+              </label>
+              <label class="switch-row">
+                <span class="switch-text"><strong>Диагностические отчёты</strong><small>Автоотправка отчётов об ошибках</small></span>
+                <span class="switch"><input id="privacyCrashReports" type="checkbox" /><span class="switch-track"></span></span>
+              </label>
+              <label class="switch-row">
+                <span class="switch-text"><strong>Сторонние интеграции</strong><small>Разрешить подключение внешних сервисов</small></span>
+                <span class="switch"><input id="privacyThirdParty" type="checkbox" /><span class="switch-track"></span></span>
+              </label>
+              <ul class="privacy-list">
+                <li>Сессии привязаны к вашему email и истекают автоматически.</li>
+                <li>Экспорт данных доступен в один клик в формате CSV.</li>
+                <li>Можно очистить локальные данные и завершить текущий вход.</li>
+              </ul>
+              <div class="cta-row">
+                <button class="btn primary" type="button" data-settings-save="privacy">Сохранить</button>
+                <button id="revokeSessionsBtn" class="btn ghost" type="button">Завершить сессию</button>
+                <button id="downloadConsentBtn" class="btn ghost" type="button">Скачать настройки</button>
+              </div>
+              <p id="privacyStatus" class="result-text">Используются стандартные настройки конфиденциальности.</p>
             </div>
-            <p id="privacyStatus" class="result-text">Используются стандартные настройки конфиденциальности.</p>
-          </article>
 
-          <article class="card account-card-security">
-            <h3>Безопасность аккаунта</h3>
-            <input id="currentPasswordAccount" class="field" type="password" placeholder="Текущий пароль" autocomplete="current-password" />
-            <input id="newPasswordAccount" class="field" type="password" placeholder="Новый пароль" autocomplete="new-password" />
-            <p id="newPasswordAccountHint" class="field-help">Сильный пароль: 8+ символов, буквы в разных регистрах, цифры и спецсимвол.</p>
-            <input id="newPasswordRepeatAccount" class="field" type="password" placeholder="Повторите новый пароль" autocomplete="new-password" />
-            <div class="cta-row">
-              <button id="changePasswordBtn" class="btn ghost" type="button">Сменить пароль</button>
-              <button id="extendSessionBtn" class="btn ghost" type="button">Продлить сессию</button>
-            </div>
-            <p id="securityStatus" class="result-text" aria-live="polite">Рекомендуется менять пароль минимум раз в 90 дней.</p>
-          </article>
+            <!-- Безопасность -->
+            <div class="settings-panel" data-settings-panel="security">
+              <div class="settings-panel-head">
+                <h3>Безопасность аккаунта</h3>
+                <p>Смена пароля и защита запросов к ИИ.</p>
+              </div>
+              <div class="settings-field">
+                <label for="currentPasswordAccount">Текущий пароль</label>
+                <input id="currentPasswordAccount" class="field" type="password" placeholder="Текущий пароль" autocomplete="current-password" />
+              </div>
+              <div class="settings-field">
+                <label for="newPasswordAccount">Новый пароль</label>
+                <input id="newPasswordAccount" class="field" type="password" placeholder="Новый пароль" autocomplete="new-password" />
+                <p id="newPasswordAccountHint" class="field-help">Сильный пароль: 8+ символов, буквы в разных регистрах, цифры и спецсимвол.</p>
+              </div>
+              <div class="settings-field">
+                <label for="newPasswordRepeatAccount">Повторите новый пароль</label>
+                <input id="newPasswordRepeatAccount" class="field" type="password" placeholder="Повторите новый пароль" autocomplete="new-password" />
+              </div>
+              <div class="cta-row">
+                <button id="changePasswordBtn" class="btn primary" type="button">Сменить пароль</button>
+              </div>
+              <p id="securityStatus" class="result-text" aria-live="polite">Рекомендуется менять пароль минимум раз в 90 дней.</p>
 
-          <article class="card account-card-ai">
-            <h3>AI-защита промптов</h3>
-            <p>Проверка запроса перед отправкой в ИИ: блокируем попытки вытащить системные инструкции и код проекта.</p>
-            <input id="aiPromptInput" class="field" type="text" placeholder="Введите тестовый запрос..." autocomplete="off" />
-            <div class="cta-row">
-              <button id="aiPromptCheckBtn" class="btn ghost" type="button">Проверить запрос</button>
+              <div class="settings-divider"></div>
+              <div class="settings-panel-head">
+                <h3>AI-защита промптов</h3>
+                <p>Проверка запроса перед отправкой в ИИ: блокируем попытки вытащить системные инструкции и код проекта.</p>
+              </div>
+              <div class="settings-field">
+                <label for="aiPromptInput">Тестовый запрос</label>
+                <input id="aiPromptInput" class="field" type="text" placeholder="Введите тестовый запрос..." autocomplete="off" />
+              </div>
+              <div class="cta-row">
+                <button id="aiPromptCheckBtn" class="btn ghost" type="button">Проверить запрос</button>
+              </div>
+              <p id="aiPromptResult" class="result-text">Ожидание проверки...</p>
             </div>
-            <p id="aiPromptResult" class="result-text">Ожидание проверки...</p>
-          </article>
+
+            <!-- Интерфейс -->
+            <div class="settings-panel" data-settings-panel="interface">
+              <div class="settings-panel-head">
+                <h3>Интерфейс и сессия</h3>
+                <p>Язык, часовой пояс и автозавершение сессии.</p>
+              </div>
+              <div class="settings-field">
+                <label for="settingsLanguage">Язык интерфейса</label>
+                <select id="settingsLanguage" class="field">
+                  <option value="ru">Русский</option>
+                  <option value="en">English</option>
+                </select>
+              </div>
+              <div class="settings-field">
+                <label for="settingsTimezone">Часовой пояс</label>
+                <select id="settingsTimezone" class="field">
+                  <option value="Europe/Moscow">Europe/Moscow</option>
+                  <option value="Asia/Almaty">Asia/Almaty</option>
+                  <option value="Asia/Tashkent">Asia/Tashkent</option>
+                  <option value="UTC">UTC</option>
+                </select>
+              </div>
+              <div class="settings-field">
+                <label for="settingsAutoLogout">Автовыход при бездействии</label>
+                <select id="settingsAutoLogout" class="field">
+                  <option value="30">30 минут</option>
+                  <option value="60">60 минут</option>
+                  <option value="120">120 минут</option>
+                </select>
+              </div>
+              <div class="cta-row">
+                <button id="saveSettingsBtn" class="btn primary" type="button">Сохранить настройки</button>
+                <button id="resetSettingsBtn" class="btn ghost" type="button">Сбросить</button>
+              </div>
+              <p id="settingsStatus" class="result-text">Настройки можно изменять в любое время.</p>
+            </div>
+
+            <!-- Данные -->
+            <div class="settings-panel" data-settings-panel="data">
+              <div class="settings-panel-head">
+                <h3>Данные и аккаунт</h3>
+                <p>Управление локальными данными аккаунта.</p>
+              </div>
+              <div class="settings-danger">
+                <div class="settings-danger-text">
+                  <strong>Очистить локальные данные</strong>
+                  <small>Удаляет сохранённые настройки и историю в этом браузере.</small>
+                </div>
+                <button id="clearDataBtn" class="btn ghost" type="button">Очистить</button>
+              </div>
+              <div class="settings-danger settings-danger--critical">
+                <div class="settings-danger-text">
+                  <strong>Удалить аккаунт (локально)</strong>
+                  <small>Полностью удаляет данные аккаунта из этого браузера.</small>
+                </div>
+                <button id="deleteAccountBtn" class="btn ghost" type="button">Удалить</button>
+              </div>
+              <p id="securityNotice" class="result-text">Все действия логируются локально в браузере.</p>
+            </div>
+          </div>
         </div>
-        <div class="cta-row">
-          <button id="clearDataBtn" class="btn ghost" type="button">Очистить локальные данные</button>
-          <button id="deleteAccountBtn" class="btn ghost" type="button">Удалить аккаунт (локально)</button>
-        </div>
-        <p id="securityNotice" class="result-text">Все действия логируются локально в браузере.</p>
       </section>
 
       <section class="section">
@@ -377,6 +491,6 @@
 
   <script src="account.js"></script>
   <script>document.getElementById("accountYear").textContent = new Date().getFullYear();</script>
-  <script src="digital-fx.js?v=20260710k" defer></script>
+  <script src="digital-fx.js?v=20260710l" defer></script>
 </body>
 </html>

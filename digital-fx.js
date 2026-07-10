@@ -175,6 +175,7 @@
     initPricingToggle();
     initTechPolish();
     initConversion();
+    initSettingsTabs();
   }
 
   // ---- Hero: typing niches ----
@@ -641,6 +642,43 @@
         }
       });
     }
+  }
+
+  // ---- App-like settings tabs (account page) ----
+  function initSettingsTabs() {
+    var nav = document.querySelector(".settings-nav");
+    if (!nav) return;
+    var buttons = nav.querySelectorAll(".settings-nav-btn");
+    var panels = document.querySelectorAll(".settings-panel");
+    if (!buttons.length || !panels.length) return;
+
+    function activate(tab) {
+      buttons.forEach(function (b) {
+        var on = b.getAttribute("data-settings-tab") === tab;
+        b.classList.toggle("is-active", on);
+        b.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      panels.forEach(function (p) {
+        p.classList.toggle(
+          "is-active",
+          p.getAttribute("data-settings-panel") === tab
+        );
+      });
+    }
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        activate(btn.getAttribute("data-settings-tab"));
+      });
+    });
+
+    var saveBtns = document.querySelectorAll("[data-settings-save]");
+    var mainSave = document.getElementById("saveSettingsBtn");
+    saveBtns.forEach(function (b) {
+      b.addEventListener("click", function () {
+        if (mainSave) mainSave.click();
+      });
+    });
   }
 
   if (document.readyState === "loading") {
