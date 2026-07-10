@@ -622,23 +622,49 @@
           </article>
           <article class="card calc-card">
             <h3 data-i18n="calcTitle">Прогноз роста</h3>
+            <div class="calc-intro">
+              <p class="calc-howto-title">Как пользоваться калькулятором</p>
+              <ol class="calc-howto">
+                <li>Введите текущие цифры бизнеса за месяц.</li>
+                <li>Нажмите «Рассчитать» и сравните потери до/после.</li>
+                <li>Отправьте расчёт команде или запросите точный прогноз.</li>
+              </ol>
+              <div class="calc-presets" aria-label="Быстрые шаблоны ниш">
+                <button class="calc-preset" type="button" data-calc-preset="beauty">Салон красоты</button>
+                <button class="calc-preset" type="button" data-calc-preset="horeca">Кафе / доставка</button>
+                <button class="calc-preset" type="button" data-calc-preset="clinic">Стоматология / клиника</button>
+              </div>
+            </div>
             <div class="calc-grid">
-              <label for="leadsInput" data-i18n="calcLeadsLabel">Лидов в месяц</label>
-              <input id="leadsInput" type="number" min="0" placeholder="Например, 120" class="field" />
-              <label for="avgCheck" data-i18n="calcAvgCheckLabel">Средний чек (₸)</label>
-              <input id="avgCheck" type="number" min="0" placeholder="Например, 45000" class="field" />
-              <label for="conversionBefore" data-i18n="calcConversionBefore">Конверсия до (%)</label>
-              <input id="conversionBefore" type="number" min="0" max="100" placeholder="Например, 12" class="field" />
-              <label for="conversionAfter" data-i18n="calcConversionAfter">Цель конверсии (%)</label>
-              <input id="conversionAfter" type="number" min="0" max="100" placeholder="Например, 22" class="field" />
-              <label for="teamSize" data-i18n="calcTeamSizeLabel">Часов команды на обработку</label>
-              <input id="teamSize" type="number" min="0" placeholder="Например, 40" class="field" />
-              <label for="industrySelect" data-i18n="calcIndustryLabel">Ниша</label>
-              <select id="industrySelect" class="field">
-                <option value="services">Services</option>
-                <option value="ecommerce">E-commerce</option>
-                <option value="edtech">EdTech</option>
-              </select>
+              <div class="calc-field">
+                <label for="leadsInput" data-i18n="calcLeadsLabel">Лидов в месяц</label>
+                <input id="leadsInput" type="number" min="0" placeholder="Например, 120" class="field" />
+              </div>
+              <div class="calc-field">
+                <label for="avgCheck" data-i18n="calcAvgCheckLabel">Средний чек (₸)</label>
+                <input id="avgCheck" type="number" min="0" placeholder="Например, 45000" class="field" />
+              </div>
+              <div class="calc-field">
+                <label for="conversionBefore" data-i18n="calcConversionBefore">Конверсия до (%)</label>
+                <input id="conversionBefore" type="number" min="0" max="100" placeholder="Например, 12" class="field" />
+              </div>
+              <div class="calc-field">
+                <label for="conversionAfter" data-i18n="calcConversionAfter">Цель конверсии (%)</label>
+                <input id="conversionAfter" type="number" min="0" max="100" placeholder="Например, 22" class="field" />
+              </div>
+              <div class="calc-field">
+                <label for="teamSize" data-i18n="calcTeamSizeLabel">Часов команды на обработку</label>
+                <input id="teamSize" type="number" min="0" placeholder="Например, 40" class="field" />
+              </div>
+              <div class="calc-field">
+                <label for="industrySelect" data-i18n="calcIndustryLabel">Ниша</label>
+                <select id="industrySelect" class="field">
+                  <option value="beauty">Салон красоты / барбершоп</option>
+                  <option value="horeca">Кафе / ресторан / доставка</option>
+                  <option value="clinic">Стоматология / частная клиника</option>
+                  <option value="services">Другие услуги</option>
+                </select>
+              </div>
             </div>
             <div class="calc-actions">
               <button id="calcGrowth" class="btn primary" type="button" data-i18n="calcButton">Рассчитать</button>

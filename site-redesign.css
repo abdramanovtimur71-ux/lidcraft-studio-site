@@ -1140,6 +1140,68 @@ select:focus-visible {
   color: #8fafd4;
 }
 
+/* Calculator UX polish */
+.calc-intro {
+  border: 1px solid rgba(134, 189, 248, 0.26);
+  border-radius: 14px;
+  padding: 14px 16px;
+  background: linear-gradient(180deg, rgba(11, 24, 45, 0.84), rgba(7, 17, 33, 0.9));
+  margin-bottom: 14px;
+}
+
+.calc-howto-title {
+  margin: 0 0 8px;
+  font-weight: 700;
+  color: #eaf5ff;
+}
+
+.calc-howto {
+  margin: 0;
+  padding-left: 18px;
+  color: #a8c3e3;
+  display: grid;
+  gap: 4px;
+}
+
+.calc-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.calc-preset {
+  border: 1px solid rgba(148, 198, 252, 0.32);
+  background: linear-gradient(180deg, rgba(24, 40, 70, 0.88), rgba(13, 25, 46, 0.9));
+  color: #dff0ff;
+  border-radius: 10px;
+  padding: 7px 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.calc-preset:hover {
+  border-color: rgba(178, 217, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.calc-grid {
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)) !important;
+  align-items: end;
+}
+
+.calc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.calc-field label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #dbeafe;
+}
+
 @media (max-width: 980px) {
   .demo-viewport-head {
     flex-direction: column;

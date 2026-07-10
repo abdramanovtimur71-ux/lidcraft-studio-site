@@ -1,6 +1,27 @@
 const growthButton = document.getElementById("calcGrowth");
 const leadsInput = document.getElementById("leadsInput");
+const avgCheckInput = document.getElementById("avgCheck");
+const conversionBeforeInput = document.getElementById("conversionBefore");
+const conversionAfterInput = document.getElementById("conversionAfter");
+const teamSizeInput = document.getElementById("teamSize");
+const industrySelect = document.getElementById("industrySelect");
 const calcResult = document.getElementById("calcResult");
+const calcShareButton = document.getElementById("calcShare");
+const calcPrefillButton = document.getElementById("calcPrefill");
+const calcFollowup = document.getElementById("calcFollowup");
+const calcFollowupText = document.getElementById("calcFollowupText");
+const lostBeforeValue = document.getElementById("lostBeforeValue");
+const lostAfterValue = document.getElementById("lostAfterValue");
+const savedPercent = document.getElementById("savedPercent");
+const savedLeadsNode = document.getElementById("savedLeads");
+const savedRevenueNode = document.getElementById("savedRevenue");
+const calcWinRate = document.getElementById("calcWinRate");
+const calcHoursSaved = document.getElementById("calcHoursSaved");
+const calcEscalations = document.getElementById("calcEscalations");
+const barLostBefore = document.querySelector('[data-bar="lost-before"]');
+const barLostAfter = document.querySelector('[data-bar="lost-after"]');
+const barSaved = document.querySelector('[data-bar="saved"]');
+const calcPresetButtons = Array.from(document.querySelectorAll("[data-calc-preset]"));
 
 const openTranslate = document.getElementById("openTranslate");
 const globalLang = document.getElementById("globalLang");
@@ -223,40 +244,153 @@ if (openTranslate && globalLang) {
   });
 }
 
-if (growthButton && leadsInput && calcResult) {
-  growthButton.addEventListener("click", () => {
-    const leads = Number(leadsInput.value || 0);
-    if (leads <= 0) {
-      calcResult.textContent = "Введите корректное количество лидов в месяц.";
-      calcResult.dataset.state = "error";
-      return;
-    }
+if (
+  growthButton &&
+  leadsInput &&
+  avgCheckInput &&
+  conversionBeforeInput &&
+  conversionAfterInput &&
+  teamSizeInput &&
+  industrySelect &&
+  calcResult
+) {
+  const industryProfiles = {
+    beauty: { label: "салонов красоты", lostBefore: 0.28, lostAfter: 0.11, escalations: 0.34 },
+    horeca: { label: "общепита", lostBefore: 0.32, lostAfter: 0.14, escalations: 0.41 },
+    clinic: { label: "частных клиник", lostBefore: 0.24, lostAfter: 0.09, escalations: 0.31 },
+    services: { label: "сервисного бизнеса", lostBefore: 0.26, lostAfter: 0.1, escalations: 0.35 }
+  };
 
-    const lostBeforeRate = 0.30;
-    const lostAfterRate = 0.10;
-    const savedRate = lostBeforeRate - lostAfterRate;
-    const fasterReplyRate = 0.35;
+  const formatInt = (value) => Math.max(0, Math.round(value)).toLocaleString("ru-RU");
+  const formatMoney = (value) => `${Math.max(0, Math.round(value)).toLocaleString("ru-RU")} ₸`;
+  const formatPercent = (value) => `${Math.max(0, value).toFixed(0)}%`;
 
-    const lostBefore = leads * lostBeforeRate;
-    const lostAfter = leads * lostAfterRate;
-    const savedLeads = leads * savedRate;
-    const fasterReply = leads * fasterReplyRate;
-
-    const formatCount = (value) => {
-      if (value < 10) return value.toFixed(1).replace(".", ",");
-      return Math.round(value).toString();
+  const applyPreset = (preset) => {
+    const presets = {
+      beauty: { leads: 180, avgCheck: 24000, conversionBefore: 11, conversionAfter: 17, teamSize: 48, industry: "beauty" },
+      horeca: { leads: 320, avgCheck: 6800, conversionBefore: 9, conversionAfter: 13, teamSize: 72, industry: "horeca" },
+      clinic: { leads: 140, avgCheck: 52000, conversionBefore: 14, conversionAfter: 21, teamSize: 44, industry: "clinic" }
     };
+    const next = presets[preset];
+    if (!next) return;
+    leadsInput.value = String(next.leads);
+    avgCheckInput.value = String(next.avgCheck);
+    conversionBeforeInput.value = String(next.conversionBefore);
+    conversionAfterInput.value = String(next.conversionAfter);
+    teamSizeInput.value = String(next.teamSize);
+    industrySelect.value = next.industry;
+  };
 
-    calcResult.textContent = `Статистика: до автоматизации может теряться около ${formatCount(lostBefore)} лидов/мес (≈30%), после — около ${formatCount(lostAfter)} (≈10%). Экономия: ${formatCount(savedLeads)} лидов/мес (≈20%). Ускоренная обработка: ${formatCount(fasterReply)} обращений/мес (≈35%).`;
-    calcResult.dataset.state = "success";
-  });
+  const calculate = () => {
+    const leads = Number(leadsInput.value || 0);
+    const avgCheck = Number(avgCheckInput.value || 0);
+    const conversionBefore = Number(conversionBeforeInput.value || 0);
+    const conversionAfter = Number(conversionAfterInput.value || 0);
+    const teamHours = Number(teamSizeInput.value || 0);
+    const profile = industryProfiles[industrySelect.value] || industryProfiles.services;
 
-  leadsInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      growthButton.click();
+    if (leads <= 0 || avgCheck <= 0 || conversionBefore <= 0 || conversionAfter <= 0 || teamHours <= 0) {
+      calcResult.textContent = "Заполните все поля: лиды, чек, конверсию и часы команды.";
+      calcResult.dataset.state = "error";
+      return null;
     }
+
+    const beforeLossRate = profile.lostBefore;
+    const afterLossRate = profile.lostAfter;
+    const savedRate = Math.max(0, beforeLossRate - afterLossRate);
+
+    const lostBefore = leads * beforeLossRate;
+    const lostAfter = leads * afterLossRate;
+    const savedLeads = leads * savedRate;
+
+    const conversionDelta = Math.max(0, conversionAfter - conversionBefore);
+    const extraDeals = leads * (conversionDelta / 100);
+    const extraRevenue = extraDeals * avgCheck;
+    const savedHours = teamHours * (0.28 + Math.min(0.17, conversionDelta / 100));
+    const escalations = profile.escalations * 100;
+
+    if (lostBeforeValue) lostBeforeValue.textContent = formatPercent(beforeLossRate * 100);
+    if (lostAfterValue) lostAfterValue.textContent = formatPercent(afterLossRate * 100);
+    if (savedPercent) savedPercent.textContent = formatPercent(savedRate * 100);
+    if (savedLeadsNode) savedLeadsNode.textContent = formatInt(savedLeads);
+    if (savedRevenueNode) savedRevenueNode.textContent = formatMoney(extraRevenue);
+    if (calcWinRate) calcWinRate.textContent = `+${conversionDelta.toFixed(1)}%`;
+    if (calcHoursSaved) calcHoursSaved.textContent = `${formatInt(savedHours)} ч`;
+    if (calcEscalations) calcEscalations.textContent = `${formatPercent(escalations)}`;
+
+    if (barLostBefore) barLostBefore.style.setProperty("--value", `${beforeLossRate * 100}%`);
+    if (barLostAfter) barLostAfter.style.setProperty("--value", `${afterLossRate * 100}%`);
+    if (barSaved) barSaved.style.setProperty("--value", `${savedRate * 100}%`);
+
+    const summary = `Для ${profile.label}: при ${formatInt(leads)} лидах/мес и чеке ${formatMoney(avgCheck)} можно вернуть около ${formatInt(savedLeads)} лидов и получить до ${formatMoney(extraRevenue)} дополнительной выручки в месяц.`;
+    calcResult.textContent = summary;
+    calcResult.dataset.state = "success";
+
+    if (calcFollowup && calcFollowupText) {
+      calcFollowup.classList.add("is-visible");
+      calcFollowupText.textContent = `Хотите точный прогноз для ${profile.label}? Оставьте заявку — подготовим расчёт под ваши реальные цифры.`;
+    }
+
+    return {
+      summary,
+      profileLabel: profile.label
+    };
+  };
+
+  growthButton.addEventListener("click", () => {
+    calculate();
   });
+
+  [leadsInput, avgCheckInput, conversionBeforeInput, conversionAfterInput, teamSizeInput].forEach((input) => {
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        calculate();
+      }
+    });
+  });
+
+  calcPresetButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const preset = button.getAttribute("data-calc-preset");
+      if (!preset) return;
+      applyPreset(preset);
+      calculate();
+    });
+  });
+
+  if (calcShareButton) {
+    calcShareButton.addEventListener("click", async () => {
+      const result = calculate();
+      if (!result) return;
+      const text = `${result.summary}\nИсточник: калькулятор LidCraft Studio`;
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        const helper = document.createElement("textarea");
+        helper.value = text;
+        helper.setAttribute("readonly", "");
+        helper.style.position = "absolute";
+        helper.style.left = "-9999px";
+        document.body.appendChild(helper);
+        helper.select();
+        document.execCommand("copy");
+        helper.remove();
+      }
+    });
+  }
+
+  if (calcPrefillButton) {
+    calcPrefillButton.addEventListener("click", () => {
+      const leadMessage = document.getElementById("leadMessage");
+      if (!(leadMessage instanceof HTMLTextAreaElement)) return;
+      if (!leadMessage.value.trim()) {
+        leadMessage.value = `Нужен точный расчёт по нашей нише (${industrySelect.options[industrySelect.selectedIndex]?.text || "бизнес"}).`;
+      }
+      leadMessage.focus();
+      leadMessage.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  }
 }
 
 const quizQuestions = [
