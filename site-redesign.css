@@ -982,3 +982,17 @@ select:focus-visible {
     -webkit-text-fill-color: transparent;
   }
 }
+
+/* Analysis section: avoid oversized empty space in short cards */
+#analysis .cards {
+  align-items: start;
+}
+
+#analysis .card {
+  height: auto;
+  min-height: 0;
+}
+
+#analysis .calc-card {
+  grid-column: 1 / -1;
+}
