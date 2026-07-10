@@ -1341,6 +1341,171 @@ body, h1, h2, h3, h4, h5, h6, .btn, .nav, .metric-chip strong, .metric-label, .a
 
 /* ========================================================== */
 
+/* =========== DIGITAL / CYBER TECH LAYER =========== */
+
+/* Animated technical grid + glow overlay on top of the base body bg */
+body {
+  position: relative;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(circle at 50% 30%, #000 0%, transparent 78%);
+  -webkit-mask-image: radial-gradient(circle at 50% 30%, #000 0%, transparent 78%);
+  animation: gridDrift 30s linear infinite;
+}
+
+@keyframes gridDrift {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 46px 46px, 46px 46px; }
+}
+
+/* Keep real content above the grid */
+.header, main, footer, .hero, .section {
+  position: relative;
+  z-index: 1;
+}
+
+/* Digital monospace numerics: metrics, prices, health, funnel values */
+#botHealthScore,
+#botIncomingLeads,
+#botQualifiedLeads,
+#botBookedCalls,
+#botConversionRate,
+#botAvgResponse,
+#botAutomationRate,
+#botFirstReplyRate,
+.metric-chip strong,
+.dashboard-health strong,
+.price {
+  font-family: "JetBrains Mono", "SF Mono", "Fira Code", ui-monospace, "Cascadia Code", Menlo, Consolas, monospace !important;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Neon accent for key numeric highlights */
+.metric-chip.highlight strong,
+.dashboard-health strong {
+  color: #5eead4 !important;
+  text-shadow: 0 0 12px rgba(94, 234, 212, 0.45);
+}
+
+/* Live badge -> pulsing digital pill */
+.account-live-badge,
+.dashboard-card h3 {
+  position: relative;
+}
+
+.account-live-badge {
+  border: 1px solid rgba(94, 234, 212, 0.4) !important;
+  color: #5eead4 !important;
+  background: rgba(94, 234, 212, 0.08) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px !important;
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+}
+
+.account-live-badge::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34d399;
+  margin-right: 8px;
+  box-shadow: 0 0 8px #34d399;
+  animation: livePulse 1.6s ease-in-out infinite;
+  vertical-align: middle;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.7); }
+}
+
+/* Eyebrow -> digital label */
+.account-eyebrow {
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  text-transform: uppercase;
+  letter-spacing: 0.18em !important;
+  font-size: 12px !important;
+  color: #7dd3fc !important;
+}
+
+/* Cards: crisp cyber top-border glow accent */
+.dashboard-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(94, 234, 212, 0.7), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.dashboard-card:hover::before {
+  opacity: 1;
+}
+
+.dashboard-card {
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(94, 234, 212, 0.12) !important;
+}
+
+/* Primary buttons -> glowing digital action */
+.btn.primary {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn.primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 20%, rgba(255, 255, 255, 0.25) 50%, transparent 80%);
+  transform: translateX(-120%);
+  transition: transform 0.6s ease;
+}
+
+.btn.primary:hover::after {
+  transform: translateX(120%);
+}
+
+/* Section headings: subtle digital underline accent */
+.account-command-center h2::after,
+.account-settings-section > h2::after {
+  content: "";
+  display: block;
+  width: 54px;
+  height: 2px;
+  margin-top: 10px;
+  background: linear-gradient(90deg, #3b82f6, #5eead4);
+  border-radius: 2px;
+}
+
+/* Mini funnel -> neon gradient fills */
+.mini-funnel-fill {
+  background: linear-gradient(90deg, #3b82f6, #5eead4) !important;
+  box-shadow: 0 0 12px rgba(94, 234, 212, 0.5) !important;
+}
+
+/* ================================================== */
+
 @media (hover: hover) and (pointer: fine) {
   #cases .case-card:hover {
     transform: translateY(-4px) !important;
