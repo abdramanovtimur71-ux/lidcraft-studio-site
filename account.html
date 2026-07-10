@@ -166,7 +166,7 @@
         <h2>Настройки и конфиденциальность</h2>
         <p class="account-section-note">Стандартный центр управления доступом, уведомлениями и приватностью данных.</p>
         <div class="cards">
-          <article class="card">
+          <article class="card account-card-status">
             <h3>Статус доступа</h3>
             <p id="sessionStatus" class="result-text">Проверяем сессию...</p>
             <p id="subscriptionStatus" class="result-text">Проверяем подписку...</p>
@@ -175,7 +175,7 @@
             </div>
           </article>
 
-          <article class="card">
+          <article class="card account-card-profile">
             <h3>Управление профилем</h3>
             <input id="profileName" class="field" type="text" placeholder="Имя" autocomplete="name" />
             <input id="profileEmail" class="field" type="email" placeholder="Email" autocomplete="email" inputmode="email" />
@@ -242,7 +242,7 @@
             <p id="settingsStatus" class="result-text">Настройки можно изменять в любое время.</p>
           </article>
 
-          <article class="card">
+          <article class="card account-card-privacy">
             <h3>Приватность и контроль данных</h3>
             <ul class="privacy-list">
               <li>Сессии привязаны к вашему email и истекают автоматически.</li>
@@ -256,7 +256,7 @@
             <p id="privacyStatus" class="result-text">Используются стандартные настройки конфиденциальности.</p>
           </article>
 
-          <article class="card">
+          <article class="card account-card-security">
             <h3>Безопасность аккаунта</h3>
             <input id="currentPasswordAccount" class="field" type="password" placeholder="Текущий пароль" autocomplete="current-password" />
             <input id="newPasswordAccount" class="field" type="password" placeholder="Новый пароль" autocomplete="new-password" />
@@ -269,7 +269,7 @@
             <p id="securityStatus" class="result-text" aria-live="polite">Рекомендуется менять пароль минимум раз в 90 дней.</p>
           </article>
 
-          <article class="card">
+          <article class="card account-card-ai">
             <h3>AI-защита промптов</h3>
             <p>Проверка запроса перед отправкой в ИИ: блокируем попытки вытащить системные инструкции и код проекта.</p>
             <input id="aiPromptInput" class="field" type="text" placeholder="Введите тестовый запрос..." autocomplete="off" />

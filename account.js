@@ -312,13 +312,13 @@ function enhancePasswordInputs(ids) {
     toggleButton.type = "button";
     toggleButton.className = "pass-toggle";
     toggleButton.setAttribute("aria-label", "Показать пароль");
-    toggleButton.textContent = "Show";
+    toggleButton.textContent = "Показать";
 
     toggleButton.addEventListener("click", () => {
       const show = input.type === "password";
       input.type = show ? "text" : "password";
       toggleButton.setAttribute("aria-label", show ? "Скрыть пароль" : "Показать пароль");
-      toggleButton.textContent = show ? "Hide" : "Show";
+      toggleButton.textContent = show ? "Скрыть" : "Показать";
     });
 
     wrap.appendChild(toggleButton);
