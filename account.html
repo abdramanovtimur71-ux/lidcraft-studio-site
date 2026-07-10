@@ -25,8 +25,27 @@
 
   <main class="section">
     <div class="container">
-      <h1 class="headline-reveal welcome-title">Добро пожаловать, <span id="userName">клиент</span></h1>
-      <p>Здесь собрана расширенная информация по работе с LidCraft Studio и быстрые действия для запуска проекта.</p>
+      <section class="account-hero-shell">
+        <div class="account-hero-intro">
+          <p class="account-eyebrow">LidCraft Control Room</p>
+          <h1 class="headline-reveal welcome-title">Добро пожаловать, <span id="userName">клиент</span></h1>
+          <p class="account-hero-sub">Рабочая панель в реальном времени: статус подключений, качество обработки лидов и приоритетные действия команды в одном месте.</p>
+        </div>
+        <div class="account-hero-meta">
+          <article class="account-meta-pill">
+            <span>Текущий пакет</span>
+            <strong>Growth</strong>
+          </article>
+          <article class="account-meta-pill">
+            <span>SLA ответа</span>
+            <strong>до 5 минут</strong>
+          </article>
+          <article class="account-meta-pill">
+            <span>Режим мониторинга</span>
+            <strong>Live 24/7</strong>
+          </article>
+        </div>
+      </section>
 
       <section id="guestBanner" class="guest-banner" hidden>
         <h2>Демо-режим (Гость)</h2>
@@ -36,11 +55,16 @@
         </div>
       </section>
 
-      <section class="section">
-        <h2>Центр управления ботом</h2>
-        <p>Здесь видно, как ваш бот подключен, что происходит по лидам и какие действия сейчас дают максимальный рост.</p>
-        <div class="cards">
-          <article class="card">
+      <section class="section account-command-center">
+        <div class="account-section-head">
+          <div>
+            <h2>Центр управления ботом</h2>
+            <p>Здесь видно, как бот подключен, как движется воронка и какие шаги сейчас быстрее всего увеличат результат.</p>
+          </div>
+          <span class="account-live-badge">Live dashboard</span>
+        </div>
+        <div class="cards dashboard-grid">
+          <article class="card dashboard-card">
             <h3>Статус подключения</h3>
             <p id="botConnectionStatus" class="result-text">Проверяем подключение бота...</p>
             <div class="metrics-grid compact">
@@ -57,9 +81,13 @@
                 <strong id="botWebhookStatus">-</strong>
               </div>
             </div>
+            <div class="dashboard-health">
+              <span>Индекс стабильности</span>
+              <strong id="botHealthScore">--</strong>
+            </div>
           </article>
 
-          <article class="card">
+          <article class="card dashboard-card">
             <h3>Воронка за 7 дней</h3>
             <div class="metrics-grid">
               <div class="metric-chip">
@@ -79,9 +107,19 @@
                 <strong id="botConversionRate">0%</strong>
               </div>
             </div>
+            <div class="mini-funnel">
+              <div class="mini-funnel-row">
+                <span>Квалификация</span>
+                <div class="mini-funnel-track"><span id="botQualifiedBar" class="mini-funnel-fill"></span></div>
+              </div>
+              <div class="mini-funnel-row">
+                <span>Созвоны</span>
+                <div class="mini-funnel-track"><span id="botCallsBar" class="mini-funnel-fill"></span></div>
+              </div>
+            </div>
           </article>
 
-          <article class="card">
+          <article class="card dashboard-card">
             <h3>Оперативная аналитика</h3>
             <div class="metrics-grid">
               <div class="metric-chip">
@@ -101,10 +139,21 @@
                 <strong id="botLastSync">-</strong>
               </div>
             </div>
+            <div class="mini-funnel">
+              <div class="mini-funnel-row">
+                <span>Автообработка</span>
+                <div class="mini-funnel-track"><span id="botAutomationBar" class="mini-funnel-fill"></span></div>
+              </div>
+              <div class="mini-funnel-row">
+                <span>Первый ответ ≤ 1 мин</span>
+                <div class="mini-funnel-track"><span id="botFirstReplyBar" class="mini-funnel-fill"></span></div>
+              </div>
+            </div>
           </article>
 
-          <article class="card">
+          <article class="card dashboard-card">
             <h3>Что делать дальше</h3>
+            <p class="dashboard-subtitle">Рекомендованные задачи на сегодня</p>
             <ul id="botActionList" class="action-list">
               <li>Загружаем персональные рекомендации...</li>
             </ul>

@@ -422,6 +422,11 @@ function renderBotAnalyticsOverview(user) {
   const botLastSync = document.getElementById("botLastSync");
   const botActionList = document.getElementById("botActionList");
   const botAdvisorNote = document.getElementById("botAdvisorNote");
+  const botHealthScore = document.getElementById("botHealthScore");
+  const botQualifiedBar = document.getElementById("botQualifiedBar");
+  const botCallsBar = document.getElementById("botCallsBar");
+  const botAutomationBar = document.getElementById("botAutomationBar");
+  const botFirstReplyBar = document.getElementById("botFirstReplyBar");
 
   if (!connectionStatus || !botActionList || !botAdvisorNote) {
     return;
@@ -454,6 +459,23 @@ function renderBotAnalyticsOverview(user) {
   if (botAutomationRate) botAutomationRate.textContent = `${Number(analytics.automationRate || 0)}%`;
   if (botFirstReplyRate) botFirstReplyRate.textContent = `${Number(analytics.firstReplyRate || 0)}%`;
   if (botLastSync) botLastSync.textContent = new Date(analytics.lastSyncAt || Date.now()).toLocaleString();
+
+  const incomingLeads = Math.max(1, Number(analytics.incomingLeads || 0));
+  const qualifiedLeads = Math.max(0, Number(analytics.qualifiedLeads || 0));
+  const bookedCalls = Math.max(0, Number(analytics.bookedCalls || 0));
+  const automationRate = Math.max(0, Math.min(100, Number(analytics.automationRate || 0)));
+  const firstReplyRate = Math.max(0, Math.min(100, Number(analytics.firstReplyRate || 0)));
+  const conversionRate = Math.max(0, Math.min(100, Number(analytics.conversionRate || 0)));
+
+  const qualifiedShare = Math.max(0, Math.min(100, Math.round((qualifiedLeads / incomingLeads) * 100)));
+  const callsShare = qualifiedLeads > 0 ? Math.max(0, Math.min(100, Math.round((bookedCalls / qualifiedLeads) * 100))) : 0;
+  const healthScore = Math.round((automationRate * 0.34) + (firstReplyRate * 0.33) + (conversionRate * 0.33));
+
+  if (botQualifiedBar) botQualifiedBar.style.setProperty("--value", `${qualifiedShare}%`);
+  if (botCallsBar) botCallsBar.style.setProperty("--value", `${callsShare}%`);
+  if (botAutomationBar) botAutomationBar.style.setProperty("--value", `${automationRate}%`);
+  if (botFirstReplyBar) botFirstReplyBar.style.setProperty("--value", `${firstReplyRate}%`);
+  if (botHealthScore) botHealthScore.textContent = `${healthScore}/100`;
 
   botActionList.innerHTML = "";
   (analytics.nextActions || []).forEach((action) => {
