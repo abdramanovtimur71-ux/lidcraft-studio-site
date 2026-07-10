@@ -4316,3 +4316,65 @@ body.theme-graphite .demo-item:hover {
       gap: 6px;
     }
   }
+
+.account-settings-section .cards {
+  align-items: start;
+}
+
+.account-section-note {
+  margin-top: -4px;
+  color: var(--muted);
+}
+
+.account-settings-card .settings-group + .settings-group {
+  margin-top: 12px;
+}
+
+.account-settings-card .settings-group h4 {
+  margin: 0 0 8px;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #b5d8ff;
+}
+
+.settings-checks {
+  display: grid;
+  gap: 8px;
+}
+
+.settings-checks label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.settings-checks input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #72b9ff;
+}
+
+.settings-checks input[type="checkbox"]:disabled {
+  opacity: 0.55;
+}
+
+.settings-checks--privacy {
+  margin-top: 6px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(125, 166, 219, 0.32);
+  background: linear-gradient(180deg, rgba(18, 31, 52, 0.78), rgba(10, 19, 35, 0.88));
+}
+
+.privacy-list {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text);
+}
+
+.privacy-list li + li {
+  margin-top: 8px;
+}

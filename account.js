@@ -71,7 +71,7 @@ function isGuestUser(user) {
 function animateGuestMessages() {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-  const revealNodes = Array.from(document.querySelectorAll("main .container > h1, #guestBanner, .result-text"))
+  const revealNodes = Array.from(document.querySelectorAll(".welcome-title, #guestBanner, .result-text"))
     .filter((node) => !node.hidden)
     .filter((node) => window.getComputedStyle(node).display !== "none");
 
@@ -127,6 +127,12 @@ const DEFAULT_SETTINGS = {
     email: false,
     telegram: true,
     digest: true
+  },
+  privacy: {
+    analytics: true,
+    personalization: true,
+    crashReports: true,
+    thirdPartyIntegrations: false
   }
 };
 
@@ -138,6 +144,10 @@ function getUserSettings(email) {
     notifications: {
       ...DEFAULT_SETTINGS.notifications,
       ...(parsed?.notifications || {})
+    },
+    privacy: {
+      ...DEFAULT_SETTINGS.privacy,
+      ...(parsed?.privacy || {})
     }
   };
 }
@@ -605,7 +615,24 @@ const settingsAutoLogout = document.getElementById("settingsAutoLogout");
 const notifyEmail = document.getElementById("notifyEmail");
 const notifyTelegram = document.getElementById("notifyTelegram");
 const notifyDigest = document.getElementById("notifyDigest");
+const privacyAnalytics = document.getElementById("privacyAnalytics");
+const privacyPersonalization = document.getElementById("privacyPersonalization");
+const privacyCrashReports = document.getElementById("privacyCrashReports");
+const privacyThirdParty = document.getElementById("privacyThirdParty");
 const settingsStatus = document.getElementById("settingsStatus");
+const privacyStatus = document.getElementById("privacyStatus");
+
+function applyPrivacyModeLock(mode) {
+  const isStrict = mode === "strict";
+  const privacyFields = [privacyAnalytics, privacyPersonalization, privacyCrashReports];
+  privacyFields.forEach((node) => {
+    if (!node) return;
+    if (isStrict) {
+      node.checked = false;
+    }
+    node.disabled = isStrict;
+  });
+}
 
 function applySettingsToForm(settings) {
   if (settingsLanguage) settingsLanguage.value = settings.language;
@@ -615,24 +642,45 @@ function applySettingsToForm(settings) {
   if (notifyEmail) notifyEmail.checked = Boolean(settings.notifications?.email);
   if (notifyTelegram) notifyTelegram.checked = Boolean(settings.notifications?.telegram);
   if (notifyDigest) notifyDigest.checked = Boolean(settings.notifications?.digest);
+  if (privacyAnalytics) privacyAnalytics.checked = Boolean(settings.privacy?.analytics);
+  if (privacyPersonalization) privacyPersonalization.checked = Boolean(settings.privacy?.personalization);
+  if (privacyCrashReports) privacyCrashReports.checked = Boolean(settings.privacy?.crashReports);
+  if (privacyThirdParty) privacyThirdParty.checked = Boolean(settings.privacy?.thirdPartyIntegrations);
+  applyPrivacyModeLock(settings.privacyMode);
 }
 
 function readSettingsFromForm() {
+  const privacyMode = settingsPrivacyMode?.value || DEFAULT_SETTINGS.privacyMode;
   return {
     language: settingsLanguage?.value || DEFAULT_SETTINGS.language,
     timezone: settingsTimezone?.value || DEFAULT_SETTINGS.timezone,
-    privacyMode: settingsPrivacyMode?.value || DEFAULT_SETTINGS.privacyMode,
+    privacyMode,
     autoLogoutMinutes: Number(settingsAutoLogout?.value || DEFAULT_SETTINGS.autoLogoutMinutes),
     notifications: {
       email: Boolean(notifyEmail?.checked),
       telegram: Boolean(notifyTelegram?.checked),
       digest: Boolean(notifyDigest?.checked)
+    },
+    privacy: {
+      analytics: privacyMode === "strict" ? false : Boolean(privacyAnalytics?.checked),
+      personalization: privacyMode === "strict" ? false : Boolean(privacyPersonalization?.checked),
+      crashReports: privacyMode === "strict" ? false : Boolean(privacyCrashReports?.checked),
+      thirdPartyIntegrations: Boolean(privacyThirdParty?.checked)
     }
   };
 }
 
 let userSettings = getUserSettings(currentUser?.email);
 applySettingsToForm(userSettings);
+if (privacyStatus) {
+  const modeText = userSettings.privacyMode === "strict" ? "строгий" : "стандартный";
+  setMessage(privacyStatus, `Текущий режим приватности: ${modeText}.`, "info");
+}
+if (settingsPrivacyMode) {
+  settingsPrivacyMode.addEventListener("change", () => {
+    applyPrivacyModeLock(settingsPrivacyMode.value);
+  });
+}
 
 const securityNotice = document.getElementById("securityNotice");
 const saveProfileBtn = document.getElementById("saveProfileBtn");
@@ -673,6 +721,12 @@ if (saveSettingsBtn) {
     saveUserSettings(currentUser?.email, userSettings);
     safeStorageSet("auraLang", userSettings.language);
     setMessage(settingsStatus, "Настройки кабинета сохранены.", "success", true);
+    const privacyModeLabel = userSettings.privacyMode === "strict" ? "Строгий" : "Стандартный";
+    setMessage(
+      privacyStatus,
+      `Режим приватности: ${privacyModeLabel}. Аналитика: ${userSettings.privacy.analytics ? "вкл" : "выкл"}, персонализация: ${userSettings.privacy.personalization ? "вкл" : "выкл"}.`,
+      "info"
+    );
     setButtonLoading(saveSettingsBtn, false);
   });
 }
@@ -687,6 +741,38 @@ if (resetSettingsBtn) {
     applySettingsToForm(userSettings);
     saveUserSettings(currentUser?.email, userSettings);
     setMessage(settingsStatus, "Настройки сброшены к значениям по умолчанию.", "info", true);
+    setMessage(privacyStatus, "Возвращены стандартные настройки конфиденциальности.", "info");
+  });
+}
+
+const revokeSessionsBtn = document.getElementById("revokeSessionsBtn");
+if (revokeSessionsBtn) {
+  revokeSessionsBtn.addEventListener("click", () => {
+    safeStorageRemove("auraSession");
+    setMessage(privacyStatus, "Сессия завершена. Выполните вход заново.", "success", true);
+    setTimeout(() => {
+      window.location.href = "auth.html";
+    }, 900);
+  });
+}
+
+const downloadConsentBtn = document.getElementById("downloadConsentBtn");
+if (downloadConsentBtn) {
+  downloadConsentBtn.addEventListener("click", () => {
+    const exportPayload = {
+      email: currentUser?.email || "",
+      generatedAt: new Date().toISOString(),
+      privacyMode: userSettings.privacyMode,
+      notifications: userSettings.notifications,
+      privacy: userSettings.privacy
+    };
+    const blob = new Blob([JSON.stringify(exportPayload, null, 2)], { type: "application/json;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "lidcraft-privacy-settings.json";
+    link.click();
+    URL.revokeObjectURL(link.href);
+    setMessage(privacyStatus, "Файл с настройками приватности скачан.", "success", true);
   });
 }
 
