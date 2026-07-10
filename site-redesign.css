@@ -1278,3 +1278,15 @@ select:focus-visible {
     font-size: 14px;
   }
 }
+
+/* Cases section stability: prevent jumpy motion on touch devices */
+#cases .case-card {
+  transform: none !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #cases .case-card:hover {
+    transform: translateY(-4px) !important;
+  }
+}
