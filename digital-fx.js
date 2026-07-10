@@ -173,6 +173,7 @@
     initCaseFilter();
     initTilt();
     initPricingToggle();
+    initTechPolish();
   }
 
   // ---- Hero: typing niches ----
@@ -499,6 +500,51 @@
         });
       });
     });
+  }
+
+  // ---- Tech polish: reading progress, page fade, back-to-top ----
+  function initTechPolish() {
+    document.body.classList.add("fx-page");
+
+    var progress = document.createElement("div");
+    progress.className = "reading-progress";
+    document.body.appendChild(progress);
+
+    var toTop = document.createElement("button");
+    toTop.className = "back-to-top";
+    toTop.type = "button";
+    toTop.setAttribute("aria-label", "Наверх");
+    document.body.appendChild(toTop);
+
+    toTop.addEventListener("click", function () {
+      window.scrollTo({
+        top: 0,
+        behavior: reduceMotion ? "auto" : "smooth",
+      });
+    });
+
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var doc = document.documentElement;
+      var scrollTop = doc.scrollTop || document.body.scrollTop;
+      var height = doc.scrollHeight - doc.clientHeight;
+      var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+      progress.style.width = pct + "%";
+      toTop.classList.toggle("is-visible", scrollTop > 600);
+    }
+
+    window.addEventListener(
+      "scroll",
+      function () {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      },
+      { passive: true }
+    );
+    update();
   }
 
   if (document.readyState === "loading") {

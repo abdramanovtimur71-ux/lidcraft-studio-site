@@ -2339,6 +2339,72 @@ textarea.field:focus,
 }
 .price-card .btn { margin-top: auto; }
 
+/* ===== TECH POLISH: reading progress, page fade, back-to-top ===== */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  z-index: 9999;
+  background: linear-gradient(90deg, #3b82f6, #5eead4);
+  box-shadow: 0 0 10px rgba(94, 234, 212, 0.5);
+  transition: width 0.1s linear;
+  pointer-events: none;
+}
+
+body.fx-page {
+  animation: pageFade 0.5s ease both;
+}
+@keyframes pageFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.back-to-top {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--lux-line);
+  background: var(--lux-panel);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--lux-text);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s, border-color 0.2s ease;
+  z-index: 40;
+}
+.back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.back-to-top:hover {
+  border-color: rgba(94, 234, 212, 0.6);
+  transform: translateY(-3px);
+}
+.back-to-top::before {
+  content: "";
+  width: 11px;
+  height: 11px;
+  border-left: 2px solid currentColor;
+  border-top: 2px solid currentColor;
+  transform: rotate(45deg) translate(1px, 1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.fx-page { animation: none; }
+  .reading-progress { transition: none; }
+}
+
 /* ================================================== */
 
 @media (hover: hover) and (pointer: fine) {
