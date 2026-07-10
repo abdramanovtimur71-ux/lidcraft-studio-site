@@ -170,6 +170,8 @@
     initAuroraParallax();
     initChatDemo();
     initTimeline();
+    initCaseFilter();
+    initTilt();
   }
 
   // ---- Hero: typing niches ----
@@ -398,6 +400,77 @@
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
     update();
+  }
+
+  // ---- Cases: niche filter ----
+  function initCaseFilter() {
+    var buttons = document.querySelectorAll(".case-filter-btn");
+    var cards = document.querySelectorAll(".case-card[data-niche]");
+    if (!buttons.length || !cards.length) return;
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var filter = btn.getAttribute("data-filter");
+        buttons.forEach(function (b) {
+          b.classList.toggle("is-active", b === btn);
+          b.setAttribute("aria-selected", b === btn ? "true" : "false");
+        });
+
+        cards.forEach(function (card) {
+          var match = filter === "all" || card.getAttribute("data-niche") === filter;
+          if (match) {
+            card.classList.remove("is-hidden");
+            requestAnimationFrame(function () {
+              card.classList.remove("filtering");
+            });
+          } else {
+            card.classList.add("filtering");
+            setTimeout(function () {
+              card.classList.add("is-hidden");
+            }, 250);
+          }
+        });
+      });
+    });
+  }
+
+  // ---- 3D tilt on hover ----
+  function initTilt() {
+    if (reduceMotion) return;
+    var supportsHover =
+      window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!supportsHover) return;
+
+    var tilts = document.querySelectorAll(".tilt");
+    tilts.forEach(function (el) {
+      var raf = null;
+      var rx = 0;
+      var ry = 0;
+
+      el.addEventListener("mousemove", function (e) {
+        var rect = el.getBoundingClientRect();
+        var px = (e.clientX - rect.left) / rect.width - 0.5;
+        var py = (e.clientY - rect.top) / rect.height - 0.5;
+        ry = px * 8;
+        rx = -py * 8;
+        if (!raf) raf = requestAnimationFrame(apply);
+      });
+
+      el.addEventListener("mouseleave", function () {
+        rx = 0;
+        ry = 0;
+        if (!raf) raf = requestAnimationFrame(apply);
+      });
+
+      function apply() {
+        raf = null;
+        el.style.transform =
+          "perspective(900px) rotateX(" + rx + "deg) rotateY(" + ry + "deg) translateY(-4px)";
+        if (rx === 0 && ry === 0) {
+          el.style.transform = "";
+        }
+      }
+    });
   }
 
   if (document.readyState === "loading") {

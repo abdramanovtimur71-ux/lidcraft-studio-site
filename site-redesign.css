@@ -2086,6 +2086,60 @@ textarea.field:focus,
   .timeline::after { transition: none; }
 }
 
+/* ===== CASES: FILTER + 3D TILT ===== */
+.case-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 22px 0 26px;
+}
+
+.case-filter-btn {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--lux-line);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--lux-muted);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+}
+
+.case-filter-btn:hover { transform: translateY(-2px); color: var(--lux-text); }
+
+.case-filter-btn.is-active {
+  color: #04121f;
+  background: linear-gradient(135deg, #5eead4, #3b82f6);
+  border-color: transparent;
+  font-weight: 600;
+}
+
+.case-card {
+  transition: opacity 0.4s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.case-card.is-hidden {
+  display: none;
+}
+
+.case-card.filtering {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .case-card.tilt:hover {
+    box-shadow: 0 26px 60px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(94, 234, 212, 0.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-card { transition: none; }
+}
+
 /* ================================================== */
 
 @media (hover: hover) and (pointer: fine) {
